@@ -1,66 +1,213 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Archive of Mysteries</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Simsang Archive | Ancient Manuscript Reverence</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&amp;family=Nanum+Myeongjo:wght@400;700;800&amp;family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&amp;family=Noto+Serif+KR:wght@300;400;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1E293B", // Deep Muted Blue-Grey
+                        accent: "#947647", // Antique Gold
+                        "background-light": "#F9F7F2", // Parchment Off-White
+                        "background-dark": "#121417", // Deep Charcoal
+                        "card-light": "rgba(255, 255, 255, 0.6)",
+                        "card-dark": "rgba(30, 41, 59, 0.4)",
+                        "border-light": "rgba(148, 118, 71, 0.2)",
+                        "border-dark": "rgba(148, 118, 71, 0.15)",
+                    },
+                    fontFamily: {
+                        display: ["'Cinzel'", "'Nanum Myeongjo'", "serif"], // Narrower, classic serif
+                        body: ["'EB Garamond'", "'Noto Serif KR'", "serif"], // Elegant, highly readable
+                        sans: ["'Cinzel'", "serif"], // Consistent classic feel
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        'xl': "0.5rem",
+                        '2xl': "0.75rem",
+                    },
+                    boxShadow: {
+                        'glass': '0 4px 20px -2px rgba(30, 41, 59, 0.08)',
+                        'glass-hover': '0 12px 30px -4px rgba(148, 118, 71, 0.12)',
+                    },
+                },
+            },
+        };
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply selection:bg-accent/30;
+                background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F9F7F2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #947647;
+            border-radius: 0px;
+        }
+        .glass-card {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-width: 1px;
+        }
+        .manuscript-border {
+            border: 1px solid rgba(148, 118, 71, 0.3);
+            position: relative;
+        }
+        .manuscript-border::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 1px solid rgba(148, 118, 71, 0.1);
+            pointer-events: none;
+        }
+    </style>
 </head>
-<body>
-    <div class="background-effects">
-        <div class="stars"></div>
-        <div class="nebula"></div>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-300 font-body min-h-screen flex flex-col transition-colors duration-1000">
+    <div class="fixed inset-0 z-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none"
+        style="background-image: radial-gradient(#947647 1px, transparent 1px); background-size: 64px 64px;">
     </div>
-
-    <header class="main-header">
-        <h1>Simsang Archive</h1>
-        <p class="subtitle">지혜와 신비의 기록 보관소</p>
-    </header>
-
-    <main class="portal-container">
-        <!-- Occult Calendar Card -->
-        <a href="https://calendar-2ty.pages.dev" class="portal-card" target="_blank">
-            <div class="card-content">
-                <div class="icon-container">
-                    <span class="icon">🌙</span>
-                </div>
-                <h2>심상학회 오컬트 캘린더</h2>
-                <p>별들의 움직임과 은밀한 시간의 흐름을 기록합니다.</p>
+    <button
+        class="fixed top-8 right-8 z-50 p-2 border border-accent/30 rounded-full bg-white/50 dark:bg-slate-900/50 backdrop-blur-md text-accent hover:bg-accent hover:text-white transition-all duration-500"
+        onclick="document.documentElement.classList.toggle('dark')">
+        <span class="material-symbols-outlined block dark:hidden text-[20px]">dark_mode</span>
+        <span class="material-symbols-outlined hidden dark:block text-[20px]">light_mode</span>
+    </button>
+    <main class="flex-grow flex flex-col items-center justify-center p-8 sm:p-16 relative z-10">
+        <header class="text-center mb-20 max-w-3xl mx-auto">
+            <h1
+                class="text-5xl md:text-6xl font-display text-primary dark:text-slate-100 mb-6 tracking-widest uppercase">
+                SIMSANG <span class="italic font-normal text-accent">Archive</span>
+            </h1>
+            <p
+                class="text-slate-500 dark:text-slate-400 font-sans text-[10px] md:text-xs tracking-[0.4em] uppercase font-bold mb-8">
+                Codex of Ancient Observation &amp; Primordial Wisdom
+            </p>
+            <div class="flex items-center justify-center space-x-4">
+                <div class="w-12 h-[1px] bg-accent/40"></div>
+                <span class="text-accent text-lg">✦</span>
+                <div class="w-12 h-[1px] bg-accent/40"></div>
             </div>
-            <div class="card-glow"></div>
-        </a>
-
-        <!-- Yoga Sutras Card -->
-        <a href="https://yoga-7ez.pages.dev" class="portal-card" target="_blank">
-            <div class="card-content">
-                <div class="icon-container">
-                    <span class="icon">🧘</span>
+        </header>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 w-full max-w-7xl mx-auto">
+            <a class="group manuscript-border glass-card bg-card-light dark:bg-card-dark border-border-light dark:border-border-dark p-10 shadow-glass hover:shadow-glass-hover hover:-translate-y-1 transition-all duration-700 flex flex-col items-center text-center h-full"
+                href="https://calendar-2ty.pages.dev" target="_blank">
+                <div
+                    class="w-32 h-32 mb-10 relative flex items-center justify-center transition-transform duration-1000 group-hover:rotate-12">
+                    <svg class="w-24 h-24 text-primary/80 dark:text-accent/60" fill="none" viewBox="0 0 100 100"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-dasharray="1 2" stroke-width="0.75">
+                        </circle>
+                        <circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="0.5"></circle>
+                        <path d="M50 5 L50 95 M5 50 L95 50" opacity="0.4" stroke="currentColor" stroke-width="0.5">
+                        </path>
+                        <path d="M18 18 L82 82 M18 82 L82 18" opacity="0.4" stroke="currentColor" stroke-width="0.5">
+                        </path>
+                        <circle cx="50" cy="50" fill="currentColor" r="4"></circle>
+                        <path d="M50 20 A 30 30 0 0 1 80 50" stroke="currentColor" stroke-width="1.5"></path>
+                        <circle cx="80" cy="50" fill="currentColor" r="2"></circle>
+                        <text fill="currentColor" font-family="serif" font-size="6" x="48" y="15">N</text>
+                    </svg>
                 </div>
-                <h2>요가 수트라 학습</h2>
-                <p>고대의 지혜, 요가 수트라의 깊은 가르침을 탐구합니다.</p>
-            </div>
-            <div class="card-glow"></div>
-        </a>
-        
-        <!-- Placeholder for Future Sites -->
-        <div class="portal-card full-access">
-             <div class="card-content">
-                <div class="icon-container">
-                    <span class="icon">✨</span>
+                <h2
+                    class="text-2xl font-display font-bold mb-5 text-primary dark:text-slate-100 tracking-wide uppercase">
+                    Celestial Ephemeris</h2>
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-10 flex-grow italic">
+                    천체의 궤적과 고대의 정렬을 세밀히 기록하여<br />우주의 거대한 주기를 해석하고 영원의 시간을 측정합니다.
+                </p>
+                <div
+                    class="mt-auto px-8 py-3 bg-primary dark:bg-slate-800 border border-accent/20 text-[10px] font-sans font-bold tracking-[0.2em] text-accent uppercase transition-all duration-500 group-hover:bg-accent group-hover:text-white">
+                    Read the Heavens
                 </div>
-                <h2>Coming Soon</h2>
-                <p>더 많은 지혜의 문이 열릴 예정입니다.</p>
+            </a>
+            <a class="group manuscript-border glass-card bg-card-light dark:bg-card-dark border-border-light dark:border-border-dark p-10 shadow-glass hover:shadow-glass-hover hover:-translate-y-1 transition-all duration-700 flex flex-col items-center text-center h-full"
+                href="https://yoga-7ez.pages.dev" target="_blank">
+                <div
+                    class="w-32 h-32 mb-10 relative flex items-center justify-center transition-transform duration-1000 group-hover:-rotate-12">
+                    <svg class="w-24 h-24 text-primary/80 dark:text-accent/60" fill="none" viewBox="0 0 100 100"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 10 Q 65 35 50 60 Q 35 35 50 10" stroke="currentColor" stroke-width="1"></path>
+                        <path d="M50 10 Q 80 30 70 60 Q 50 50 50 10" opacity="0.6" stroke="currentColor"
+                            stroke-width="0.75"></path>
+                        <path d="M50 10 Q 20 30 30 60 Q 50 50 50 10" opacity="0.6" stroke="currentColor"
+                            stroke-width="0.75"></path>
+                        <path d="M50 60 L50 90" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.5"></path>
+                        <path d="M30 80 H 70" stroke="currentColor" stroke-width="0.5"></path>
+                        <circle cx="50" cy="70" fill="currentColor" opacity="0.8" r="3"></circle>
+                    </svg>
+                </div>
+                <h2
+                    class="text-2xl font-display font-bold mb-5 text-primary dark:text-slate-100 tracking-wide uppercase">
+                    Sutra Exegesis</h2>
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-10 flex-grow italic">
+                    심연의 침묵 속에서 길어 올린 고귀한 진리를 통해<br />자아의 경계를 허물고 무한한 의식의 바다로 나아갑니다.
+                </p>
+                <div
+                    class="mt-auto px-8 py-3 bg-primary dark:bg-slate-800 border border-accent/20 text-[10px] font-sans font-bold tracking-[0.2em] text-accent uppercase transition-all duration-500 group-hover:bg-accent group-hover:text-white">
+                    Unveil the Truth
+                </div>
+            </a>
+            <div
+                class="group manuscript-border glass-card bg-card-light dark:bg-card-dark border-border-light dark:border-border-dark p-10 shadow-glass flex flex-col items-center text-center h-full opacity-70">
+                <div class="w-32 h-32 mb-10 relative flex items-center justify-center">
+                    <span class="material-symbols-outlined text-5xl text-accent/40 font-thin">history_edu</span>
+                </div>
+                <h2
+                    class="text-2xl font-display font-bold mb-5 text-slate-500 dark:text-slate-500 tracking-[0.2em] uppercase">
+                    Unmanifested</h2>
+                <p class="text-slate-500 dark:text-slate-500 text-sm leading-relaxed mb-10 flex-grow italic">
+                    아직 잉크가 마르지 않은 예언의 서가<br />지혜의 보고 속에 깊이 감추어져 있습니다.
+                </p>
+                <div
+                    class="mt-auto px-8 py-2 border border-slate-300 dark:border-slate-700 text-[9px] font-sans font-bold text-slate-400 uppercase tracking-[0.3em]">
+                    Awaiting Revelation
+                </div>
             </div>
         </div>
     </main>
-
-    <footer class="main-footer">
-        <p>&copy; 2024 Simsang Archive. All rights reserved.</p>
+    <footer class="w-full py-16 relative z-10 mt-auto border-t border-accent/10">
+        <div class="max-w-4xl mx-auto flex flex-col items-center justify-center space-y-8">
+            <div class="flex space-x-12">
+                <a class="text-accent/60 hover:text-accent transition-colors duration-500" href="#">
+                    <span class="material-symbols-outlined text-[24px] font-light">temple_buddhist</span>
+                </a>
+                <a class="text-accent/60 hover:text-accent transition-colors duration-500" href="#">
+                    <span class="material-symbols-outlined text-[24px] font-light">auto_stories</span>
+                </a>
+                <a class="text-accent/60 hover:text-accent transition-colors duration-500" href="#">
+                    <span class="material-symbols-outlined text-[24px] font-light">edit_calendar</span>
+                </a>
+            </div>
+            <div class="text-center">
+                <p class="text-[9px] text-slate-500 dark:text-slate-500 font-sans tracking-[0.25em] uppercase mb-2">
+                    © ANNO DOMINI MMXXIV • SIMSANG ARCHIVE
+                </p>
+                <p class="text-[8px] text-accent/40 font-sans tracking-[0.3em] uppercase">
+                    Custodians of the Perennial Philosophy &amp; Sacred Lore
+                </p>
+            </div>
+        </div>
     </footer>
 
-    <script src="script.js"></script>
 </body>
+
 </html>
