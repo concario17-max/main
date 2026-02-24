@@ -235,14 +235,6 @@ body {
 
 /* 반응형(미디어 쿼리) 스타일 작성함 */
 @media (max-width: 768px) {
-    .main-header h1 {
-        font-size: 2.5rem;
-    }
-
-    .portal-card {
-        width: 100%;
-        max-width: 350px;
-        height: auto;
-        min-height: 300px;
-    }
+    /* Tailwind CSS가 반응형을 제어하므로 순수 CSS의 커스텀 미디어쿼리는 
+       특정 포털 로딩 스피너 혹은 기타 예외 레이아웃을 제외하고 비워둠. */
 }
