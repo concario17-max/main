@@ -1,10 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Entrance animations are largely handled by CSS, 
-    // but we can add more complex interactions here if needed.
+    // 진입 애니메이션은 주로 CSS에서 처리되나, 필요시 여기에 복잡한 상호작용을 추가할 수 있음.
 
-    console.log("Simsang Archive Gateway Initialized.");
-
-    // Optional: Add a subtle parallax effect to the background
+    // 선택사항: 배경에 미세한 패럴랙스 효과를 추가함
     const container = document.body;
     const nebula = document.querySelector('.nebula');
 

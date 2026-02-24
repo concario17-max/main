@@ -7,7 +7,7 @@
     <title>Simsang Archive | Ancient Manuscript Reverence</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&amp;family=Nanum+Myeongjo:wght@400;700;800&amp;family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&amp;family=Noto+Serif+KR:wght@300;400;700&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,700;1,400&amp;family=Inter:wght@300;400;700&amp;display=swap"
         rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
@@ -18,19 +18,19 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: "#1E293B", // Deep Muted Blue-Grey
-                        accent: "#947647", // Antique Gold
-                        "background-light": "#F9F7F2", // Parchment Off-White
-                        "background-dark": "#121417", // Deep Charcoal
+                        primary: "#1E293B", // 딥 뮤티드 블루그레이
+                        accent: "#B8860B", // 앤틱 골드
+                        "background-light": "#FCFBF9", // 파치먼트 화이트
+                        "background-dark": "#0A0A0A", // 딥 차콜 피치 블랙
                         "card-light": "rgba(255, 255, 255, 0.6)",
                         "card-dark": "rgba(30, 41, 59, 0.4)",
-                        "border-light": "rgba(148, 118, 71, 0.2)",
-                        "border-dark": "rgba(148, 118, 71, 0.15)",
+                        "border-light": "rgba(184, 134, 11, 0.2)",
+                        "border-dark": "rgba(184, 134, 11, 0.15)",
                     },
                     fontFamily: {
-                        display: ["'Cinzel'", "'Nanum Myeongjo'", "serif"], // Narrower, classic serif
-                        body: ["'EB Garamond'", "'Noto Serif KR'", "serif"], // Elegant, highly readable
-                        sans: ["'Cinzel'", "serif"], // Consistent classic feel
+                        display: ["'Crimson Pro'", "serif"], // 좁고 클래식한 세리프
+                        body: ["'Inter'", "sans-serif"], // 우아하고 가독성 높은 폰트
+                        sans: ["'Crimson Pro'", "serif"], // 일관된 클래식 느낌
                     },
                     borderRadius: {
                         DEFAULT: "0.25rem",
@@ -39,7 +39,7 @@
                     },
                     boxShadow: {
                         'glass': '0 4px 20px -2px rgba(30, 41, 59, 0.08)',
-                        'glass-hover': '0 12px 30px -4px rgba(148, 118, 71, 0.12)',
+                        'glass-hover': '0 12px 30px -4px rgba(184, 134, 11, 0.12)',
                     },
                 },
             },
@@ -56,10 +56,10 @@
             width: 5px;
         }
         ::-webkit-scrollbar-track {
-            background: #F9F7F2;
+            background: #FCFBF9;
         }
         ::-webkit-scrollbar-thumb {
-            background-color: #947647;
+            background-color: #B8860B;
             border-radius: 0px;
         }
         .glass-card {
@@ -68,14 +68,14 @@
             border-width: 1px;
         }
         .manuscript-border {
-            border: 1px solid rgba(148, 118, 71, 0.3);
+            border: 1px solid rgba(184, 134, 11, 0.3);
             position: relative;
         }
         .manuscript-border::before {
             content: '';
             position: absolute;
             inset: 4px;
-            border: 1px solid rgba(148, 118, 71, 0.1);
+            border: 1px solid rgba(184, 134, 11, 0.1);
             pointer-events: none;
         }
     </style>
@@ -84,7 +84,7 @@
 <body
     class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-300 font-body min-h-screen flex flex-col transition-colors duration-1000">
     <div class="fixed inset-0 z-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none"
-        style="background-image: radial-gradient(#947647 1px, transparent 1px); background-size: 64px 64px;">
+        style="background-image: radial-gradient(#B8860B 1px, transparent 1px); background-size: 64px 64px;">
     </div>
     <button
         class="fixed top-8 right-8 z-50 p-2 border border-accent/30 rounded-full bg-white/50 dark:bg-slate-900/50 backdrop-blur-md text-accent hover:bg-accent hover:text-white transition-all duration-500"
@@ -185,7 +185,7 @@
         </div>
     </main>
 
-    <!-- Portal Overlay -->
+    <!-- 포털 오버레이 설정함 -->
     <div id="portal-overlay"
         class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden opacity-0 transition-opacity duration-500 flex flex-col justify-center items-center">
         <button onclick="closePortal()"
