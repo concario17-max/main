@@ -71,3 +71,48 @@ const closePortal = () => {
         }, 700); // 트랜지션 지속 시간에 맞춘 정리
     }
 };
+
+/**
+ * 앰비언트 스타더스트(Stardust) 생성 로직
+ * 
+ * @description 초기화 시점에만 연산을 수행하여 이후 Reflow를 유발하지 않는 정적 파티클 레이어 구현
+ */
+const initStardust = () => {
+    const container = document.getElementById('particles-container');
+    if (!container) return;
+
+    // 파티클 개수 (성능을 위해 50개 제한)
+    const particleCount = 50;
+    // 다중 DOM 삽입 최소화를 위한 DocumentFragment 사용
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+
+        // CSS Custom Property 및 인라인 스타일 렌더링
+        const size = Math.random() * 2 + 1; // 1px ~ 3px
+        const xPos = Math.random() * 100; // 0vw ~ 100vw
+        const duration = Math.random() * 20 + 20; // 20s ~ 40s (매우 느린 속도)
+        const delay = Math.random() * 10; // 0s ~ 10s
+
+        particle.style.cssText = `
+            position: absolute;
+            bottom: -5%;
+            left: ${xPos}vw;
+            width: ${size}px;
+            height: ${size}px;
+            background-color: var(--tw-prose-body, rgba(212, 175, 55, 0.5));
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 ${size * 2}px rgba(212, 175, 55, 0.4);
+            animation: drift ${duration}s linear ${delay}s infinite;
+        `;
+
+        fragment.appendChild(particle);
+    }
+
+    container.appendChild(fragment);
+};
+
+// 스크립트 로드 시 파티클 생성 함수 추가 등록
+document.addEventListener('DOMContentLoaded', initStardust);
