@@ -4,13 +4,12 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Simsang Archive | Ancient Manuscript Reverence</title>
+    <title>Simsang Archive | The Premium Collection</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <link
-        href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,700;1,400&amp;family=Inter:wght@300;400;700&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500&display=swap"
         rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..400,0..1&display=swap"
         rel="stylesheet" />
     <script>
         tailwind.config = {
@@ -18,28 +17,33 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: "#1E293B", // 딥 뮤티드 블루그레이
-                        accent: "#B8860B", // 앤틱 골드
-                        "background-light": "#FCFBF9", // 파치먼트 화이트
-                        "background-dark": "#0A0A0A", // 딥 차콜 피치 블랙
-                        "card-light": "rgba(255, 255, 255, 0.6)",
-                        "card-dark": "rgba(30, 41, 59, 0.4)",
-                        "border-light": "rgba(184, 134, 11, 0.2)",
-                        "border-dark": "rgba(184, 134, 11, 0.15)",
+                        primary: "#111111",
+                        accent: {
+                            light: "#C5A059", // Champagne Gold
+                            dark: "#D4AF37",  // Rich Gold
+                        },
+                        background: {
+                            light: "#F9F8F6", // Warm Alabaster
+                            dark: "#080808",  // Obsidian
+                        },
+                        card: {
+                            light: "rgba(255, 255, 255, 0.6)",
+                            dark: "rgba(15, 15, 15, 0.6)",
+                        },
+                        border: {
+                            light: "rgba(197, 160, 89, 0.2)",
+                            dark: "rgba(212, 175, 55, 0.15)",
+                        }
                     },
                     fontFamily: {
-                        display: ["'Crimson Pro'", "serif"], // 좁고 클래식한 세리프
-                        body: ["'Inter'", "sans-serif"], // 우아하고 가독성 높은 폰트
-                        sans: ["'Crimson Pro'", "serif"], // 일관된 클래식 느낌
-                    },
-                    borderRadius: {
-                        DEFAULT: "0.25rem",
-                        'xl': "0.5rem",
-                        '2xl': "0.75rem",
+                        display: ["'Cinzel'", "serif"],
+                        body: ["'Inter'", "sans-serif"],
                     },
                     boxShadow: {
-                        'glass': '0 4px 20px -2px rgba(30, 41, 59, 0.08)',
-                        'glass-hover': '0 12px 30px -4px rgba(184, 134, 11, 0.12)',
+                        'premium': '0 10px 40px -10px rgba(0,0,0,0.05)',
+                        'premium-hover': '0 20px 40px -10px rgba(197, 160, 89, 0.15)',
+                        'premium-dark': '0 10px 40px -10px rgba(0,0,0,0.4)',
+                        'premium-hover-dark': '0 20px 40px -10px rgba(212, 175, 55, 0.15)',
                     },
                 },
             },
@@ -48,197 +52,270 @@
     <style type="text/tailwindcss">
         @layer base {
             body {
-                @apply selection:bg-accent/30;
-                background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+                @apply selection:bg-accent-light/30 dark:selection:bg-accent-dark/30;
             }
         }
         ::-webkit-scrollbar {
-            width: 5px;
+            width: 4px;
         }
         ::-webkit-scrollbar-track {
-            background: #FCFBF9;
+            @apply bg-background-light dark:bg-background-dark;
         }
         ::-webkit-scrollbar-thumb {
-            background-color: #B8860B;
-            border-radius: 0px;
+            @apply bg-accent-light/50 dark:bg-accent-dark/50 rounded-full;
         }
-        .glass-card {
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-width: 1px;
+        
+        .premium-card {
+            @apply relative overflow-hidden backdrop-blur-xl border border-transparent bg-card-light dark:bg-card-dark transition-all duration-700;
         }
-        .manuscript-border {
-            border: 1px solid rgba(184, 134, 11, 0.3);
-            position: relative;
-        }
-        .manuscript-border::before {
+        
+        /* Subtle static border layer */
+        .premium-card::after {
             content: '';
             position: absolute;
-            inset: 4px;
-            border: 1px solid rgba(184, 134, 11, 0.1);
+            inset: 0;
+            border: 1px solid var(--tw-border-opacity, 1);
+            @apply border-border-light dark:border-border-dark rounded-xl pointer-events-none transition-colors duration-700;
+        }
+        
+        .premium-card:hover::after {
+            @apply border-accent-light/40 dark:border-accent-dark/40;
+        }
+
+        /* Mouse spotlight layer */
+        .premium-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(
+                800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                rgba(197, 160, 89, 0.08),
+                transparent 40%
+            );
+            opacity: 0;
+            transition: opacity 0.5s ease;
             pointer-events: none;
+            z-index: 10;
+        }
+        .dark .premium-card::before {
+            background: radial-gradient(
+                800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                rgba(212, 175, 55, 0.12),
+                transparent 40%
+            );
+        }
+        .premium-card:hover::before {
+            opacity: 1;
+        }
+        
+        /* Ambient Background Glow */
+        .bg-glow {
+            position: absolute;
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, rgba(197, 160, 89, 0.03) 0%, transparent 60%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .dark .bg-glow {
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.04) 0%, transparent 60%);
         }
     </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body
-    class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-300 font-body min-h-screen flex flex-col transition-colors duration-1000">
-    <div class="fixed inset-0 z-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none"
-        style="background-image: radial-gradient(#B8860B 1px, transparent 1px); background-size: 64px 64px;">
+    class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-300 font-body min-h-screen flex flex-col transition-colors duration-1000 relative">
+
+    <div class="bg-glow"></div>
+    <div class="fixed inset-0 z-0 opacity-[0.02] dark:opacity-[0.03] pointer-events-none"
+        style="background-image: radial-gradient(currentColor 1px, transparent 1px); background-size: 48px 48px;">
     </div>
+
+    <!-- Theme Toggle -->
     <button
-        class="fixed top-8 right-8 z-50 p-2 border border-accent/30 rounded-full bg-white/50 dark:bg-slate-900/50 backdrop-blur-md text-accent hover:bg-accent hover:text-white transition-all duration-500"
+        class="fixed top-8 right-8 z-50 p-3 rounded-full bg-white/50 dark:bg-black/50 border border-border-light dark:border-border-dark backdrop-blur-md text-accent-light dark:text-accent-dark hover:scale-105 transition-all duration-500 shadow-sm"
         onclick="document.documentElement.classList.toggle('dark')">
-        <span class="material-symbols-outlined block dark:hidden text-[20px]">dark_mode</span>
-        <span class="material-symbols-outlined hidden dark:block text-[20px]">light_mode</span>
+        <span class="material-symbols-outlined block dark:hidden text-[20px] font-light">dark_mode</span>
+        <span class="material-symbols-outlined hidden dark:block text-[20px] font-light">light_mode</span>
     </button>
+
     <main
-        class="flex-grow flex flex-col items-center justify-center p-4 sm:p-8 md:p-16 relative z-10 w-full overflow-hidden">
-        <header class="text-center mb-20 max-w-3xl mx-auto">
-            <h1
-                class="text-4xl sm:text-5xl md:text-6xl font-display text-primary dark:text-slate-100 mb-6 tracking-widest uppercase text-center px-4">
-                SIMSANG <span class="italic font-normal text-accent">Archive</span>
-            </h1>
-            <p
-                class="text-slate-500 dark:text-slate-400 font-sans text-[9px] md:text-xs tracking-[0.3em] md:tracking-[0.4em] uppercase font-bold mb-8 px-4 text-center leading-relaxed">
-                Codex of Ancient Observation &amp; Primordial Wisdom
-            </p>
-            <div class="flex items-center justify-center space-x-4">
-                <div class="w-12 h-[1px] bg-accent/40"></div>
-                <span class="text-accent text-lg">✦</span>
-                <div class="w-12 h-[1px] bg-accent/40"></div>
+        class="flex-grow flex flex-col items-center justify-center p-6 sm:p-12 md:p-20 relative z-10 w-full max-w-7xl mx-auto">
+        <header class="text-center mb-24 max-w-4xl mx-auto flex flex-col items-center">
+            <div
+                class="text-[10px] tracking-[0.4em] text-accent-light dark:text-accent-dark uppercase mb-8 font-medium">
+                The Premium Collection
             </div>
+            <h1
+                class="text-4xl sm:text-5xl md:text-7xl font-display text-primary dark:text-white mb-8 tracking-wider uppercase text-center leading-tight">
+                SIMSANG <span class="text-accent-light dark:text-accent-dark font-light italic">Archive</span>
+            </h1>
+            <div class="w-px h-16 bg-gradient-to-b from-accent-light/50 dark:from-accent-dark/50 to-transparent mb-10">
+            </div>
+            <p
+                class="text-slate-500 dark:text-slate-400 font-body text-xs md:text-[13px] tracking-[0.25em] max-w-2xl text-center leading-loose font-light uppercase">
+                Curated Wisdom &amp; Ancient Observations <br /> A Sanctuary for the Eternal Mind
+            </p>
         </header>
-        <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12 w-full max-w-7xl mx-auto px-4 md:px-0">
-            <a class="group manuscript-border glass-card bg-card-light dark:bg-card-dark border-border-light dark:border-border-dark p-6 sm:p-8 md:p-10 shadow-glass hover:shadow-glass-hover hover:-translate-y-1 transition-all duration-700 flex flex-col items-center text-center h-full w-full"
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 w-full px-4 md:px-0">
+            <!-- Celestial Ephemeris -->
+            <a class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl"
                 href="https://calendar.simsang.org/" target="_blank">
                 <div
-                    class="w-20 h-20 md:w-32 md:h-32 mb-6 md:mb-10 relative flex items-center justify-center transition-transform duration-1000 group-hover:rotate-12">
-                    <svg class="w-24 h-24 text-primary/80 dark:text-accent/60" fill="none" viewBox="0 0 100 100"
+                    class="w-24 h-24 mb-10 flex items-center justify-center text-accent-light dark:text-accent-dark transition-transform duration-1000 group-hover:scale-110">
+                    <svg class="w-full h-full stroke-[0.5]" fill="none" viewBox="0 0 100 100"
                         xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-dasharray="1 2" stroke-width="0.75">
+                        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-dasharray="1 3" stroke-width="0.5">
                         </circle>
-                        <circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="0.5"></circle>
-                        <path d="M50 5 L50 95 M5 50 L95 50" opacity="0.4" stroke="currentColor" stroke-width="0.5">
+                        <circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="0.3"></circle>
+                        <path d="M50 5 L50 95 M5 50 L95 50" opacity="0.3" stroke="currentColor" stroke-width="0.3">
                         </path>
-                        <path d="M18 18 L82 82 M18 82 L82 18" opacity="0.4" stroke="currentColor" stroke-width="0.5">
+                        <path d="M18 18 L82 82 M18 82 L82 18" opacity="0.3" stroke="currentColor" stroke-width="0.3">
                         </path>
-                        <circle cx="50" cy="50" fill="currentColor" r="4"></circle>
-                        <path d="M50 20 A 30 30 0 0 1 80 50" stroke="currentColor" stroke-width="1.5"></path>
-                        <circle cx="80" cy="50" fill="currentColor" r="2"></circle>
-                        <text fill="currentColor" font-family="serif" font-size="6" x="48" y="15">N</text>
+                        <circle cx="50" cy="50" fill="currentColor" r="2"></circle>
+                        <path d="M50 20 A 30 30 0 0 1 80 50" stroke="currentColor" stroke-width="0.8"></path>
+                        <circle cx="80" cy="50" fill="currentColor" r="1.5"></circle>
                     </svg>
                 </div>
                 <h2
-                    class="text-xl md:text-2xl font-display font-bold mb-3 md:mb-5 text-primary dark:text-slate-100 tracking-wide uppercase">
-                    Celestial Ephemeris</h2>
-                <p
-                    class="text-slate-600 dark:text-slate-400 text-xs md:text-sm leading-relaxed mb-6 md:mb-10 flex-grow italic">
-                    천체의 궤적과 고대의 정렬을 세밀히 기록하여<br />우주의 거대한 주기를 해석하고 영원의 시간을 측정합니다.
+                    class="text-lg md:text-xl lg:text-2xl font-display font-medium mb-5 text-primary dark:text-white tracking-[0.15em] uppercase">
+                    Celestial<br />Ephemeris
+                </h2>
+                <div
+                    class="w-8 h-px bg-accent-light/30 dark:bg-accent-dark/30 mb-6 transition-all duration-500 group-hover:w-16 group-hover:bg-accent-light dark:group-hover:bg-accent-dark">
+                </div>
+                <p class="text-slate-500 dark:text-slate-400 text-[13px] leading-relaxed font-light mb-8 flex-grow">
+                    천체의 궤적과 고대의 정렬을 세밀히 기록하여 우주의 거대한 주기를 해석하고 영원의 시간을 측정합니다.
                 </p>
                 <div
-                    class="mt-auto px-8 py-3 bg-primary dark:bg-slate-800 border border-accent/20 text-[10px] font-sans font-bold tracking-[0.2em] text-accent uppercase transition-all duration-500 group-hover:bg-accent group-hover:text-white">
-                    Read the Heavens
+                    class="mt-auto text-[9px] font-body tracking-[0.3em] text-accent-light dark:text-accent-dark uppercase opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                    Discover More
                 </div>
             </a>
-            <a class="group manuscript-border glass-card bg-card-light dark:bg-card-dark border-border-light dark:border-border-dark p-6 sm:p-8 md:p-10 shadow-glass hover:shadow-glass-hover hover:-translate-y-1 transition-all duration-700 flex flex-col items-center text-center h-full w-full"
+
+            <!-- Sutra Exegesis -->
+            <a class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl"
                 href="https://yogasutra.simsang.org/" target="_blank">
                 <div
-                    class="w-20 h-20 md:w-32 md:h-32 mb-6 md:mb-10 relative flex items-center justify-center transition-transform duration-1000 group-hover:-rotate-12">
-                    <svg class="w-24 h-24 text-primary/80 dark:text-accent/60" fill="none" viewBox="0 0 100 100"
+                    class="w-24 h-24 mb-10 flex items-center justify-center text-accent-light dark:text-accent-dark transition-transform duration-1000 group-hover:scale-110">
+                    <svg class="w-full h-full stroke-[0.8]" fill="none" viewBox="0 0 100 100"
                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M50 10 Q 65 35 50 60 Q 35 35 50 10" stroke="currentColor" stroke-width="1"></path>
-                        <path d="M50 10 Q 80 30 70 60 Q 50 50 50 10" opacity="0.6" stroke="currentColor"
-                            stroke-width="0.75"></path>
-                        <path d="M50 10 Q 20 30 30 60 Q 50 50 50 10" opacity="0.6" stroke="currentColor"
-                            stroke-width="0.75"></path>
-                        <path d="M50 60 L50 90" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.5"></path>
+                        <path d="M50 15 Q 65 35 50 60 Q 35 35 50 15" stroke="currentColor" stroke-width="0.8"></path>
+                        <path d="M50 15 Q 80 30 70 60 Q 50 50 50 15" opacity="0.5" stroke="currentColor"
+                            stroke-width="0.5"></path>
+                        <path d="M50 15 Q 20 30 30 60 Q 50 50 50 15" opacity="0.5" stroke="currentColor"
+                            stroke-width="0.5"></path>
+                        <path d="M50 60 L50 90" stroke="currentColor" stroke-dasharray="1 2" stroke-width="0.5"></path>
                         <path d="M30 80 H 70" stroke="currentColor" stroke-width="0.5"></path>
-                        <circle cx="50" cy="70" fill="currentColor" opacity="0.8" r="3"></circle>
+                        <circle cx="50" cy="70" fill="currentColor" opacity="0.8" r="2"></circle>
                     </svg>
                 </div>
                 <h2
-                    class="text-xl md:text-2xl font-display font-bold mb-3 md:mb-5 text-primary dark:text-slate-100 tracking-wide uppercase">
-                    Sutra Exegesis</h2>
-                <p
-                    class="text-slate-600 dark:text-slate-400 text-xs md:text-sm leading-relaxed mb-6 md:mb-10 flex-grow italic">
-                    심연의 침묵 속에서 길어 올린 고귀한 진리를 통해<br />자아의 경계를 허물고 무한한 의식의 바다로 나아갑니다.
+                    class="text-lg md:text-xl lg:text-2xl font-display font-medium mb-5 text-primary dark:text-white tracking-[0.15em] uppercase">
+                    Sutra<br />Exegesis
+                </h2>
+                <div
+                    class="w-8 h-px bg-accent-light/30 dark:bg-accent-dark/30 mb-6 transition-all duration-500 group-hover:w-16 group-hover:bg-accent-light dark:group-hover:bg-accent-dark">
+                </div>
+                <p class="text-slate-500 dark:text-slate-400 text-[13px] leading-relaxed font-light mb-8 flex-grow">
+                    심연의 침묵 속에서 길어 올린 고귀한 진리를 통해 자아의 경계를 허물고 무한한 의식의 바다로 나아갑니다.
                 </p>
                 <div
-                    class="mt-auto px-8 py-3 bg-primary dark:bg-slate-800 border border-accent/20 text-[10px] font-sans font-bold tracking-[0.2em] text-accent uppercase transition-all duration-500 group-hover:bg-accent group-hover:text-white">
-                    Unveil the Truth
+                    class="mt-auto text-[9px] font-body tracking-[0.3em] text-accent-light dark:text-accent-dark uppercase opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                    Discover More
                 </div>
             </a>
-            <a class="group manuscript-border glass-card bg-card-light dark:bg-card-dark border-border-light dark:border-border-dark p-6 sm:p-8 md:p-10 shadow-glass hover:shadow-glass-hover hover:-translate-y-1 transition-all duration-700 flex flex-col items-center text-center h-full w-full"
+
+            <!-- Divine Song -->
+            <a class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl"
                 href="https://bhagavad.simsang.org/" target="_blank">
                 <div
-                    class="w-20 h-20 md:w-32 md:h-32 mb-6 md:mb-10 relative flex items-center justify-center transition-transform duration-1000 group-hover:scale-110">
-                    <svg class="w-24 h-24 text-primary/80 dark:text-accent/60" fill="none" viewBox="0 0 100 100"
+                    class="w-24 h-24 mb-10 flex items-center justify-center text-accent-light dark:text-accent-dark transition-transform duration-1000 group-hover:scale-110">
+                    <svg class="w-full h-full stroke-[0.8]" fill="none" viewBox="0 0 100 100"
                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M20 80 Q 50 100 80 80 L 80 20 Q 50 40 20 20 Z" stroke="currentColor" fill="none"
-                            stroke-width="1"></path>
-                        <path d="M50 30 L 50 90" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.5"></path>
+                            stroke-width="0.8"></path>
+                        <path d="M50 30 L 50 90" stroke="currentColor" stroke-dasharray="1 2" stroke-width="0.5"></path>
                         <circle cx="50" cy="50" r="10" stroke="currentColor" stroke-width="0.5" fill="none"></circle>
-                        <circle cx="50" cy="50" r="2" fill="currentColor"></circle>
-                        <path d="M35 50 A 15 15 0 0 1 50 35" stroke="currentColor" stroke-width="1"></path>
-                        <path d="M65 50 A 15 15 0 0 1 50 65" stroke="currentColor" stroke-width="1"></path>
+                        <circle cx="50" cy="50" r="1.5" fill="currentColor"></circle>
+                        <path d="M35 50 A 15 15 0 0 1 50 35" stroke="currentColor" stroke-width="0.8"></path>
+                        <path d="M65 50 A 15 15 0 0 1 50 65" stroke="currentColor" stroke-width="0.8"></path>
                     </svg>
                 </div>
                 <h2
-                    class="text-xl md:text-2xl font-display font-bold mb-3 md:mb-5 text-primary dark:text-slate-100 tracking-wide uppercase">
-                    Divine Song</h2>
-                <p
-                    class="text-slate-600 dark:text-slate-400 text-xs md:text-sm leading-relaxed mb-6 md:mb-10 flex-grow italic">
-                    전쟁터 한가운데서 울려 퍼진 신성한 서사시를 통해<br />존재의 본질과 영원한 의무(Dharma)를 각성합니다.
+                    class="text-lg md:text-xl lg:text-2xl font-display font-medium mb-5 text-primary dark:text-white tracking-[0.15em] uppercase">
+                    Divine<br />Song
+                </h2>
+                <div
+                    class="w-8 h-px bg-accent-light/30 dark:bg-accent-dark/30 mb-6 transition-all duration-500 group-hover:w-16 group-hover:bg-accent-light dark:group-hover:bg-accent-dark">
+                </div>
+                <p class="text-slate-500 dark:text-slate-400 text-[13px] leading-relaxed font-light mb-8 flex-grow">
+                    전쟁터 한가운데서 울려 퍼진 신성한 서사시를 통해 존재의 본질과 영원한 의무(Dharma)를 각성합니다.
                 </p>
                 <div
-                    class="mt-auto px-8 py-3 bg-primary dark:bg-slate-800 border border-accent/20 text-[10px] font-sans font-bold tracking-[0.2em] text-accent uppercase transition-all duration-500 group-hover:bg-accent group-hover:text-white">
-                    Hear the Gita
+                    class="mt-auto text-[9px] font-body tracking-[0.3em] text-accent-light dark:text-accent-dark uppercase opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                    Discover More
                 </div>
             </a>
         </div>
     </main>
 
-    <!-- 포털 오버레이 설정함 -->
+    <!-- Portal Overlay -->
     <div id="portal-overlay"
-        class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden opacity-0 transition-opacity duration-500 flex flex-col justify-center items-center">
+        class="fixed inset-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-xl hidden opacity-0 transition-opacity duration-700 flex flex-col justify-center items-center">
         <button onclick="closePortal()"
-            class="absolute top-5 right-5 text-accent hover:text-white transition-colors p-2">
-            <span class="material-symbols-outlined text-4xl">close</span>
+            class="absolute top-8 right-8 text-accent-light dark:text-accent-dark hover:scale-110 transition-transform p-2">
+            <span class="material-symbols-outlined text-3xl font-light">close</span>
         </button>
         <div
-            class="w-full h-full max-w-[95%] max-h-[90%] border border-accent/20 rounded-lg overflow-hidden shadow-2xl relative">
+            class="w-full h-full max-w-[90%] max-h-[85%] border border-border-light dark:border-border-dark rounded-2xl overflow-hidden shadow-premium dark:shadow-premium-dark relative bg-card-light dark:bg-card-dark">
             <div class="absolute inset-0 flex items-center justify-center -z-10">
-                <div class="w-12 h-12 border-4 border-accent/30 border-t-accent rounded-full animate-spin"></div>
+                <div
+                    class="w-12 h-12 border-2 border-accent-light/20 dark:border-accent-dark/20 border-t-accent-light dark:border-t-accent-dark rounded-full animate-spin">
+                </div>
             </div>
-            <iframe id="portal-frame" class="w-full h-full bg-white/5" src="" frameborder="0"></iframe>
+            <iframe id="portal-frame" class="w-full h-full" src="" frameborder="0"></iframe>
         </div>
     </div>
-    <footer class="w-full py-8 md:py-16 relative z-10 mt-auto border-t border-accent/10 px-4">
-        <div class="max-w-4xl mx-auto flex flex-col items-center justify-center space-y-8">
+
+    <footer class="w-full py-16 relative z-10 mt-10 border-t border-border-light dark:border-border-dark">
+        <div class="max-w-4xl mx-auto flex flex-col items-center justify-center space-y-10">
             <div class="flex space-x-12">
-                <a class="text-accent/60 hover:text-accent transition-colors duration-500" href="#">
-                    <span class="material-symbols-outlined text-[24px] font-light">temple_buddhist</span>
+                <a class="text-slate-400 hover:text-accent-light dark:hover:text-accent-dark transition-colors duration-500 transform hover:-translate-y-1"
+                    href="#">
+                    <span class="material-symbols-outlined text-[20px] font-light">temple_buddhist</span>
                 </a>
-                <a class="text-accent/60 hover:text-accent transition-colors duration-500" href="#">
-                    <span class="material-symbols-outlined text-[24px] font-light">auto_stories</span>
+                <a class="text-slate-400 hover:text-accent-light dark:hover:text-accent-dark transition-colors duration-500 transform hover:-translate-y-1"
+                    href="#">
+                    <span class="material-symbols-outlined text-[20px] font-light">auto_stories</span>
                 </a>
-                <a class="text-accent/60 hover:text-accent transition-colors duration-500" href="#">
-                    <span class="material-symbols-outlined text-[24px] font-light">edit_calendar</span>
+                <a class="text-slate-400 hover:text-accent-light dark:hover:text-accent-dark transition-colors duration-500 transform hover:-translate-y-1"
+                    href="#">
+                    <span class="material-symbols-outlined text-[20px] font-light">edit_calendar</span>
                 </a>
             </div>
             <div class="text-center">
-                <p class="text-[9px] text-slate-500 dark:text-slate-500 font-sans tracking-[0.25em] uppercase mb-2">
-                    © ANNO DOMINI MMXXIV • SIMSANG ARCHIVE
+                <p class="text-[9px] text-slate-500 font-body tracking-[0.3em] uppercase mb-4">
+                    © 2024 • SIMSANG ARCHIVE
                 </p>
-                <p class="text-[8px] text-accent/40 font-sans tracking-[0.3em] uppercase">
-                    Custodians of the Perennial Philosophy &amp; Sacred Lore
+                <p
+                    class="text-[8px] text-accent-light/50 dark:text-accent-dark/50 font-body tracking-[0.4em] uppercase">
+                    Custodians of the Perennial Philosophy
                 </p>
             </div>
         </div>
     </footer>
 
+    <script src="script.js"></script>
 </body>
 
 </html>
