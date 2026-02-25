@@ -124,9 +124,28 @@
             pointer-events: none;
             z-index: 0;
         }
-        .dark .bg-glow {
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.04) 0%, transparent 60%);
+        /* 애니메이션 코어 (Meta-Design 레벨의 부드러운 스태거링) */
+        @keyframes fadeUpPremium {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.98);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
         }
+
+        .animate-fade-up {
+            opacity: 0;
+            animation: fadeUpPremium 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .delay-100 { animation-delay: 100ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-500 { animation-delay: 500ms; }
     </style>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -139,7 +158,7 @@
         style="background-image: radial-gradient(currentColor 1px, transparent 1px); background-size: 48px 48px;">
     </div>
 
-    <!-- Theme Toggle -->
+    <!-- 테마 토글러 세팅 -->
     <button
         class="fixed top-8 right-8 z-50 p-3 rounded-full bg-white/50 dark:bg-black/50 border border-border-light dark:border-border-dark backdrop-blur-md text-accent-light dark:text-accent-dark hover:scale-105 transition-all duration-500 shadow-sm"
         onclick="document.documentElement.classList.toggle('dark')">
@@ -167,8 +186,8 @@
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 w-full px-4 md:px-0">
-            <!-- Celestial Ephemeris -->
-            <a class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl"
+            <!-- 첫 번째 카드: 천체 관측소 데이터 (Celestial Ephemeris) -->
+            <a class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl animate-fade-up delay-100"
                 href="https://calendar.simsang.org/" target="_blank">
                 <div
                     class="w-24 h-24 mb-10 flex items-center justify-center text-accent-light dark:text-accent-dark transition-transform duration-1000 group-hover:scale-110">
@@ -202,8 +221,8 @@
                 </div>
             </a>
 
-            <!-- Sutra Exegesis -->
-            <a class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl"
+            <!-- 두 번째 카드: 명상 코어 데이터 (Sutra Exegesis) -->
+            <a class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl animate-fade-up delay-300"
                 href="https://yogasutra.simsang.org/" target="_blank">
                 <div
                     class="w-24 h-24 mb-10 flex items-center justify-center text-accent-light dark:text-accent-dark transition-transform duration-1000 group-hover:scale-110">
@@ -235,8 +254,8 @@
                 </div>
             </a>
 
-            <!-- Divine Song -->
-            <a class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl"
+            <!-- 세 번째 카드: 신성 서사시 지식 풀 (Divine Song) -->
+            <a class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl animate-fade-up delay-500"
                 href="https://bhagavad.simsang.org/" target="_blank">
                 <div
                     class="w-24 h-24 mb-10 flex items-center justify-center text-accent-light dark:text-accent-dark transition-transform duration-1000 group-hover:scale-110">
@@ -269,7 +288,7 @@
         </div>
     </main>
 
-    <!-- Portal Overlay -->
+    <!-- 포털 오버레이 뷰 (모바일/서드파티 확장을 위한 프레임) -->
     <div id="portal-overlay"
         class="fixed inset-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-xl hidden opacity-0 transition-opacity duration-700 flex flex-col justify-center items-center">
         <button onclick="closePortal()"
