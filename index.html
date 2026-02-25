@@ -163,7 +163,8 @@
 
         .animate-fade-up {
             opacity: 0;
-            animation: fadeUpPremium 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            will-change: transform, opacity, filter;
+            animation: fadeUpPremium 1.6s cubic-bezier(0.19, 1, 0.22, 1) forwards;
         }
         
         .delay-100 { animation-delay: 100ms; }
@@ -202,16 +203,16 @@
 
     <main
         class="flex-grow flex flex-col items-center justify-center p-6 sm:p-12 md:p-20 relative z-10 w-full max-w-7xl mx-auto">
-        <header class="text-center mb-12 max-w-4xl mx-auto flex flex-col items-center">
+        <header class="text-center mb-16 max-w-4xl mx-auto flex flex-col items-center animate-fade-up">
             <div
-                class="text-[10px] tracking-[0.4em] text-accent-light dark:text-accent-dark uppercase mb-4 font-medium">
+                class="text-[10px] tracking-[0.4em] text-accent-light dark:text-accent-dark uppercase mb-5 font-medium">
                 The Premium Collection
             </div>
             <h1
-                class="text-4xl sm:text-5xl md:text-7xl font-display text-primary dark:text-white mb-4 tracking-wider uppercase text-center leading-tight">
+                class="text-4xl sm:text-5xl md:text-7xl font-display text-primary dark:text-white mb-5 tracking-wider uppercase text-center leading-tight">
                 SIMSANG <span class="text-accent-light dark:text-accent-dark font-light italic">Archive</span>
             </h1>
-            <div class="w-px h-8 bg-gradient-to-b from-accent-light/50 dark:from-accent-dark/50 to-transparent mb-6">
+            <div class="w-px h-10 bg-gradient-to-b from-accent-light/50 dark:from-accent-dark/50 to-transparent mb-8">
             </div>
             <p
                 class="text-slate-500 dark:text-slate-400 font-body text-xs md:text-[13px] tracking-[0.25em] max-w-2xl text-center leading-loose font-light uppercase">
