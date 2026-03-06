@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', updateCardRects, { passive: true });
 
     // 마우스 이벤트 스트림 최적화 (3D Tilt & Magnetic 효과 통합)
-    const TILT_STRENGTH = 6; // 3D 회전 강도
-    const MAGNETIC_STRENGTH = 0.3; // 마그네틱 인력 강도
+    const TILT_STRENGTH = 10; // 3D 회전 강도 강화
+    const MAGNETIC_STRENGTH = 0.4; // 마그네틱 인력 강도 조정
 
     cards.forEach(card => {
         const cta = card.querySelector('.mt-auto');
