@@ -125,8 +125,19 @@
             z-index: 0;
         }
         .dark .bg-glow {
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.04) 0%, transparent 60%);
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 65%);
         }
+
+        /* Ray Standard Level 2: Granular Texture Overlay */
+        .grain-overlay {
+            position: absolute;
+            inset: 0;
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 20;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        .dark .grain-overlay { opacity: 0.05; }
         
         /* 애니메이션 코어 (Meta-Design 레벨의 부드러운 스태거링) */
         @keyframes fadeUpPremium {
@@ -184,6 +195,9 @@
         style="animation: auraFloat 20s ease-in-out infinite alternate;"></div>
     <div class="fixed bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-primary/5 dark:bg-accent-dark/5 filter blur-[120px] opacity-40 mix-blend-multiply dark:mix-blend-screen pointer-events-none z-0"
         style="animation: auraFloat 25s ease-in-out infinite alternate-reverse;"></div>
+    <!-- Level 2: 3rd Aura for depth -->
+    <div class="fixed top-1/2 left-1/2 w-[40vw] h-[40vw] rounded-full bg-accent-light/3 dark:bg-accent-dark/3 filter blur-[150px] opacity-30 mix-blend-soft-light pointer-events-none z-0"
+        style="animation: auraFloat 30s ease-in-out infinite alternate 5s;"></div>
 
     <div class="fixed inset-0 z-0 opacity-[0.02] dark:opacity-[0.03] pointer-events-none"
         style="background-image: radial-gradient(currentColor 1px, transparent 1px); background-size: 48px 48px;">
@@ -232,6 +246,7 @@
             <!-- 첫 번째 카드: 천체 관측소 데이터 (Celestial Ephemeris) -->
             <a class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl animate-fade-up delay-100"
                 href="https://calendar.simsang.org/" target="_blank">
+                <div class="grain-overlay"></div>
                 <div
                     class="w-24 h-24 mb-10 flex items-center justify-center text-accent-light dark:text-accent-dark transition-transform duration-1000 group-hover:scale-110">
                     <svg class="w-full h-full stroke-[0.5]" fill="none" viewBox="0 0 100 100"
@@ -270,6 +285,7 @@
             <!-- 두 번째 카드: 명상 코어 데이터 (Sutra Exegesis) -->
             <a class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl animate-fade-up delay-300"
                 href="https://yogasutra.simsang.org/" target="_blank">
+                <div class="grain-overlay"></div>
                 <div
                     class="w-24 h-24 mb-10 flex items-center justify-center text-accent-light dark:text-accent-dark transition-transform duration-1000 group-hover:scale-110">
                     <svg class="w-full h-full stroke-[0.8]" fill="none" viewBox="0 0 100 100"
@@ -306,6 +322,7 @@
             <!-- 세 번째 카드: 신성 서사시 지식 풀 (Divine Song) -->
             <a class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl animate-fade-up delay-500"
                 href="https://bhagavad.simsang.org/" target="_blank">
+                <div class="grain-overlay"></div>
                 <div
                     class="w-24 h-24 mb-10 flex items-center justify-center text-accent-light dark:text-accent-dark transition-transform duration-1000 group-hover:scale-110">
                     <svg class="w-full h-full stroke-[0.8]" fill="none" viewBox="0 0 100 100"
@@ -341,6 +358,7 @@
             <!-- 네 번째 카드: 티베트 사자의 서 (Eternal Liberation) -->
             <a class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl animate-fade-up delay-700"
                 href="https://tibet.simsang.org/" target="_blank">
+                <div class="grain-overlay"></div>
                 <div
                     class="w-24 h-24 mb-10 flex items-center justify-center text-accent-light dark:text-accent-dark transition-transform duration-1000 group-hover:scale-110">
                     <svg class="w-full h-full stroke-[0.8]" fill="none" viewBox="0 0 100 100"

@@ -20,16 +20,49 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCardRects();
     window.addEventListener('resize', updateCardRects, { passive: true });
 
-    // 마우스 이벤트 스트림 최적화
+    // 마우스 이벤트 스트림 최적화 (3D Tilt & Magnetic 효과 통합)
+    const TILT_STRENGTH = 6; // 3D 회전 강도
+    const MAGNETIC_STRENGTH = 0.3; // 마그네틱 인력 강도
+
     cards.forEach(card => {
+        const cta = card.querySelector('.mt-auto');
+
         card.addEventListener('mousemove', (e) => {
             window.requestAnimationFrame(() => {
                 const rect = state.cardRects.get(card);
                 if (!rect) return;
-                card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-                card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const xPct = (x / rect.width - 0.5) * 2; // -1 to 1
+                const yPct = (y / rect.height - 0.5) * 2; // -1 to 1
+
+                // 1. Spotlight (CSS Variable)
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+
+                // 2. 3D Tilt (Grandmaster Performance)
+                card.style.transform = `perspective(1000px) rotateX(${-yPct * TILT_STRENGTH}deg) rotateY(${xPct * TILT_STRENGTH}deg) scale3d(1.02, 1.02, 1.02)`;
+
+                // 3. Magnetic CTA (Inertia effect)
+                if (cta) {
+                    const ctaRect = cta.getBoundingClientRect();
+                    const ctaX = e.clientX - (ctaRect.left + ctaRect.width / 2);
+                    const ctaY = e.clientY - (ctaRect.top + ctaRect.height / 2);
+                    // 특정 반경 내에서만 인력 발생
+                    if (Math.abs(ctaX) < 100 && Math.abs(ctaY) < 100) {
+                        cta.style.transform = `translate3d(${ctaX * MAGNETIC_STRENGTH}px, ${ctaY * MAGNETIC_STRENGTH}px, 0)`;
+                    } else {
+                        cta.style.transform = '';
+                    }
+                }
             });
         }, { passive: true });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+            if (cta) cta.style.transform = '';
+        });
 
         card.addEventListener('mouseenter', () => {
             state.cardRects.set(card, card.getBoundingClientRect());
