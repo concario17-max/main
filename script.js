@@ -20,42 +20,18 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCardRects();
     window.addEventListener('resize', updateCardRects, { passive: true });
 
-    // 마우스 이벤트 스트림 최적화 (Magnetic 효과 & Spotlight 유지)
-    const MAGNETIC_STRENGTH = 0.4; // 마그네틱 인력 강도 조정
-
+    // 마우스 이벤트 스트림 최적화 (Spotlight 유지, 인터랙션 최소화)
     cards.forEach(card => {
-        const cta = card.querySelector('.mt-auto');
-
         card.addEventListener('mousemove', (e) => {
             window.requestAnimationFrame(() => {
                 const rect = state.cardRects.get(card);
                 if (!rect) return;
 
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                // 1. Spotlight (CSS Variable)
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
-
-                // 2. Magnetic CTA (Inertia effect)
-                if (cta) {
-                    const ctaRect = cta.getBoundingClientRect();
-                    const ctaX = e.clientX - (ctaRect.left + ctaRect.width / 2);
-                    const ctaY = e.clientY - (ctaRect.top + ctaRect.height / 2);
-                    // 특정 반경 내에서만 인력 발생
-                    if (Math.abs(ctaX) < 100 && Math.abs(ctaY) < 100) {
-                        cta.style.transform = `translate3d(${ctaX * MAGNETIC_STRENGTH}px, ${ctaY * MAGNETIC_STRENGTH}px, 0)`;
-                    } else {
-                        cta.style.transform = '';
-                    }
-                }
+                // Spotlight (CSS Variable) - 유일한 동적 인터랙션
+                card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
             });
         }, { passive: true });
-
-        card.addEventListener('mouseleave', () => {
-            if (cta) cta.style.transform = '';
-        });
 
         card.addEventListener('mouseenter', () => {
             state.cardRects.set(card, card.getBoundingClientRect());
