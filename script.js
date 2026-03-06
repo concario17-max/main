@@ -10,33 +10,105 @@ document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.premium-card');
     const state = { cardRects: new Map() };
 
-    // 카드 위치 정보 캐싱 (O(1) 접근 지향)
+    // Physics Engine State
+    const mouse = { x: 0, y: 0 };
+    const targets = new Map(); // Store target values for lerp
+
+    const lerp = (start, end, factor) => start + (end - start) * factor;
+
+    // 카드 위치 정보 캐싱
     const updateCardRects = () => {
-        const newRects = new Map();
-        cards.forEach(card => newRects.set(card, card.getBoundingClientRect()));
-        state.cardRects = newRects;
+        cards.forEach(card => state.cardRects.set(card, card.getBoundingClientRect()));
     };
 
     updateCardRects();
     window.addEventListener('resize', updateCardRects, { passive: true });
 
-    // 마우스 이벤트 스트림 최적화 (Spotlight 유지, 인터랙션 최소화)
+    // Initialize animation state for each card
     cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            window.requestAnimationFrame(() => {
-                const rect = state.cardRects.get(card);
-                if (!rect) return;
+        targets.set(card, {
+            spotX: 50, spotY: 50,
+            currSpotX: 50, currSpotY: 50,
+            tiltX: 0, tiltY: 0,
+            currTiltX: 0, currTiltY: 0,
+            magneticX: 0, magneticY: 0,
+            currMagneticX: 0, currMagneticY: 0
+        });
 
-                // Spotlight (CSS Variable) - 유일한 동적 인터랙션
-                card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-                card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-            });
+        card.addEventListener('mousemove', (e) => {
+            const rect = state.cardRects.get(card);
+            if (!rect) return;
+
+            const t = targets.get(card);
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Update Target Values
+            t.spotX = x;
+            t.spotY = y;
+
+            // Tilt Calculation (Center is 0, edges are -1 to 1)
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            t.tiltY = ((x - centerX) / centerX) * 10;  // Rotate around Y for X movement
+            t.tiltX = -((y - centerY) / centerY) * 10; // Rotate around X for Y movement
+
+            // Magnetic Pull for CTA
+            const cta = card.querySelector('.mt-auto');
+            if (cta) {
+                const ctaRect = cta.getBoundingClientRect();
+                const ctaCenterX = ctaRect.left + ctaRect.width / 2;
+                const ctaCenterY = ctaRect.top + ctaRect.height / 2;
+                const dist = Math.hypot(e.clientX - ctaCenterX, e.clientY - ctaCenterY);
+
+                if (dist < 100) {
+                    t.magneticX = (e.clientX - ctaCenterX) * 0.3;
+                    t.magneticY = (e.clientY - ctaCenterY) * 0.3;
+                } else {
+                    t.magneticX = 0;
+                    t.magneticY = 0;
+                }
+            }
         }, { passive: true });
+
+        card.addEventListener('mouseleave', () => {
+            const t = targets.get(card);
+            t.tiltX = 0; t.tiltY = 0;
+            t.magneticX = 0; t.magneticY = 0;
+        });
 
         card.addEventListener('mouseenter', () => {
             state.cardRects.set(card, card.getBoundingClientRect());
         });
     });
+
+    // Unified Animation Loop (Physics-based Inertia)
+    const animate = () => {
+        cards.forEach(card => {
+            const t = targets.get(card);
+
+            // Lerp everything for that "viscous" feeling
+            t.currSpotX = lerp(t.currSpotX, t.spotX, 0.1);
+            t.currSpotY = lerp(t.currSpotY, t.spotY, 0.1);
+            t.currTiltX = lerp(t.currTiltX, t.tiltX, 0.1);
+            t.currTiltY = lerp(t.currTiltY, t.tiltY, 0.1);
+            t.currMagneticX = lerp(t.currMagneticX, t.magneticX, 0.15);
+            t.currMagneticY = lerp(t.currMagneticY, t.magneticY, 0.15);
+
+            // Apply Styles
+            card.style.setProperty('--mouse-x', `${t.currSpotX}px`);
+            card.style.setProperty('--mouse-y', `${t.currSpotY}px`);
+            card.style.transform = `rotateX(${t.currTiltX}deg) rotateY(${t.currTiltY}deg)`;
+
+            const cta = card.querySelector('.mt-auto');
+            if (cta) {
+                cta.style.transform = `translate(${t.currMagneticX}px, ${t.currMagneticY}px)`;
+            }
+        });
+        requestAnimationFrame(animate);
+    };
+
+    requestAnimationFrame(animate);
 });
 
 /**
