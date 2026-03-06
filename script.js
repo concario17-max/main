@@ -20,8 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCardRects();
     window.addEventListener('resize', updateCardRects, { passive: true });
 
-    // 마우스 이벤트 스트림 최적화 (3D Tilt & Magnetic 효과 통합)
-    const TILT_STRENGTH = 10; // 3D 회전 강도 강화
+    // 마우스 이벤트 스트림 최적화 (Magnetic 효과 & Spotlight 유지)
     const MAGNETIC_STRENGTH = 0.4; // 마그네틱 인력 강도 조정
 
     cards.forEach(card => {
@@ -34,17 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                const xPct = (x / rect.width - 0.5) * 2; // -1 to 1
-                const yPct = (y / rect.height - 0.5) * 2; // -1 to 1
 
                 // 1. Spotlight (CSS Variable)
                 card.style.setProperty('--mouse-x', `${x}px`);
                 card.style.setProperty('--mouse-y', `${y}px`);
 
-                // 2. 3D Tilt (Grandmaster Performance)
-                card.style.transform = `perspective(1000px) rotateX(${-yPct * TILT_STRENGTH}deg) rotateY(${xPct * TILT_STRENGTH}deg) scale3d(1.02, 1.02, 1.02)`;
-
-                // 3. Magnetic CTA (Inertia effect)
+                // 2. Magnetic CTA (Inertia effect)
                 if (cta) {
                     const ctaRect = cta.getBoundingClientRect();
                     const ctaX = e.clientX - (ctaRect.left + ctaRect.width / 2);
@@ -60,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
 
         card.addEventListener('mouseleave', () => {
-            card.style.transform = '';
             if (cta) cta.style.transform = '';
         });
 

@@ -66,13 +66,7 @@
         }
         
         .premium-card {
-            @apply relative overflow-hidden backdrop-blur-2xl border border-transparent bg-card-light dark:bg-card-dark transition-[background,border,box-shadow,backdrop-filter] duration-700;
-            will-change: transform;
-        }
-        
-        /* 밖으로 나갈 때만 부드럽게 복구 */
-        .premium-card:not(:hover) {
-            transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            @apply relative overflow-hidden backdrop-blur-2xl border border-transparent bg-card-light dark:bg-card-dark transition-all duration-700;
         }
         
         /* Subtle static border layer */
