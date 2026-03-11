@@ -218,7 +218,7 @@
 </head>
 
 <body
-    class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-300 font-body min-h-screen flex flex-col transition-colors duration-1000 relative">
+    class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-300 font-body h-screen overflow-hidden flex flex-col transition-colors duration-1000 relative">
 
     <div class="bg-glow"></div>
 
@@ -256,8 +256,8 @@
     </button>
 
     <main
-        class="flex-grow flex flex-col items-center justify-center p-6 sm:p-12 md:p-20 relative z-10 w-full max-w-7xl mx-auto">
-        <header class="text-center mb-16 max-w-4xl mx-auto flex flex-col items-center animate-fade-up">
+        class="flex-grow flex flex-col items-center justify-center p-6 sm:p-12 md:p-20 relative z-10 w-full max-w-7xl mx-auto overflow-hidden">
+        <header class="text-center mb-12 max-w-4xl mx-auto flex flex-col items-center animate-fade-up">
             <div
                 class="text-[10px] tracking-[0.4em] text-accent-light dark:text-accent-dark uppercase mb-5 font-medium">
                 The Premium Collection
@@ -480,34 +480,6 @@
             <iframe id="portal-frame" class="w-full h-full" src="" frameborder="0"></iframe>
         </div>
     </div>
-
-    <footer class="w-full py-16 relative z-10 mt-10 border-t border-border-light dark:border-border-dark">
-        <div class="max-w-4xl mx-auto flex flex-col items-center justify-center space-y-10">
-            <div class="flex space-x-12">
-                <a class="text-slate-400 hover:text-accent-light dark:hover:text-accent-dark transition-colors duration-500 transform hover:-translate-y-1"
-                    href="#">
-                    <span class="material-symbols-outlined text-[20px] font-light">temple_buddhist</span>
-                </a>
-                <a class="text-slate-400 hover:text-accent-light dark:hover:text-accent-dark transition-colors duration-500 transform hover:-translate-y-1"
-                    href="#">
-                    <span class="material-symbols-outlined text-[20px] font-light">auto_stories</span>
-                </a>
-                <a class="text-slate-400 hover:text-accent-light dark:hover:text-accent-dark transition-colors duration-500 transform hover:-translate-y-1"
-                    href="#">
-                    <span class="material-symbols-outlined text-[20px] font-light">edit_calendar</span>
-                </a>
-            </div>
-            <div class="text-center">
-                <p class="text-[9px] text-slate-500 font-body tracking-[0.3em] uppercase mb-4">
-                    © 2024 • SIMSANG ARCHIVE
-                </p>
-                <p
-                    class="text-[8px] text-accent-light/50 dark:text-accent-dark/50 font-body tracking-[0.4em] uppercase">
-                    Custodians of the Perennial Philosophy
-                </p>
-            </div>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>
