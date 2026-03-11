@@ -102,12 +102,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Lerp everything for that "viscous" feeling, Immutably
             const newT = {
                 ...t,
-                currSpotX: lerp(t.currSpotX, t.spotX, 0.1),
-                currSpotY: lerp(t.currSpotY, t.spotY, 0.1),
-                currTiltX: lerp(t.currTiltX, t.tiltX, 0.1),
-                currTiltY: lerp(t.currTiltY, t.tiltY, 0.1),
-                currMagneticX: lerp(t.currMagneticX, t.magneticX, 0.15),
-                currMagneticY: lerp(t.currMagneticY, t.magneticY, 0.15)
+                currSpotX: lerp(t.currSpotX, t.spotX, 0.06),
+                currSpotY: lerp(t.currSpotY, t.spotY, 0.06),
+                currTiltX: lerp(t.currTiltX, t.tiltX, 0.06),
+                currTiltY: lerp(t.currTiltY, t.tiltY, 0.06),
+                currMagneticX: lerp(t.currMagneticX, t.magneticX, 0.1),
+                currMagneticY: lerp(t.currMagneticY, t.magneticY, 0.1)
             };
             targets.set(card, newT);
 

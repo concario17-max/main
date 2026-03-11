@@ -10,20 +10,20 @@ export default {
       colors: {
         primary: "#1A1A1A",
         accent: {
-          light: "#C5A059",
-          dark: "#D4AF37",
+          light: "#C5A059", // Champagne Gold
+          dark: "#A68948",
         },
         background: {
-          light: "#F0EBE0",
-          dark: "#080808",
+          light: "#F5F5F0", // Soft Hotel Beige
+          dark: "#0F0F0F",
         },
         card: {
-          light: "rgba(255, 255, 255, 0.6)",
-          dark: "rgba(15, 15, 15, 0.6)",
+          light: "rgba(255, 255, 255, 0.4)",
+          dark: "rgba(20, 20, 20, 0.6)",
         },
         border: {
-          light: "rgba(197, 160, 89, 0.2)",
-          dark: "rgba(212, 175, 55, 0.15)",
+          light: "rgba(197, 160, 89, 0.15)",
+          dark: "rgba(212, 175, 55, 0.1)",
         }
       },
       fontFamily: {
