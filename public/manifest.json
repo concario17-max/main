@@ -1,0 +1,22 @@
+{
+  "name": "Simsang Archive",
+  "short_name": "Simsang",
+  "description": "시공을 초월한 프리미엄 지혜의 정수",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#C5A059",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
