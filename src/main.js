@@ -6,6 +6,8 @@
  * 3. Atomic DOM: Fragment-based batch insertion.
  */
 
+import './style.css';
+
 document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.premium-card');
     const state = { cardRects: new Map() };
