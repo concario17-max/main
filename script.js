@@ -43,15 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
 
-            // Update Target Values
-            t.spotX = x;
-            t.spotY = y;
-
             // Tilt Calculation (Center is 0, edges are -1 to 1)
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            t.tiltY = ((x - centerX) / centerX) * 10;  // Rotate around Y for X movement
-            t.tiltX = -((y - centerY) / centerY) * 10; // Rotate around X for Y movement
+            
+            let newMagneticX = 0;
+            let newMagneticY = 0;
 
             // Magnetic Pull for CTA
             const cta = card.querySelector('.mt-auto');
@@ -62,19 +59,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dist = Math.hypot(e.clientX - ctaCenterX, e.clientY - ctaCenterY);
 
                 if (dist < 100) {
-                    t.magneticX = (e.clientX - ctaCenterX) * 0.3;
-                    t.magneticY = (e.clientY - ctaCenterY) * 0.3;
-                } else {
-                    t.magneticX = 0;
-                    t.magneticY = 0;
+                    newMagneticX = (e.clientX - ctaCenterX) * 0.3;
+                    newMagneticY = (e.clientY - ctaCenterY) * 0.3;
                 }
             }
+
+            // Update Target Values Immutably
+            targets.set(card, {
+                ...t,
+                spotX: x,
+                spotY: y,
+                tiltY: ((x - centerX) / centerX) * 10,
+                tiltX: -((y - centerY) / centerY) * 10,
+                magneticX: newMagneticX,
+                magneticY: newMagneticY
+            });
         }, { passive: true });
 
         card.addEventListener('mouseleave', () => {
             const t = targets.get(card);
-            t.tiltX = 0; t.tiltY = 0;
-            t.magneticX = 0; t.magneticY = 0;
+            targets.set(card, {
+                ...t,
+                tiltX: 0, 
+                tiltY: 0,
+                magneticX: 0, 
+                magneticY: 0
+            });
         });
 
         card.addEventListener('mouseenter', () => {
@@ -87,22 +97,26 @@ document.addEventListener('DOMContentLoaded', () => {
         cards.forEach(card => {
             const t = targets.get(card);
 
-            // Lerp everything for that "viscous" feeling
-            t.currSpotX = lerp(t.currSpotX, t.spotX, 0.1);
-            t.currSpotY = lerp(t.currSpotY, t.spotY, 0.1);
-            t.currTiltX = lerp(t.currTiltX, t.tiltX, 0.1);
-            t.currTiltY = lerp(t.currTiltY, t.tiltY, 0.1);
-            t.currMagneticX = lerp(t.currMagneticX, t.magneticX, 0.15);
-            t.currMagneticY = lerp(t.currMagneticY, t.magneticY, 0.15);
+            // Lerp everything for that "viscous" feeling, Immutably
+            const newT = {
+                ...t,
+                currSpotX: lerp(t.currSpotX, t.spotX, 0.1),
+                currSpotY: lerp(t.currSpotY, t.spotY, 0.1),
+                currTiltX: lerp(t.currTiltX, t.tiltX, 0.1),
+                currTiltY: lerp(t.currTiltY, t.tiltY, 0.1),
+                currMagneticX: lerp(t.currMagneticX, t.magneticX, 0.15),
+                currMagneticY: lerp(t.currMagneticY, t.magneticY, 0.15)
+            };
+            targets.set(card, newT);
 
             // Apply Styles
-            card.style.setProperty('--mouse-x', `${t.currSpotX}px`);
-            card.style.setProperty('--mouse-y', `${t.currSpotY}px`);
-            card.style.transform = `rotateX(${t.currTiltX}deg) rotateY(${t.currTiltY}deg)`;
+            card.style.setProperty('--mouse-x', `${newT.currSpotX}px`);
+            card.style.setProperty('--mouse-y', `${newT.currSpotY}px`);
+            card.style.transform = `rotateX(${newT.currTiltX}deg) rotateY(${newT.currTiltY}deg)`;
 
             const cta = card.querySelector('.mt-auto');
             if (cta) {
-                cta.style.transform = `translate(${t.currMagneticX}px, ${t.currMagneticY}px)`;
+                cta.style.transform = `translate(${newT.currMagneticX}px, ${newT.currMagneticY}px)`;
             }
         });
         requestAnimationFrame(animate);
