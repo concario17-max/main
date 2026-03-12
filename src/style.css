@@ -9,14 +9,16 @@
     }
 }
 
-::-webkit-scrollbar {
-    width: 4px;
-}
-::-webkit-scrollbar-track {
-    @apply bg-background-light dark:bg-background-dark;
-}
-::-webkit-scrollbar-thumb {
-    @apply bg-accent-light/50 dark:bg-accent-dark/50 rounded-full;
+@media (min-width: 768px) {
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+        @apply bg-background-light dark:bg-background-dark;
+    }
+    ::-webkit-scrollbar-thumb {
+        @apply bg-accent-light/50 dark:bg-accent-dark/50 rounded-full;
+    }
 }
 
 .premium-card {

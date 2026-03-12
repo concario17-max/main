@@ -41,7 +41,7 @@
 </head>
 
 <body
-    class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-300 font-body h-screen overflow-hidden flex flex-col transition-colors duration-1000 relative">
+    class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-300 font-body min-h-screen md:h-screen overflow-x-hidden overflow-y-auto md:overflow-hidden flex flex-col transition-colors duration-1000 relative">
 
     <div class="bg-glow"></div>
 
@@ -79,7 +79,7 @@
     </button>
 
     <main
-        class="flex-grow flex flex-col items-center justify-center p-6 sm:p-12 md:p-20 relative z-10 w-full max-w-7xl mx-auto overflow-hidden">
+        class="flex-grow flex flex-col items-center justify-center p-6 sm:p-12 md:p-20 relative z-10 w-full max-w-7xl mx-auto overflow-visible md:overflow-hidden">
         <header class="text-center mb-12 max-w-4xl mx-auto flex flex-col items-center animate-fade-up">
             <div
                 class="text-[10px] tracking-[0.4em] text-accent-light dark:text-accent-dark uppercase mb-5 font-medium">
@@ -97,7 +97,7 @@
             </p>
         </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 w-full px-4 md:px-0"
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 w-full px-4 md:px-0 py-10 md:py-0"
             style="perspective: 2000px;">
             <!-- 첫 번째 카드: 천체 관측소 데이터 (Celestial Ephemeris) -->
             <a class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl animate-fade-up delay-100"
