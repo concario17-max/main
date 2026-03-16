@@ -64,7 +64,7 @@ const createCtaMarkup = (featured, cta, tone) => {
     `;
 };
 
-const createCardMarkup = ({ slug, href, delayClass, featured, tone, icon, heading, copy }) => {
+const createCardMarkup = ({ slug, href, delayClass, featured, tone, index, portal, icon, heading, copy }) => {
     const toneClasses = getToneClasses(tone);
 
     return `
@@ -78,6 +78,14 @@ const createCardMarkup = ({ slug, href, delayClass, featured, tone, icon, headin
     >
         <div class="grain-overlay"></div>
         <div class="premium-card-content ${featured ? 'lg:items-start lg:text-left' : ''} justify-center w-full">
+            <div class="premium-card__topline mb-6 md:mb-7 flex w-full items-center justify-between gap-4">
+                <div class="premium-card__portal ${toneClasses.meta}">
+                    ${portal}
+                </div>
+                <div class="premium-card__index ${toneClasses.meta}" aria-hidden="true">
+                    ${index}
+                </div>
+            </div>
             ${createFeaturedBadge(featured)}
             <div class="premium-card__icon ${toneClasses.icon} ${featured ? 'w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 mb-6 sm:mb-8 lg:mb-10' : 'w-20 h-20 sm:w-24 sm:h-24 mb-7 sm:mb-9'} flex items-center justify-center transition-transform duration-1000 group-hover:scale-110">
                 ${icon()}

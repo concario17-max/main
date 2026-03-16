@@ -8,12 +8,14 @@ export const cards = [
         featured: true,
         tone: 'celestial',
         icon: cardIcons.celestial,
+        index: 'I',
+        portal: 'Astrology Portal',
         heading: {
             main: 'Celestial',
             accent: 'Ephemeris',
         },
         copy: {
-            label: 'Astrological Observatory',
+            label: '천체 관측 아카이브',
             description: 'Track planetary cycles, symbolic alignments, and cosmic timing through a refined astrological archive.',
             cta: 'Enter the Archive',
         },
@@ -24,12 +26,14 @@ export const cards = [
         delayClass: 'delay-300',
         tone: 'sutra',
         icon: cardIcons.sutra,
+        index: 'II',
+        portal: 'Yoga Portal',
         heading: {
             main: 'Sutra',
             accent: 'Exegesis',
         },
         copy: {
-            label: 'Yoga Wisdom Library',
+            label: '요가 지혜 문고',
             description: 'Read distilled teachings on consciousness, discipline, and the inner architecture of contemplative practice.',
             cta: 'Unveil the Sutras',
         },
@@ -40,12 +44,14 @@ export const cards = [
         delayClass: 'delay-500',
         tone: 'divine',
         icon: cardIcons.divine,
+        index: 'III',
+        portal: 'Gita Portal',
         heading: {
             main: 'Divine',
             accent: 'Song',
         },
         copy: {
-            label: 'Bhagavad Gita Archive',
+            label: '바가바드 기타 아카이브',
             description: 'Enter a guided reading of duty, devotion, and awakening through the voice of the Gita.',
             cta: 'Hear the Song',
         },
@@ -56,12 +62,14 @@ export const cards = [
         delayClass: 'delay-700',
         tone: 'liberation',
         icon: cardIcons.liberation,
+        index: 'IV',
+        portal: 'Bardo Portal',
         heading: {
             main: 'Eternal',
             accent: 'Liberation',
         },
         copy: {
-            label: 'Tibetan Passage Texts',
+            label: '티베트 전이 문헌',
             description: 'Explore teachings on transition, death, and luminous awareness through the Tibetan wisdom tradition.',
             cta: 'Cross the Bardo',
         },

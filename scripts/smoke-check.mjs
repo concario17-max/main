@@ -42,12 +42,20 @@ const main = async () => {
     addCheck(
         cards.every(({ slug, heading, copy, icon }) => (
             slug
+            && typeof slug === 'string'
+            && typeof icon === 'function'
+        )),
+        'Each card has a valid slug and icon factory',
+    );
+    addCheck(
+        cards.every(({ index, portal, heading, copy }) => (
+            index
+            && portal
             && heading?.main
             && heading?.accent
             && copy?.label
             && copy?.description
             && copy?.cta
-            && typeof icon === 'function'
         )),
         'Each card contains the required structured fields',
     );
@@ -59,7 +67,8 @@ const main = async () => {
     addCheck(indexHtml.includes('id="theme-toggle"'), 'Theme toggle button exists');
     addCheck(indexHtml.includes('aria-label="Toggle color theme"'), 'Theme toggle has an accessibility label');
     addCheck(indexHtml.includes('id="cards-grid"'), 'Cards grid container exists');
-    addCheck(indexHtml.includes('Four Living Portals for Astrology, Yoga, Gita, and Tibetan Wisdom'), 'Header support copy is present');
+    addCheck(indexHtml.includes('점성, 요가, 기타, 티베트 지혜를 잇는 네 개의 살아 있는 포털'), 'Header support copy is present');
+    addCheck(indexHtml.includes('header-pill'), 'Header portal pills are present');
     addCheck(indexHtml.includes('A premium archive of astrology, yoga sutras, the Bhagavad Gita, and Tibetan wisdom.'), 'Meta description is normalized');
     addCheck(!indexHtml.includes('portal-overlay'), 'Unused portal overlay has been removed');
     addCheck(!indexHtml.includes('onclick='), 'Inline event handlers have been removed');
@@ -76,6 +85,7 @@ const main = async () => {
     addCheck(stardustJs.includes("prefers-reduced-motion: reduce"), 'Particle system honors reduced-motion preference');
 
     addCheck(renderCardsJs.includes('premium-card__meta'), 'Card renderer uses explicit meta classes');
+    addCheck(renderCardsJs.includes('premium-card__topline'), 'Card renderer includes portal topline markup');
     addCheck(!componentCss.includes('nth-child'), 'Component styles do not depend on nth-child card ordering');
     addCheck(cards.every(({ delayClass }) => animationCss.includes(`.${delayClass}`)), 'All card delay classes map to defined animations');
 
