@@ -1,147 +1,63 @@
-# 모바일 스크롤 이슈 해결 파업 (plan.md)
+# plan.md
 
-## 목표
-데스크톱 프리미엄 UI(1안 뷰, 스크롤 없는 물리 기반 카드 렌더링)는 완벽하게 훼손 없이 유지하되, 모바일 환경(작은 뷰포트)에서 카드 레이아웃이 화면 밖으로 밀려날 때 자연스러운 수직 스크롤을 허용한다.
+## 목적
+Simsang Archive 랜딩 페이지를 분위기 중심의 프리미엄 UI로 유지하면서도, 구조적으로 읽기 쉽고 수정하기 쉬운 정적 포털로 정리한다.
 
-## 원인 분석 (상세 내용은 `research.md` 참조)
-1. `body` 태그의 하드코딩된 `h-screen`, `overflow-hidden`
-2. `main` 태그의 하드코딩된 `overflow-hidden`
-3. 모바일 스크롤 발생 시 커스텀 스크롤바(`src/style.css`)의 패딩 문제
+## 완료된 작업
 
-## Todo 리스트 (실행 계획)
+### 모바일 스크롤/레이아웃
+- [x] `body`를 모바일에서 `min-h-screen` + 세로 스크롤 가능 구조로 조정
+- [x] `main`을 모바일에서 `overflow-visible`로 변경해 카드 영역이 자연스럽게 확장되도록 수정
+- [x] 모바일 기준 여백과 카드 그리드 간격을 재조정
+- [x] 모바일 전용 광원/그레인/그림자 강도 완화
 
-### 1단계: 마크업 분기 처리 (`index.html` 수정)
-- [x] `body` 요소의 클래스 속성 수정:
-  - 기존: `h-screen overflow-hidden`
-  - 변경: `min-h-screen md:h-screen overflow-x-hidden overflow-y-auto md:overflow-hidden`
-  - 목적: 모바일에서는 콘텐츠 길이에 맞춰 높이가 늘어나고 수직 스크롤 렌더링을 허용하며, 데스크톱(`md:` 브레이크포인트 이상)에서는 기존 `hidden` 상태를 강제.
+### 구조 리팩터링
+- [x] 카드 콘텐츠를 [src/data/cards.js](/C:/Users/roadsea/Desktop/main/src/data/cards.js)로 분리
+- [x] SVG 아이콘을 [src/data/cardIcons.js](/C:/Users/roadsea/Desktop/main/src/data/cardIcons.js)로 분리
+- [x] 카드 렌더링을 [src/modules/renderCards.js](/C:/Users/roadsea/Desktop/main/src/modules/renderCards.js)로 분리
+- [x] 카드 인터랙션을 [src/modules/cardEffects.js](/C:/Users/roadsea/Desktop/main/src/modules/cardEffects.js)로 분리
+- [x] 파티클을 [src/modules/stardust.js](/C:/Users/roadsea/Desktop/main/src/modules/stardust.js)로 분리
+- [x] 테마 토글을 [src/modules/theme.js](/C:/Users/roadsea/Desktop/main/src/modules/theme.js)로 분리
+- [x] 스타일을 `base/components/effects/animations` 계층으로 분리
+- [x] 미사용 포털 오버레이 제거
+- [x] inline 이벤트 제거
 
-- [x] `main` 요소의 클래스 속성 수정:
-  - 기존: `overflow-hidden`
-  - 변경: `overflow-visible md:overflow-hidden`
-  - 목적: 부모 컨테이너(body)로 카드 영역의 높이를 온전히 전달하기 위함.
+### UI/카피 개선
+- [x] 대표 카드 1장을 featured 구조로 승격
+- [x] 카드별 tone/CTA 차별화
+- [x] 헤더 보조 문장을 이해형 카피로 정리
+- [x] 카드 설명과 라벨 문구를 구조화된 영어 카피로 재작성
+- [x] 메타/OG/Twitter 문구 정상화
 
-### 2단계: CSS & 레이아웃 디테일 보정 (`index.html` & `src/style.css`)
-- [x] 모바일 환경에서 위아래 여백(Padding) 추가:
-  - `main` 태그나 내부 `grid` 박스의 상/하단 여백(`py-10` 등)을 추가하여 끝까지 스크롤 시 카드가 잘리지 않도록 보호.
-- [x] 커스텀 스크롤바 다듬기:
-  - `src/style.css`에서 `::-webkit-scrollbar` 관련 CSS가 모바일 오버플로우 트랙에 이질감을 주지 않는지 점검 및 필요 시 `md:` 분기 미디어 쿼리 적용 검토 (바닐라 CSS 지원 여부 확인 필요, 기본적으로는 유지).
+### 접근성/상태
+- [x] 테마 토글 `aria-label` 추가
+- [x] 외부 링크 `rel="noopener noreferrer"` 적용
+- [x] 테마 상태 `localStorage` 저장
+- [x] `prefers-reduced-motion` 대응 추가
+- [x] 포커스 스타일 보강
 
-### 3단계: 렌더링 및 물리 엔진 검증
-- [x] 로컬 빌드 후 브라우저 개발자 도구의 Device Toolbar 켜기.
-- [x] 375px (iPhone SE) 규격에서 수직 스크롤이 정상 동작하는지 테스트.
-- [x] 1024px 이상 (Desktop) 해상도에서 기존 JS 물리 엔진(Hover Tilt & Magnetic CTA)이 스크롤 없이 원본 그대로 동작하는지 회귀 테스트.
+### 검증
+- [x] `npm run build` 기준 빌드 확인
+- [x] [scripts/smoke-check.mjs](/C:/Users/roadsea/Desktop/main/scripts/smoke-check.mjs) 추가
+- [x] 카드 개수, slug, 링크, 메타 문구, featured 카드, reduced-motion 대응, 스타일 import, `delay-*` 매핑 검증
+- [x] 카드 스타일의 `nth-child` 의존 제거 여부 검증
 
-### 4단계: TDD 기반 강제 Commit
-- [/] 변경 사항 이상 없음을 확인 후, Ray Standard에 의거한 `git auto-commit` 진행 (`docs: write implementation plan for mobile scroll fix`).
-
----
-
-# 구조 정리 실행안
-
-## 목표
-현재의 프리미엄 비주얼과 인터랙션 감각은 유지하면서, `index.html` 중심의 높은 결합도를 낮추고 기능/데이터/스타일의 책임을 분리해 유지보수성과 확장성을 끌어올린다.
-
-## 현재 구조 문제 요약
-1. `index.html`에 카드 데이터와 화면 구조가 과도하게 몰려 있음
-2. `src/main.js`에 카드 효과, 스타더스트, 포털 관련 코드가 함께 섞여 있음
-3. `src/style.css`에 컴포넌트, 이펙트, 애니메이션 정의가 한 파일에 평면적으로 배치돼 있음
-4. 포털 오버레이는 마크업은 있으나 실제 사용자 플로우에 연결되지 않음
-5. 접근성, 보안 속성, 테마 영속성, 최소 검증 체계가 부족함
-
-## 리팩터링 원칙
-- 시각 결과는 최대한 보존
-- 한 번에 큰 재작성 대신 단계별 분리
-- 데이터와 표현을 분리
-- 미사용 기능은 살리거나 제거하거나 둘 중 하나로 명확히 결정
-- 각 단계마다 빌드 검증 수행
-
-## 단계별 실행 계획
-
-### 1단계: 구조 기준선 고정
-- [x] 현재 `index.html`, `src/main.js`, `src/style.css`의 역할을 기준선으로 확정
-- [x] 카드 수, 링크, 카피, 인터랙션 요소를 체크리스트로 추출
-- [x] 포털 오버레이를 유지할지 제거할지 결정
-
-### 2단계: 카드 데이터 분리
-- [x] 카드 제목, 설명, 링크, 라벨, CTA를 데이터 객체로 이동
-- [x] 반복되는 카드 마크업을 렌더 함수 기반으로 치환
-- [x] 정적 SVG 아이콘은 인라인 유지 여부를 결정하고 일관된 방식으로 정리
-- [x] 향후 카드 추가가 데이터 수정만으로 가능하도록 구조화
-- [x] 카드 아이콘을 `src/data/cardIcons.js`로 분리
-- [x] 카드 텍스트를 `heading` / `copy` 구조로 정리
-
-### 3단계: JavaScript 모듈 분리
-- [x] `src/main.js`의 초기화 코드를 얇은 엔트리로 축소
-- [x] 카드 인터랙션 로직을 별도 모듈로 분리
-- [x] 스타더스트 로직을 별도 모듈로 분리
-- [x] 테마 토글/저장 로직을 별도 모듈로 분리
-- [x] 포털 기능을 유지한다면 별도 모듈로 분리, 제거한다면 관련 코드와 마크업 삭제
-- [x] 미사용 변수와 죽은 코드 제거
-
-### 4단계: 마크업 이벤트 정리
-- [x] inline `onclick` 제거
-- [x] DOM 이벤트 바인딩을 JS 초기화 코드로 이동
-- [x] `closePortal()` 같은 전역 의존 호출 제거
-- [x] 외부 링크 속성(`rel="noopener noreferrer"`) 보강
-
-### 5단계: 스타일 계층 정리
-- [x] `src/style.css`를 base/layout/components/effects/animations 기준으로 재배치
-- [x] 카드 관련 스타일과 배경 효과 스타일을 논리적으로 분리
-- [x] 누락된 `delay-700` 등 애니메이션 유틸리티 정리
-- [x] 포커스 상태, 접근성 상태 스타일 추가
-- [x] 필요 시 파일 분리 여부 검토
-
-### 6단계: 접근성 및 제품 마감
-- [x] 테마 토글 버튼에 `aria-label` 추가
-- [x] 키보드 포커스 가능 흐름 점검
-- [x] 카드 링크의 포커스 스타일 보강
-- [x] 다크 모드 상태를 `localStorage` 등에 저장
-- [x] 텍스트/메타/매니페스트 문자열 일관성 점검
-
-### 7단계: 최소 검증 체계 도입
-- [x] `npm run build`를 기준 검증으로 유지
-- [x] 카드 렌더 수와 핵심 링크 존재 여부를 확인할 수 있는 최소 테스트 또는 스모크 체크 도입
-- [x] 테마 토글과 주요 DOM 셀렉터 존재 여부를 검증
-- [x] 이후 리팩터링 시 회귀 확인 절차를 문서화
-
-## 회귀 확인 절차
-구조 변경 이후에는 아래 순서로 빠르게 회귀를 확인한다.
-
+## 현재 QA 체크리스트
 1. `npm run build`
-   - 번들링, CSS import, 모듈 경로, 정적 자산 참조가 깨지지 않았는지 확인
 2. `npm run check:smoke`
-   - 카드 데이터 개수, 링크 무결성, `theme-toggle`, `cards-grid`, 스타일 import 연결, 포털 제거 상태 확인
-3. 수동 UI 확인
-   - 데스크톱에서 카드 hover tilt, spotlight, CTA 자기장 효과 확인
-   - 모바일 폭에서 수직 스크롤과 카드 레이아웃 확인
-   - 테마 토글 클릭 후 새로고침 시 테마 유지 확인
-4. 메타/설치 확인
-   - 문서 title, description, OG/Twitter 설명, manifest 문자열이 의도와 맞는지 확인
-5. 변경 범위 확인
-   - 불필요한 구조 회귀나 미사용 코드가 다시 들어오지 않았는지 `git diff`로 검토
+3. 데스크톱에서 카드 hover tilt, spotlight, CTA 모션 확인
+4. 모바일에서 헤더 밀도와 카드 간격 확인
+5. 다크 모드 토글 및 저장 상태 확인
+6. 공유 메타(title, description, OG/Twitter) 문구 확인
 
 ## 현재 상태 요약
-- 카드 데이터는 `src/data/cards.js`로 분리됨
-- 카드 아이콘은 `src/data/cardIcons.js`에서 중앙 관리됨
-- 렌더링은 `src/modules/renderCards.js`가 담당
-- 인터랙션, 테마, 스타더스트는 각각 별도 모듈로 분리됨
-- 포털 오버레이와 관련 전역 함수는 제거됨
-- 스타일은 `src/styles/` 아래 역할별 파일로 분리됨
-- `npm run build`, `npm run check:smoke` 검증 경로가 확보됨
+- 랜딩 페이지는 단일 [index.html](/C:/Users/roadsea/Desktop/main/index.html) + Vite 기반 정적 앱 구조다.
+- 카드 데이터와 아이콘은 데이터 계층으로 분리돼 있다.
+- 렌더링과 인터랙션 로직은 모듈화되어 있다.
+- 스타일은 역할별 파일로 분리돼 있다.
+- featured 카드, 모바일 밀도 조정, reduced-motion 대응, 스모크 체크 강화까지 반영됐다.
 
-## 추천 우선순위
-1. 포털 유지/제거 결정
-2. 카드 데이터 분리
-3. JS 모듈 분리
-4. inline 이벤트 제거
-5. 스타일 계층 정리
-6. 접근성/보안/테마 저장 보강
-7. 최소 검증 도입
-
-## 기대 효과
-- 카드 추가/수정 비용 감소
-- 기능별 책임 분리로 디버깅 난이도 감소
-- 미완성 포털 기능 처리로 구조적 혼선 제거
-- 접근성/보안 기본기 보강
-- 이후 디자인 확장과 배포 운영이 쉬워짐
+## 다음 후보 작업
+1. 문서 변경분 커밋 정리
+2. `.compare/` 폴더 필요 여부 확인 후 정리
+3. 배포 전 최종 점검 라운드
