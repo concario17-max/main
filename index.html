@@ -7,9 +7,8 @@
     <title>Simsang Archive | The Premium Collection</title>
     <meta
         name="description"
-        content="영원의 지혜가 머무는 성소. 천체의 궤적, 심연의 수트라, 신성한 서사시가 당신의 의식을 무한한 차원으로 인도합니다." />
+        content="A premium archive of astrology, yoga sutras, the Bhagavad Gita, and Tibetan wisdom." />
 
-    <!-- Mobile Home Screen & Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="512x512" href="/apple-touch-icon.png">
@@ -20,19 +19,20 @@
     <meta name="apple-mobile-web-app-title" content="Simsang Archive">
     <meta name="theme-color" content="#080808">
 
-    <!-- Open Graph (KakaoTalk, Facebook, Notion, etc.) -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Simsang Archive" />
-    <meta property="og:title" content="SIMSANG ARCHIVE | 시공을 초월한 프리미엄 지혜의 정수" />
-    <meta property="og:description"
-        content="영원의 지혜가 머무는 성소(Sanctuary). 천체의 궤적, 심연의 수트라, 신성한 서사시가 당신의 의식을 무한한 차원으로 인도합니다." />
+    <meta property="og:title" content="SIMSANG ARCHIVE | Four Living Portals of Wisdom" />
+    <meta
+        property="og:description"
+        content="Explore a curated sanctuary of astrology, yoga, Gita study, and Tibetan passage texts." />
     <meta property="og:image" content="https://simsang.org/og-image.jpg" />
     <meta property="og:url" content="https://simsang.org" />
 
-    <!-- Twitter Card (Twitter, Discord, etc.) -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="SIMSANG ARCHIVE | 시공을 초월한 프리미엄 지혜의 정수" />
-    <meta name="twitter:description" content="영원의 지혜가 머무는 성소. 천체의 궤적, 심연의 수트라, 신성한 서사시가 당신의 의식을 무한한 차원으로 인도합니다." />
+    <meta name="twitter:title" content="SIMSANG ARCHIVE | Four Living Portals of Wisdom" />
+    <meta
+        name="twitter:description"
+        content="A premium archive of astrology, yoga sutras, the Bhagavad Gita, and Tibetan wisdom." />
     <meta name="twitter:image" content="https://simsang.org/og-image.jpg" />
 
     <link
@@ -48,12 +48,10 @@
 
     <div class="bg-glow"></div>
 
-    <!-- 동적인 앰비언트 그라디언트 오라 (Aura) -->
     <div class="fixed top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-accent-light/5 dark:bg-accent-dark/5 filter blur-[100px] opacity-60 mix-blend-multiply dark:mix-blend-screen pointer-events-none z-0"
         style="animation: auraFloat 20s ease-in-out infinite alternate;"></div>
     <div class="fixed bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-primary/5 dark:bg-accent-dark/5 filter blur-[120px] opacity-40 mix-blend-multiply dark:mix-blend-screen pointer-events-none z-0"
         style="animation: auraFloat 25s ease-in-out infinite alternate-reverse;"></div>
-    <!-- Level 2: 3rd Aura for depth -->
     <div class="fixed top-1/2 left-1/2 w-[40vw] h-[40vw] rounded-full bg-accent-light/3 dark:bg-accent-dark/3 filter blur-[150px] opacity-30 mix-blend-soft-light pointer-events-none z-0"
         style="animation: auraFloat 30s ease-in-out infinite alternate 5s;"></div>
 
@@ -61,22 +59,18 @@
         style="background-image: radial-gradient(currentColor 1px, transparent 1px); background-size: 48px 48px;">
     </div>
 
-    <!-- 미세 파티클 (Stardust) 레이어 -->
     <div id="particles-container"
         class="fixed inset-0 z-0 pointer-events-none overflow-hidden opacity-30 dark:opacity-40"></div>
 
-    <!-- 테마 토글러 세팅 -->
     <button
         id="theme-toggle"
         type="button"
         aria-label="Toggle color theme"
-        class="fixed top-8 right-8 z-50 p-3 rounded-full bg-white/50 dark:bg-black/50 border border-border-light dark:border-border-dark backdrop-blur-md text-accent-light dark:text-accent-dark hover:scale-105 transition-all duration-500 shadow-sm">
-        <!-- 달(Dark Mode) 아이콘 SVG -->
+        class="fixed top-5 right-5 md:top-8 md:right-8 z-50 p-3 rounded-full bg-white/50 dark:bg-black/50 border border-border-light dark:border-border-dark backdrop-blur-md text-accent-light dark:text-accent-dark hover:scale-105 transition-all duration-500 shadow-sm">
         <svg class="w-5 h-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
             <path stroke-linecap="round" stroke-linejoin="round"
                 d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
         </svg>
-        <!-- 해(Light Mode) 아이콘 SVG -->
         <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
             <path stroke-linecap="round" stroke-linejoin="round"
                 d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
@@ -84,27 +78,28 @@
     </button>
 
     <main
-        class="flex-grow flex flex-col items-center justify-center p-6 sm:p-12 md:p-20 relative z-10 w-full max-w-7xl mx-auto overflow-visible md:overflow-hidden">
-        <header class="text-center mb-12 max-w-4xl mx-auto flex flex-col items-center animate-fade-up">
+        class="flex-grow flex flex-col items-center justify-center px-5 pt-20 pb-10 sm:p-12 md:p-20 relative z-10 w-full max-w-7xl mx-auto overflow-visible md:overflow-hidden">
+        <header class="text-center mb-10 md:mb-12 max-w-4xl mx-auto flex flex-col items-center animate-fade-up">
             <div
-                class="text-[10px] tracking-[0.4em] text-accent-light dark:text-accent-dark uppercase mb-5 font-medium">
+                class="text-[10px] tracking-[0.34em] md:tracking-[0.4em] text-accent-light dark:text-accent-dark uppercase mb-4 md:mb-5 font-medium">
                 The Premium Collection
             </div>
             <h1
-                class="text-4xl sm:text-5xl md:text-7xl font-display text-primary dark:text-white mb-5 tracking-wider uppercase text-center leading-tight">
+                class="text-3xl sm:text-5xl md:text-7xl font-display text-primary dark:text-white mb-4 md:mb-5 tracking-[0.18em] md:tracking-wider uppercase text-center leading-tight">
                 SIMSANG <span class="text-accent-light dark:text-accent-dark font-light italic">Archive</span>
             </h1>
-            <div class="w-px h-10 bg-gradient-to-b from-accent-light/50 dark:from-accent-dark/50 to-transparent mb-8">
+            <div class="w-px h-8 md:h-10 bg-gradient-to-b from-accent-light/50 dark:from-accent-dark/50 to-transparent mb-6 md:mb-8">
             </div>
             <p
-                class="text-slate-500 dark:text-slate-400 font-body text-xs md:text-[13px] tracking-[0.25em] max-w-2xl text-center leading-loose font-light uppercase">
-                Curated Wisdom &amp; Ancient Observations <br /> A Sanctuary for the Eternal Mind
+                class="text-slate-500 dark:text-slate-400 font-body text-[11px] md:text-[13px] tracking-[0.22em] md:tracking-[0.25em] max-w-xl md:max-w-2xl text-center leading-7 md:leading-loose font-light uppercase">
+                Four Living Portals for Astrology, Yoga, Gita, and Tibetan Wisdom <br /> Curated Wisdom &amp; Ancient
+                Observations for the Eternal Mind
             </p>
         </header>
 
         <div
             id="cards-grid"
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 w-full px-4 md:px-0 py-10 md:py-0"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-5 gap-5 md:gap-6 lg:gap-8 w-full px-1 md:px-0 py-6 md:py-0"
             style="perspective: 2000px;"></div>
     </main>
 

@@ -2,6 +2,21 @@ export const initCardEffects = () => {
     const cards = document.querySelectorAll('.premium-card');
     if (!cards.length) return;
 
+    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    if (reduceMotionQuery.matches) {
+        cards.forEach((card) => {
+            card.style.removeProperty('transform');
+
+            const cta = card.querySelector('.mt-auto');
+            if (cta) {
+                cta.style.removeProperty('transform');
+            }
+        });
+
+        return;
+    }
+
     const state = { cardRects: new Map() };
     const targets = new Map();
     const lerp = (start, end, factor) => start + (end - start) * factor;

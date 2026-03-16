@@ -2,6 +2,13 @@ export const initStardust = () => {
     const container = document.getElementById('particles-container');
     if (!container) return;
 
+    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    if (reduceMotionQuery.matches) {
+        container.style.display = 'none';
+        return;
+    }
+
     const fragment = document.createDocumentFragment();
     const count = 50;
 

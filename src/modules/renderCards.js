@@ -1,8 +1,75 @@
 const createHeadingMarkup = ({ main, accent }) => `${main}<br />${accent}`;
 
-const createCardMarkup = ({ slug, href, delayClass, icon, heading, copy }) => `
+const toneClassMap = {
+    celestial: {
+        label: 'premium-card--celestial',
+        icon: 'premium-card__icon--celestial',
+        meta: 'premium-card__meta--celestial',
+        rule: 'premium-card__rule--celestial',
+        cta: 'premium-card__cta--celestial',
+    },
+    sutra: {
+        label: 'premium-card--sutra',
+        icon: 'premium-card__icon--sutra',
+        meta: 'premium-card__meta--sutra',
+        rule: 'premium-card__rule--sutra',
+        cta: 'premium-card__cta--sutra',
+    },
+    divine: {
+        label: 'premium-card--divine',
+        icon: 'premium-card__icon--divine',
+        meta: 'premium-card__meta--divine',
+        rule: 'premium-card__rule--divine',
+        cta: 'premium-card__cta--divine',
+    },
+    liberation: {
+        label: 'premium-card--liberation',
+        icon: 'premium-card__icon--liberation',
+        meta: 'premium-card__meta--liberation',
+        rule: 'premium-card__rule--liberation',
+        cta: 'premium-card__cta--liberation',
+    },
+};
+
+const getToneClasses = (tone) => toneClassMap[tone] ?? toneClassMap.celestial;
+
+const createFeaturedBadge = (featured) => {
+    if (!featured) return '';
+
+    return `
+        <div class="mb-5 md:mb-6 inline-flex items-center gap-2 md:gap-3 rounded-full border border-accent-light/30 bg-white/40 px-3 py-2 md:px-4 text-[9px] md:text-[10px] font-body uppercase tracking-[0.26em] md:tracking-[0.3em] text-accent-light dark:border-accent-dark/30 dark:bg-black/30 dark:text-accent-dark">
+            <span class="h-px w-6 bg-current opacity-70"></span>
+            Featured Archive
+        </div>
+    `;
+};
+
+const createCtaMarkup = (featured, cta, tone) => {
+    const toneClasses = getToneClasses(tone);
+
+    if (featured) {
+        return `
+            <div class="premium-card__cta ${toneClasses.cta} mt-auto inline-flex items-center gap-2 md:gap-3 rounded-full border px-4 py-2.5 md:px-5 md:py-3 text-[9px] md:text-[10px] font-body tracking-[0.26em] md:tracking-[0.3em] uppercase transition-all duration-700">
+                <span class="w-5 h-px bg-current opacity-80"></span>
+                ${cta}
+            </div>
+        `;
+    }
+
+    return `
+        <div class="premium-card__cta ${toneClasses.cta} mt-auto text-[9px] font-body tracking-[0.26em] md:tracking-[0.3em] uppercase opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-4 group-hover:translate-y-0 flex items-center gap-2">
+            <span class="w-4 h-px bg-current transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700"></span>
+            ${cta}
+        </div>
+    `;
+};
+
+const createCardMarkup = ({ slug, href, delayClass, featured, tone, icon, heading, copy }) => {
+    const toneClasses = getToneClasses(tone);
+
+    return `
     <a
-        class="group premium-card p-10 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl animate-fade-up ${delayClass}"
+        class="group premium-card ${toneClasses.label} ${featured ? 'premium-card--featured lg:col-span-2' : ''} p-7 sm:p-9 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl animate-fade-up ${delayClass}"
         data-card="${slug}"
         href="${href}"
         target="_blank"
@@ -10,27 +77,26 @@ const createCardMarkup = ({ slug, href, delayClass, icon, heading, copy }) => `
         aria-label="${heading.main} ${heading.accent}"
     >
         <div class="grain-overlay"></div>
-        <div class="premium-card-content justify-center w-full">
-            <div class="w-24 h-24 mb-10 flex items-center justify-center text-accent-light dark:text-accent-dark transition-transform duration-1000 group-hover:scale-110">
+        <div class="premium-card-content ${featured ? 'lg:items-start lg:text-left' : ''} justify-center w-full">
+            ${createFeaturedBadge(featured)}
+            <div class="premium-card__icon ${toneClasses.icon} ${featured ? 'w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 mb-6 sm:mb-8 lg:mb-10' : 'w-20 h-20 sm:w-24 sm:h-24 mb-7 sm:mb-9'} flex items-center justify-center transition-transform duration-1000 group-hover:scale-110">
                 ${icon()}
             </div>
-            <h2 class="text-lg md:text-xl lg:text-2xl font-display font-medium mb-1 text-primary dark:text-white tracking-[0.15em] uppercase">
+            <h2 class="${featured ? 'text-xl sm:text-2xl md:text-3xl xl:text-4xl' : 'text-base sm:text-lg md:text-xl lg:text-2xl'} font-display font-medium mb-1 text-primary dark:text-white tracking-[0.13em] md:tracking-[0.15em] uppercase">
                 ${createHeadingMarkup(heading)}
             </h2>
-            <div class="text-[10px] sm:text-[11px] font-body tracking-[0.3em] text-accent-light dark:text-accent-dark/80 mb-5 font-light">
+            <div class="premium-card__meta ${toneClasses.meta} text-[10px] sm:text-[11px] font-body tracking-[0.24em] md:tracking-[0.3em] ${featured ? 'mb-5 md:mb-6' : 'mb-4 md:mb-5'} font-light">
                 ${copy.label}
             </div>
-            <div class="w-8 h-px bg-accent-light/30 dark:bg-accent-dark/30 mb-6 transition-all duration-500 group-hover:w-16 group-hover:bg-accent-light dark:group-hover:bg-accent-dark"></div>
-            <p class="break-keep text-slate-700 dark:text-slate-300 text-[13px] leading-relaxed font-medium italic mb-8 flex-grow">
+            <div class="premium-card__rule ${toneClasses.rule} w-8 h-px ${featured ? 'mb-6 md:mb-8' : 'mb-5 md:mb-6'} transition-all duration-500 group-hover:w-16"></div>
+            <p class="break-keep ${featured ? 'text-slate-700 dark:text-slate-200 text-[14px] sm:text-[15px] md:text-base leading-7 md:leading-8' : 'text-slate-600 dark:text-slate-400 text-[12px] sm:text-[13px] leading-6 sm:leading-relaxed'} font-medium italic mb-7 md:mb-8 flex-grow">
                 ${copy.description}
             </p>
-            <div class="mt-auto text-[9px] font-body tracking-[0.3em] text-accent-light dark:text-accent-dark uppercase opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-4 group-hover:translate-y-0 flex items-center gap-2">
-                <span class="w-4 h-px bg-current transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700"></span>
-                ${copy.cta}
-            </div>
+            ${createCtaMarkup(featured, copy.cta, tone)}
         </div>
     </a>
 `;
+};
 
 export const renderCards = (cards) => {
     const cardsGrid = document.getElementById('cards-grid');

@@ -25,32 +25,59 @@ const assertChecks = () => {
 };
 
 const main = async () => {
-    const [indexHtml, rootStyleCss, animationCss] = await Promise.all([
+    const [indexHtml, rootStyleCss, componentCss, effectsCss, animationCss, renderCardsJs, cardEffectsJs, stardustJs] = await Promise.all([
         readFile(new URL('../index.html', import.meta.url), 'utf8'),
         readFile(new URL('../src/style.css', import.meta.url), 'utf8'),
+        readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8'),
+        readFile(new URL('../src/styles/effects.css', import.meta.url), 'utf8'),
         readFile(new URL('../src/styles/animations.css', import.meta.url), 'utf8'),
+        readFile(new URL('../src/modules/renderCards.js', import.meta.url), 'utf8'),
+        readFile(new URL('../src/modules/cardEffects.js', import.meta.url), 'utf8'),
+        readFile(new URL('../src/modules/stardust.js', import.meta.url), 'utf8'),
     ]);
 
-    addCheck(cards.length === 4, '카드 데이터가 4개다');
-    addCheck(new Set(cards.map(({ href }) => href)).size === cards.length, '카드 링크가 중복되지 않는다');
-    addCheck(cards.every(({ href }) => href.startsWith('https://')), '모든 카드 링크가 https를 사용한다');
-    addCheck(cards.every(({ slug, heading, copy, icon }) => slug && heading?.main && heading?.accent && copy?.label && copy?.description && copy?.cta && typeof icon === 'function'), '모든 카드 데이터에 구조화된 필수 필드가 존재한다');
-    addCheck(new Set(cards.map(({ slug }) => slug)).size === cards.length, '카드 slug가 중복되지 않는다');
-    addCheck(cards.every(({ icon }) => Object.values(cardIcons).includes(icon)), '모든 카드 아이콘이 중앙 아이콘 모듈을 사용한다');
+    addCheck(cards.length === 4, 'Card data includes four entries');
+    addCheck(new Set(cards.map(({ href }) => href)).size === cards.length, 'Card links are unique');
+    addCheck(cards.every(({ href }) => href.startsWith('https://')), 'Card links use HTTPS');
+    addCheck(
+        cards.every(({ slug, heading, copy, icon }) => (
+            slug
+            && heading?.main
+            && heading?.accent
+            && copy?.label
+            && copy?.description
+            && copy?.cta
+            && typeof icon === 'function'
+        )),
+        'Each card contains the required structured fields',
+    );
+    addCheck(new Set(cards.map(({ slug }) => slug)).size === cards.length, 'Card slugs are unique');
+    addCheck(cards.every(({ icon }) => Object.values(cardIcons).includes(icon)), 'Cards use shared icon definitions');
+    addCheck(cards.filter(({ featured }) => featured).length === 1, 'Exactly one featured card exists');
+    addCheck(cards.every(({ tone }) => ['celestial', 'sutra', 'divine', 'liberation'].includes(tone)), 'Each card uses a supported tone');
 
-    addCheck(indexHtml.includes('id="theme-toggle"'), '테마 토글 버튼이 존재한다');
-    addCheck(indexHtml.includes('aria-label="Toggle color theme"'), '테마 토글 버튼에 접근성 레이블이 있다');
-    addCheck(indexHtml.includes('id="cards-grid"'), '카드 그리드 컨테이너가 존재한다');
-    addCheck(!indexHtml.includes('portal-overlay'), '미사용 포털 오버레이가 제거됐다');
-    addCheck(!indexHtml.includes('onclick='), 'inline 이벤트 핸들러가 제거됐다');
+    addCheck(indexHtml.includes('id="theme-toggle"'), 'Theme toggle button exists');
+    addCheck(indexHtml.includes('aria-label="Toggle color theme"'), 'Theme toggle has an accessibility label');
+    addCheck(indexHtml.includes('id="cards-grid"'), 'Cards grid container exists');
+    addCheck(indexHtml.includes('Four Living Portals for Astrology, Yoga, Gita, and Tibetan Wisdom'), 'Header support copy is present');
+    addCheck(indexHtml.includes('A premium archive of astrology, yoga sutras, the Bhagavad Gita, and Tibetan wisdom.'), 'Meta description is normalized');
+    addCheck(!indexHtml.includes('portal-overlay'), 'Unused portal overlay has been removed');
+    addCheck(!indexHtml.includes('onclick='), 'Inline event handlers have been removed');
 
-    addCheck(rootStyleCss.includes("@import './styles/base.css';"), '스타일 엔트리가 base.css를 불러온다');
-    addCheck(rootStyleCss.includes("@import './styles/components.css';"), '스타일 엔트리가 components.css를 불러온다');
-    addCheck(rootStyleCss.includes("@import './styles/effects.css';"), '스타일 엔트리가 effects.css를 불러온다');
-    addCheck(rootStyleCss.includes("@import './styles/animations.css';"), '스타일 엔트리가 animations.css를 불러온다');
-    addCheck(animationCss.includes('.delay-700'), 'delay-700 애니메이션 유틸리티가 존재한다');
+    addCheck(rootStyleCss.includes("@import './styles/base.css';"), 'Style entry imports base.css');
+    addCheck(rootStyleCss.includes("@import './styles/components.css';"), 'Style entry imports components.css');
+    addCheck(rootStyleCss.includes("@import './styles/effects.css';"), 'Style entry imports effects.css');
+    addCheck(rootStyleCss.includes("@import './styles/animations.css';"), 'Style entry imports animations.css');
 
-    addCheck(cards.every(({ delayClass }) => animationCss.includes(`.${delayClass}`)), '모든 카드 delay 클래스가 애니메이션 정의와 연결된다');
+    addCheck(animationCss.includes('.delay-700'), 'delay-700 animation utility exists');
+    addCheck(animationCss.includes('@media (prefers-reduced-motion: reduce)'), 'Reduced-motion animation fallback exists');
+    addCheck(effectsCss.includes('@media (prefers-reduced-motion: reduce)'), 'Reduced-motion visual-effects fallback exists');
+    addCheck(cardEffectsJs.includes("prefers-reduced-motion: reduce"), 'Card tilt honors reduced-motion preference');
+    addCheck(stardustJs.includes("prefers-reduced-motion: reduce"), 'Particle system honors reduced-motion preference');
+
+    addCheck(renderCardsJs.includes('premium-card__meta'), 'Card renderer uses explicit meta classes');
+    addCheck(!componentCss.includes('nth-child'), 'Component styles do not depend on nth-child card ordering');
+    addCheck(cards.every(({ delayClass }) => animationCss.includes(`.${delayClass}`)), 'All card delay classes map to defined animations');
 
     assertChecks();
 };

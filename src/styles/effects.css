@@ -57,3 +57,54 @@
 .dark .grain-overlay {
     opacity: 0.05;
 }
+
+@media (max-width: 767px) {
+    .premium-card::before {
+        background: radial-gradient(
+            720px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(197, 160, 89, 0.035),
+            transparent 52%
+        );
+    }
+
+    .dark .premium-card::before {
+        background: radial-gradient(
+            720px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(212, 175, 55, 0.06),
+            transparent 54%
+        );
+    }
+
+    .bg-glow {
+        width: 68vw;
+        height: 68vw;
+        background: radial-gradient(circle, rgba(197, 160, 89, 0.022) 0%, transparent 62%);
+    }
+
+    .dark .bg-glow {
+        background: radial-gradient(circle, rgba(212, 175, 55, 0.038) 0%, transparent 66%);
+    }
+
+    .grain-overlay {
+        opacity: 0.02;
+    }
+
+    .dark .grain-overlay {
+        opacity: 0.035;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .premium-card::before,
+    .bg-glow,
+    .grain-overlay,
+    #particles-container {
+        animation: none !important;
+    }
+
+    .premium-card::before,
+    .bg-glow,
+    .grain-overlay {
+        opacity: 0.01;
+    }
+}
