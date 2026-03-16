@@ -1,75 +1,320 @@
-# Simsang Archive - 심층 분석 보고서
+# Simsang Archive - 심층 기술 분석 보고서
 
-## 1. 아키텍처 개요
-**Simsang Archive (The Premium Collection)**
-고대 지혜와 오컬트 데이터(천체 관측소, 수트라, 바가바드 기타, 티베트 사자의 서)를 연결하는 프론트엔드 포털.
-Awwwards급 하이엔드 'Meta-Design'과 극단적인 렌더링 최적화를 목표로 설계된 정적 웹 애플리케이션.
+## 1. 프로젝트 정체성
+Simsang Archive는 4개의 외부 아카이브 서비스를 프리미엄 전시장처럼 연결하는 정적 포털이다.
+앱이라기보다 큐레이션된 브랜드 랜딩에 가깝고, 핵심 가치는 데이터 처리보다 분위기, 타이포그래피, 인터랙션 감각에 있다.
 
-- **스택**: HTML5, Vanilla JavaScript(ES6+), Tailwind CSS(v3.4), PostCSS, Vite.
-- **철학**: "Ray Standard" 적용. 무거운 프레임워크(React, Vue) 배제. 오로지 DOM 제어와 물리 기반 렌더링에 집중한 퓨어 바닐라 구현. 불필요한 추상화 제로.
+현재 구조는 "얇은 HTML 셸 + 데이터 기반 카드 렌더링 + 바닐라 JS 인터랙션 모듈 + Tailwind/CSS 효과 계층"으로 정리돼 있다.
 
----
+## 2. 현재 파일 구조
 
-## 2. 코어 엔진 분석 (src/main.js)
-바닐라 JS로 작성된 커스텀 물리 기반 인터랙션 엔진. 
-퍼포먼스 병목을 일으키는 Reflow와 Repaint를 철저히 차단한 구조.
+### 루트
+- `index.html`: 문서 셸, 메타, 배경 레이어, 헤더, 카드 그리드 컨테이너
+- `package.json`: 실행 스크립트와 도구 의존성
+- `vite.config.js`: 개발 서버와 빌드 출력 설정
+- `tailwind.config.js`: 색상, 폰트, 그림자 토큰
+- `postcss.config.js`: Tailwind/PostCSS 연결
+- `plan.md`: 작업 계획 문서
+- `research.md`: 분석 보고서
 
-### [1] O(1) 룩업 캐싱 & Zero-Reflow
-- 초기화 및 창 크기 조절 시에만 `getBoundingClientRect()` 호출.
-- `.premium-card` 요소들의 좌표와 크기를 `Map` 객체(`state.cardRects`)에 캐싱.
-- 마우스 무브먼트 이벤트 루프 내에서 DOM 요소의 크기나 위치를 다시 묻는 짓(Forced Synchronous Layout 발생 원인) 원천 차단.
+### 소스
+- `src/main.js`: 전체 초기화 엔트리
+- `src/data/cards.js`: 카드 데이터 소스
+- `src/data/cardIcons.js`: 카드 SVG 아이콘 팩토리
+- `src/modules/renderCards.js`: 카드 마크업 렌더
+- `src/modules/cardEffects.js`: 카드 호버 물리 효과
+- `src/modules/stardust.js`: 파티클 초기화
+- `src/modules/theme.js`: 테마 토글과 저장
+- `src/style.css`: 스타일 엔트리
+- `src/styles/base.css`: 기본 스타일과 스크롤바
+- `src/styles/components.css`: 카드/포커스 같은 컴포넌트 계층
+- `src/styles/effects.css`: 광원, 그레인, 글로우
+- `src/styles/animations.css`: 키프레임과 delay 유틸리티
 
-### [2] 수치 해석 기반 물리 엔진 (Lerp)
-- 마우스 포인터 좌표 추적에 CSS `transition` 의존 안 함.
-- 매 프레임 좌표의 목표점(`target`)과 현재점(`current`)을 분리하여 상태 관리.
-- `lerp(선형 보간)` 함수를 `requestAnimationFrame` 단일 루프 안에서 돌려 유체(Viscous) 같은 관성과 묵직한 조작감 구현.
-- Immutability Doctrine 준수. 상태 변경 시 기존 객체 변형(Mutation) 대신 Spread 연산자로 불변성 유지.
+### 기타
+- `public/`: 파비콘, OG 이미지, 매니페스트
+- `scripts/smoke-check.mjs`: 최소 스모크 검증
+- `design/`: 과거 시안 또는 참고 산출물
 
-### [3] Stardust Particle (IntersectionObserver 최적화)
-- DOM에 50개의 파티클 노드를 `DocumentFragment`로 일괄 삽입. (Atomic DOM 조작)
-- 파티클 컨테이너에 `IntersectionObserver` 부착.
-- 스크롤해서 보이지 않는 영역으로 넘어가면 `display: none` 처리. 즉, CSS 애니메이션 연산 자체를 브라우저 GPU 렌더 파이프라인에서 완전히 도려내는 극강의 배터리/CPU 최적화.
+## 3. 빌드와 실행 방식
+이 프로젝트는 런타임 프레임워크가 없는 Vite 기반 정적 사이트다.
 
----
+### 스크립트
+- `npm run dev`: 개발 서버 실행
+- `npm run build`: 프로덕션 빌드
+- `npm run preview`: 빌드 결과 확인
+- `npm run check:smoke`: 핵심 구조 회귀 검증
 
-## 3. 메타 디자인 렌더링 (src/style.css & tailwind.config.js)
-Tailwind의 유틸리티 클래스만으로 뽑기 힘든 심도(Depth)와 질감을 커스텀 CSS로 우겨넣은 변태적인 디테일.
+### 기술 스택
+- HTML5
+- Vanilla JavaScript
+- Tailwind CSS
+- PostCSS
+- Vite
 
-### [1] 테마 & 타이포그래피 설정
-- **Colors**: `accent-light` (Champagne Gold), `background-light` (Soft Beige), `primary` (Ink Black). 
-- **Typography**: Google Fonts의 `Cinzel`(Display)과 `Inter`(Body) 조합.
-- **Shadows**: 단순 드롭 섀도우가 아님. `premium`, `premium-hover` 같은 다중 레이어 `boxShadow`를 정의하여 평면을 물리적인 3D 객체로 승격시킴.
+브라우저에서 실제로 동작하는 로직은 모두 직접 작성한 JS 모듈이다.
+React, Vue, 상태 관리 라이브러리, 라우터, API 계층은 없다.
 
-### [2] 광원과 재질 구현 (Material & Lighting)
-- **3D Transform**: `.premium-card`에 `transform-style: preserve-3d`와 `perspective: 2000px`를 걸어 JS 물리 엔진에서 쏘아주는 `rotateX`, `rotateY` 값을 현실적인 원근감으로 표현.
-- **Reactive Lighting (Spotlight)**: 마우스가 위치한 곳을 중심으로 JS가 `--mouse-x`, `--mouse-y` CSS 변수를 주입. `::before` 가상 요소의 `radial-gradient`가 이 변수를 추적하며 카드의 하이라이트(광택) 반향을 만듦.
-- **Grain Overlay**: 무거운 PNG 이미지 통신 없이 `feTurbulence` 기반의 Data URI SVG 필터를 깔아 미세한 필름 노이즈/종이 질감(Texture) 생성. 로딩 속도 지연 제로.
+## 4. 실제 런타임 흐름
 
----
+1. 브라우저가 `index.html`을 읽는다
+2. Google Fonts, Material Symbols, 스타일 엔트리를 로드한다
+3. `src/main.js`가 실행된다
+4. `DOMContentLoaded` 시점에 카드 렌더링이 먼저 일어난다
+5. 이어서 테마 초기화, 카드 인터랙션 초기화, 스타더스트 초기화가 실행된다
 
-## 4. 구조 요약 및 결론
-- **구조적 완벽성**: 800줄 이하 모듈 분리 원칙 위반 없음.
-- **성능 최적화**: 1ms의 프레임 드랍도 용납하지 않는 연산 구조.
-- **결론**: 프론트엔드 최적화의 극한. 화려한 이펙트를 떡칠했음에도 브라우저 메인 스레드 점유율을 바닥으로 묶어둔 예술적인 코드. 튜닝 끝.
+즉 현재 앱 초기화 순서는 다음과 같다.
 
----
+- `renderCards(cards)`
+- `initThemeToggle()`
+- `initCardEffects()`
+- `initStardust()`
 
-## 5. 트러블슈팅: 모바일 수직 스크롤 차단 원인 분석
-모바일 디바이스에서 수직 스크롤이 불가능한 현상의 핵심 원인을 파악했다. 이는 의도된 데스크톱 아키텍처가 모바일 환경의 뷰포트 제약을 고려하지 않고 강제 적용된 결과다.
+이 순서는 중요하다.
+카드 DOM이 먼저 렌더된 다음에야 카드 효과 엔진이 `.premium-card`를 찾을 수 있기 때문이다.
 
-### 원인 1: `body` 태그의 하드코딩된 오버플로우 제어
-`index.html`의 43번 라인 `body` 클래스 구조:
-`class="... h-screen overflow-hidden flex flex-col ..."`
-- **`h-screen`**: `height: 100vh`를 강제. 
-- **`overflow-hidden`**: 뷰포트를 벗어나는 모든 컨텐츠(특히 4개의 카드가 세로로 쌓이는 모바일 레이아웃)의 렌더링을 잘라내고 네이티브 스크롤 이벤트를 완전히 차단함.
-- **결과**: 브라우저는 화면을 넘어가는 카드들을 스크롤할 권한을 박탈당함.
+## 5. HTML 구조 분석
 
-### 원인 2: `main` 태그의 레이아웃 제약
-`main`(81번 라인): `class="flex-grow flex flex-col items-center justify-center ... overflow-hidden"`
-- 부모인 `body`가 높이를 고정한 상태에서 `main`마저 `overflow-hidden`을 들고 있어, 데스크톱의 1안 뷰(One-page view)에는 완벽하지만 모바일(세로 쌓임)에서는 치명적 결함으로 작용.
+### Head
+`index.html`의 head는 메타 품질에 꽤 신경 쓴 편이다.
 
-### 해결 전략 (Meta-Design 관점)
-모바일에서는 자연스러운 수직 스크롤을 허용하되, 데스크톱에서는 기존의 1안 뷰(Zero-Scroll) 프리미엄 레이아웃을 유지해야 한다.
-- `overflow-hidden` ➔ 데스크톱에서만 유지 (`md:overflow-hidden`), 모바일은 `overflow-x-hidden overflow-y-auto` 적용.
-- `h-screen` ➔ 모바일에서는 콘텐츠 높이에 맞게 늘어나도록 `min-h-screen`으로 교체.
-- 커스텀 Webkit 스크롤바가 모바일에서도 우아하게 보이도록 패딩(Padding) 및 여백 조정.
+- favicon / apple touch icon
+- `manifest.json`
+- OG 메타
+- Twitter 카드 메타
+- 외부 폰트
+- 메인 스타일
+
+정적 사이트지만 공유 시 썸네일과 설명 품질을 챙긴다.
+
+### Body
+body는 시각 레이어와 콘텐츠 레이어로 분리되어 있다.
+
+배경 레이어:
+- 글로우
+- 3개의 오라
+- 점 패턴
+- 스타더스트 컨테이너
+
+콘텐츠 레이어:
+- 테마 토글 버튼
+- 헤더
+- 카드 그리드 컨테이너
+
+### 모바일/데스크톱 분기
+모바일 스크롤 이슈 수정이 이미 반영되어 있다.
+
+- 모바일: `min-h-screen overflow-y-auto`
+- 데스크톱: `md:h-screen md:overflow-hidden`
+
+메인과 그리드도 모바일에서 자연 스크롤을 허용하는 쪽으로 분기돼 있다.
+
+### 카드 렌더링 방식
+예전에는 카드 4장이 `index.html`에 직접 반복 작성돼 있었다.
+현재는 `id="cards-grid"` 컨테이너만 남겨두고, 실제 카드는 JS가 데이터 기반으로 주입한다.
+
+이 변화의 의미는 크다.
+
+- 카드 추가/수정이 쉬워짐
+- 반복 마크업 제거
+- 링크/카피 관리가 한곳으로 모임
+- DOM 계약이 단순해짐
+
+## 6. 데이터 계층
+
+`src/data/cards.js`는 현재 UI의 핵심 콘텐츠 소스다.
+각 카드 객체는 다음 필드를 갖는다.
+
+- `slug`
+- `heading.main`
+- `heading.accent`
+- `copy.label`
+- `copy.description`
+- `copy.cta`
+- `href`
+- `delayClass`
+- `icon`
+
+특징은 다음과 같다.
+
+- 제목과 카피가 역할별 블록으로 구조화됨
+- SVG 아이콘은 `src/data/cardIcons.js` 함수 참조로 연결됨
+- 카드 렌더러는 이 데이터를 그대로 UI로 바꿈
+
+즉 지금 구조에서 "콘텐츠 변경"은 거의 `cards.js`만 건드리면 된다.
+아이콘 표현 수정은 `cardIcons.js`에서 따로 다룰 수 있다.
+
+## 7. JavaScript 모듈 구조
+
+### `src/main.js`
+얇은 엔트리다.
+직접 계산을 거의 하지 않고 초기화 순서를 조정하는 역할만 한다.
+
+### `src/modules/renderCards.js`
+카드 데이터 배열을 받아 HTML 문자열로 변환한 뒤 `#cards-grid`에 삽입한다.
+여기서 외부 링크 보안 속성도 함께 보장한다.
+
+- `target="_blank"`
+- `rel="noopener noreferrer"`
+- `data-card`
+- `aria-label`
+
+즉 링크 보안 기본기가 렌더 단계에 흡수돼 있다.
+
+### `src/modules/cardEffects.js`
+카드 틸트, 스포트라이트, CTA 자기장 효과를 담당한다.
+핵심 구조는 이전과 같은 물리 보간 방식이지만, 이제 렌더 모듈과 분리돼 책임이 명확하다.
+
+주요 포인트:
+- `.premium-card` 수집
+- `Map` 기반 rect 캐싱
+- `mousemove`에서 목표값 계산
+- `requestAnimationFrame` 루프에서 보간
+- CSS 변수와 transform 주입
+
+이 모듈은 시각적으로 가장 눈에 띄는 "고급스러운 반응성"을 만든다.
+
+### `src/modules/theme.js`
+이전에는 inline `onclick` 한 줄이 전부였다.
+현재는 다음 책임을 갖는 별도 모듈이다.
+
+- 저장된 테마 읽기
+- OS 선호 테마 감지
+- 초기 테마 적용
+- 클릭 이벤트 바인딩
+- `localStorage`에 테마 저장
+
+즉 다크 모드는 이제 영속 상태를 가진다.
+
+### `src/modules/stardust.js`
+스타더스트 파티클 생성과 observer 연결을 담당한다.
+
+- 50개 파티클 생성
+- `DocumentFragment`로 일괄 삽입
+- `IntersectionObserver` 연결
+
+여전히 fixed 전체 화면 레이어라 observer의 절대 효과는 제한적일 수 있지만, 구조 자체는 분리로 인해 읽기 쉬워졌다.
+
+## 8. 스타일 계층 분석
+
+예전에는 `src/style.css` 한 파일에 모든 스타일이 들어 있었다.
+현재는 엔트리 + 역할별 분리 구조다.
+
+### `src/style.css`
+실제 규칙보다 스타일 조립 역할을 한다.
+
+### `src/styles/base.css`
+- body 기본 선택 스타일
+- 서체 feature 설정
+- 데스크톱 전용 스크롤바
+
+### `src/styles/components.css`
+- `.premium-card`
+- `.premium-card-content`
+- 포커스 링
+- 카드 외곽선 오버레이
+
+### `src/styles/effects.css`
+- 카드 spotlight
+- 배경 glow
+- grain overlay
+
+### `src/styles/animations.css`
+- `fadeUpPremium`
+- `auraFloat`
+- `drift`
+- `delay-100`
+- `delay-300`
+- `delay-500`
+- `delay-700`
+
+이 분리 덕분에 "어떤 스타일이 무엇을 위한 것인지"가 훨씬 명확해졌다.
+
+## 9. 테마와 접근성 상태
+
+구조 정리 전후를 비교하면 제품 마감이 좋아진 부분이 있다.
+
+반영된 개선:
+- 테마 토글 버튼에 `aria-label` 추가
+- 키보드 포커스 링 추가
+- 외부 링크 `noopener noreferrer` 보강
+- 다크 모드 영속 저장
+- inline 이벤트 제거
+
+여전히 남은 부분:
+- 카드 자체의 더 풍부한 접근성 설명
+- 시맨틱 heading/landmark 세부 개선
+- prefers-reduced-motion 대응
+
+## 10. 제거된 구조
+
+이전에는 문서 끝에 포털 오버레이가 있었다.
+
+- `portal-overlay`
+- `portal-frame`
+- `closePortal()`
+
+하지만 실제 여는 흐름이 전혀 없었고, 모듈 스코프 때문에 닫기 함수도 안전하지 않았다.
+현재는 이 미완성 기능을 통째로 제거해 구조 혼선을 줄였다.
+
+이 판단은 맞다.
+지금 프로젝트에서 포털은 제품 기능이 아니라 미사용 흔적에 더 가까웠다.
+
+## 11. 현재 남아 있는 리스크
+
+### 1. 스모크 체크는 DOM 렌더 전체를 실행하는 브라우저 테스트가 아니다
+`scripts/smoke-check.mjs`는 파일 기반 계약 검증에 가깝다.
+Playwright 같은 진짜 브라우저 E2E는 아직 없다.
+
+### 2. `cards.js`가 커지면 데이터 파일이 비대해질 수 있다
+지금은 4개라 괜찮지만, 수십 개가 되면 카테고리 분리나 파일 분할이 필요하다.
+
+### 3. 스타더스트 observer의 실효성은 제한적이다
+fixed 풀스크린 컨테이너 구조상 observer 최적화 효과는 크지 않을 수 있다.
+
+### 4. `npm audit` 경고는 별도 점검 필요
+정적 사이트라 위험도는 상대적으로 낮을 수 있지만, 빌드 체인 기준으로는 확인해두는 편이 좋다.
+
+## 12. 현재 구조의 장점
+
+- 반복 카드 마크업 제거
+- 데이터와 표현 분리
+- 기능별 모듈 분리
+- 스타일 역할 분리
+- 접근성/보안 기본기 보강
+- 최소 회귀 검증 경로 확보
+
+즉 지금 구조는 처음보다 훨씬 "수정 가능한 코드"에 가까워졌다.
+
+## 13. 검증 상태
+현재 확인된 검증 경로는 다음과 같다.
+
+- `npm run build` 통과
+- `npm run check:smoke` 통과
+
+스모크 체크가 확인하는 항목:
+- 카드 개수
+- 링크 중복 여부
+- slug 중복 여부
+- `https` 사용 여부
+- 필수 카드 필드 존재
+- 중앙 아이콘 모듈 사용 여부
+- `theme-toggle`, `cards-grid` 존재
+- 포털 제거 여부
+- inline 이벤트 제거 여부
+- 스타일 import 연결 여부
+- `delay-700` 및 delay 클래스 연결 여부
+
+## 14. 최종 평가
+현재의 Simsang Archive는 작은 코드베이스 안에서 시각적 인상과 유지보수성을 균형 있게 맞춰가는 단계에 있다.
+
+초기 버전이 "한 파일에 응집된 고급 랜딩"이었다면, 지금은 "정적이지만 모듈화된 프리미엄 포털"에 더 가깝다.
+디자인의 힘은 유지하면서도, 구조는 훨씬 덜 불안해졌다.
+
+핵심 요약:
+
+- UI는 그대로 고급스럽다
+- 구조는 더 읽기 쉬워졌다
+- 포털 같은 죽은 기능은 제거됐다
+- 테마, 포커스, 링크 보안 같은 기본기는 강화됐다
+- 최소 검증 체계가 생겨 이후 리팩터링 안정성이 올라갔다
