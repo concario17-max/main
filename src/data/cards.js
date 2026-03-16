@@ -15,7 +15,7 @@ export const cards = [
             accent: 'Ephemeris',
         },
         copy: {
-            label: '천체 관측 아카이브',
+            label: '오컬트 주역 천체 관측소',
             description: 'Track planetary cycles, symbolic alignments, and cosmic timing through a refined astrological archive.',
             cta: 'Enter the Archive',
         },
@@ -33,7 +33,7 @@ export const cards = [
             accent: 'Exegesis',
         },
         copy: {
-            label: '요가 지혜 문고',
+            label: '파탄잘리 요가 수트라',
             description: 'Read distilled teachings on consciousness, discipline, and the inner architecture of contemplative practice.',
             cta: 'Unveil the Sutras',
         },
@@ -51,7 +51,7 @@ export const cards = [
             accent: 'Song',
         },
         copy: {
-            label: '바가바드 기타 아카이브',
+            label: '바가바드 기타',
             description: 'Enter a guided reading of duty, devotion, and awakening through the voice of the Gita.',
             cta: 'Hear the Song',
         },
@@ -69,7 +69,7 @@ export const cards = [
             accent: 'Liberation',
         },
         copy: {
-            label: '티베트 전이 문헌',
+            label: '티베트 사자의 서',
             description: 'Explore teachings on transition, death, and luminous awareness through the Tibetan wisdom tradition.',
             cta: 'Cross the Bardo',
         },

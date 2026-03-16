@@ -27,8 +27,8 @@ export default {
         }
       },
       fontFamily: {
-        display: ["'Cinzel'", "serif"],
-        body: ["'Inter'", "sans-serif"],
+        display: ["'Cinzel'", "'Noto Serif KR'", "serif"],
+        body: ["'Inter'", "'Noto Sans KR'", "sans-serif"],
       },
       boxShadow: {
         'premium': '0 10px 40px -10px rgba(0,0,0,0.05), inset 0 0 0 1px rgba(255,255,255,0.1)',
