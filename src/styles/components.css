@@ -1,0 +1,27 @@
+.premium-card {
+    @apply relative overflow-hidden backdrop-blur-3xl border border-transparent bg-card-light dark:bg-card-dark transition-all duration-1000;
+    transform-style: preserve-3d;
+    perspective: 2000px;
+}
+
+.premium-card:focus-visible,
+#theme-toggle:focus-visible {
+    outline: 2px solid rgba(197, 160, 89, 0.8);
+    outline-offset: 4px;
+}
+
+.premium-card-content {
+    @apply relative z-20 h-full flex flex-col items-center;
+    transform: translateZ(20px);
+}
+
+.premium-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    @apply border border-border-light dark:border-border-dark rounded-xl pointer-events-none transition-colors duration-700;
+}
+
+.premium-card:hover::after {
+    @apply border-accent-light/60 dark:border-accent-dark/60;
+}
