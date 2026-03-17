@@ -89,7 +89,6 @@
 }
 
 .premium-card__icon--celestial,
-.premium-card__meta--celestial,
 .premium-card__rule--celestial,
 .premium-card__cta--celestial {
     color: rgba(197, 160, 89, 0.95);
@@ -98,7 +97,6 @@
 }
 
 .premium-card__icon--sutra,
-.premium-card__meta--sutra,
 .premium-card__rule--sutra,
 .premium-card__cta--sutra {
     color: rgba(166, 137, 72, 0.88);
@@ -107,7 +105,6 @@
 }
 
 .premium-card__icon--divine,
-.premium-card__meta--divine,
 .premium-card__rule--divine,
 .premium-card__cta--divine {
     color: rgba(184, 144, 82, 0.88);
@@ -116,12 +113,27 @@
 }
 
 .premium-card__icon--liberation,
-.premium-card__meta--liberation,
 .premium-card__rule--liberation,
 .premium-card__cta--liberation {
     color: rgba(151, 124, 77, 0.88);
     background-color: rgba(151, 124, 77, 0.18);
     border-color: rgba(151, 124, 77, 0.28);
+}
+
+.premium-card__meta--celestial {
+    color: rgba(197, 160, 89, 0.95);
+}
+
+.premium-card__meta--sutra {
+    color: rgba(140, 107, 63, 0.96);
+}
+
+.premium-card__meta--divine {
+    color: rgba(154, 122, 77, 0.96);
+}
+
+.premium-card__meta--liberation {
+    color: rgba(127, 106, 71, 0.96);
 }
 
 .premium-card__rule {
