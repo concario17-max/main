@@ -69,7 +69,11 @@ const main = async () => {
     addCheck(indexHtml.includes('id="cards-grid"'), 'Cards grid container exists');
     addCheck(indexHtml.includes('점성, 요가, 기타, 티베트 지혜를 잇는 네 개의 살아 있는 포털'), 'Header support copy is present');
     addCheck(indexHtml.includes('header-pill'), 'Header portal pills are present');
-    addCheck(indexHtml.includes('A premium archive of astrology, yoga sutras, the Bhagavad Gita, and Tibetan wisdom.'), 'Meta description is normalized');
+    addCheck(indexHtml.includes('점성, 요가 수트라, 바가바드 기타, 티베트 사자의 서를 잇는 프리미엄 지혜 아카이브.'), 'Meta description is normalized');
+    addCheck(indexHtml.includes('property="og:locale" content="ko_KR"'), 'OG locale is present');
+    addCheck(indexHtml.includes('property="og:image:width" content="1200"'), 'OG image width is declared');
+    addCheck(indexHtml.includes('property="og:image:height" content="630"'), 'OG image height is declared');
+    addCheck(indexHtml.includes('property="og:image:alt"'), 'OG image alt text is declared');
     addCheck(!indexHtml.includes('portal-overlay'), 'Unused portal overlay has been removed');
     addCheck(!indexHtml.includes('onclick='), 'Inline event handlers have been removed');
 
