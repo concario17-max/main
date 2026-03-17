@@ -36,15 +36,11 @@ const main = async () => {
         readFile(new URL('../src/modules/stardust.js', import.meta.url), 'utf8'),
     ]);
 
-    addCheck(cards.length === 4, 'Card data includes four entries');
+    addCheck(cards.length > 0, 'Card data includes at least one entry');
     addCheck(new Set(cards.map(({ href }) => href)).size === cards.length, 'Card links are unique');
     addCheck(cards.every(({ href }) => href.startsWith('https://')), 'Card links use HTTPS');
     addCheck(
-        cards.every(({ slug, heading, copy, icon }) => (
-            slug
-            && typeof slug === 'string'
-            && typeof icon === 'function'
-        )),
+        cards.every(({ slug, icon }) => slug && typeof slug === 'string' && typeof icon === 'function'),
         'Each card has a valid slug and icon factory',
     );
     addCheck(
@@ -61,13 +57,13 @@ const main = async () => {
     );
     addCheck(new Set(cards.map(({ slug }) => slug)).size === cards.length, 'Card slugs are unique');
     addCheck(cards.every(({ icon }) => Object.values(cardIcons).includes(icon)), 'Cards use shared icon definitions');
-    addCheck(cards.filter(({ featured }) => featured).length === 1, 'Exactly one featured card exists');
+    addCheck(cards.filter(({ featured }) => featured).length <= 1, 'At most one featured card exists');
     addCheck(cards.every(({ tone }) => ['celestial', 'sutra', 'divine', 'liberation'].includes(tone)), 'Each card uses a supported tone');
 
     addCheck(indexHtml.includes('id="theme-toggle"'), 'Theme toggle button exists');
     addCheck(indexHtml.includes('aria-label="Toggle color theme"'), 'Theme toggle has an accessibility label');
     addCheck(indexHtml.includes('id="cards-grid"'), 'Cards grid container exists');
-    addCheck(indexHtml.includes('점성, 요가, 기타, 티베트 지혜를 잇는 네 개의 살아 있는 포털'), 'Header support copy is present');
+    addCheck(indexHtml.includes('점성, 요가, 기타, 사자의 서를 잇는 살아 있는 포털'), 'Header support copy is present');
     addCheck(indexHtml.includes('header-pill'), 'Header portal pills are present');
     addCheck(indexHtml.includes('점성, 요가 수트라, 바가바드 기타, 티베트 사자의 서를 잇는 프리미엄 지혜 아카이브.'), 'Meta description is normalized');
     addCheck(indexHtml.includes('property="og:locale" content="ko_KR"'), 'OG locale is present');
@@ -76,6 +72,8 @@ const main = async () => {
     addCheck(indexHtml.includes('property="og:image:alt"'), 'OG image alt text is declared');
     addCheck(!indexHtml.includes('portal-overlay'), 'Unused portal overlay has been removed');
     addCheck(!indexHtml.includes('onclick='), 'Inline event handlers have been removed');
+    addCheck(!indexHtml.includes('네 개'), 'Header copy does not hardcode a fixed card count');
+    addCheck(!indexHtml.includes('Four'), 'Meta copy does not hardcode a fixed card count in English');
 
     addCheck(rootStyleCss.includes("@import './styles/base.css';"), 'Style entry imports base.css');
     addCheck(rootStyleCss.includes("@import './styles/components.css';"), 'Style entry imports components.css');
