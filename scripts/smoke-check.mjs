@@ -63,7 +63,7 @@ const main = async () => {
     addCheck(indexHtml.includes('id="theme-toggle"'), 'Theme toggle button exists');
     addCheck(indexHtml.includes('aria-label="Toggle color theme"'), 'Theme toggle has an accessibility label');
     addCheck(indexHtml.includes('id="cards-grid"'), 'Cards grid container exists');
-    addCheck(indexHtml.includes('점성, 요가, 기타, 사자의 서를 잇는 살아 있는 포털'), 'Header support copy is present');
+    addCheck(indexHtml.includes('A Living Portal for Astrology, Yoga, Gita, and the Book of the Dead'), 'Header support copy is present');
     addCheck(indexHtml.includes('header-pill'), 'Header portal pills are present');
     addCheck(indexHtml.includes('점성, 요가 수트라, 바가바드 기타, 티베트 사자의 서를 잇는 프리미엄 지혜 아카이브.'), 'Meta description is normalized');
     addCheck(indexHtml.includes('property="og:locale" content="ko_KR"'), 'OG locale is present');

@@ -93,11 +93,11 @@ const createCardMarkup = ({ slug, href, delayClass, featured, tone, index, porta
             <h2 class="${featured ? 'text-xl sm:text-2xl md:text-3xl xl:text-4xl' : 'text-base sm:text-lg md:text-xl lg:text-2xl'} font-display font-medium mb-1 text-primary dark:text-white tracking-[0.13em] md:tracking-[0.15em] uppercase">
                 ${createHeadingMarkup(heading)}
             </h2>
-            <div class="premium-card__meta ${toneClasses.meta} text-[10px] sm:text-[11px] font-body tracking-[0.24em] md:tracking-[0.3em] ${featured ? 'mb-5 md:mb-6' : 'mb-4 md:mb-5'} font-light">
+            <div class="premium-card__meta ${toneClasses.meta} text-[10px] sm:text-[11px] font-body tracking-[0.18em] md:tracking-[0.24em] ${featured ? 'mb-5 md:mb-6' : 'mb-4 md:mb-5'} font-medium">
                 ${copy.label}
             </div>
             <div class="premium-card__rule ${toneClasses.rule} w-8 h-px ${featured ? 'mb-6 md:mb-8' : 'mb-5 md:mb-6'} transition-all duration-500 group-hover:w-16"></div>
-            <p class="break-keep ${featured ? 'text-slate-700 dark:text-slate-200 text-[14px] sm:text-[15px] md:text-base leading-7 md:leading-8' : 'text-slate-600 dark:text-slate-400 text-[12px] sm:text-[13px] leading-6 sm:leading-relaxed'} font-medium italic mb-7 md:mb-8 flex-grow">
+            <p class="break-keep ${featured ? 'text-slate-800 dark:text-slate-100 text-[14px] sm:text-[15px] md:text-base leading-7 md:leading-8' : 'text-slate-700 dark:text-slate-300 text-[12px] sm:text-[13px] leading-6 sm:leading-relaxed'} font-medium italic mb-7 md:mb-8 flex-grow">
                 ${copy.description}
             </p>
             ${createCtaMarkup(featured, copy.cta, tone)}
