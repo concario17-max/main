@@ -1,7 +1,17 @@
 .premium-card {
     @apply relative overflow-hidden backdrop-blur-3xl border border-transparent bg-card-light dark:bg-card-dark transition-all duration-1000;
+    width: 100%;
+    height: auto;
+    align-self: start;
     transform-style: preserve-3d;
     perspective: 2000px;
+}
+
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+    gap: 1.5rem;
+    align-items: start;
 }
 
 .entry-gate {
@@ -282,10 +292,28 @@ body.entry-locked #archive-shell {
 }
 
 .premium-card-content {
-    @apply relative z-20 h-full flex flex-col items-center;
+    @apply relative z-20 flex flex-col items-center;
     min-width: 0;
     overflow: visible;
     transform: translateZ(20px);
+}
+
+@media (min-width: 1024px) {
+    .archive-grid {
+        grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr));
+        gap: 1.75rem;
+    }
+
+    .archive-grid__feature {
+        grid-column: span 2;
+    }
+}
+
+@media (min-width: 1440px) {
+    .archive-grid {
+        grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
+        gap: 2rem;
+    }
 }
 
 .premium-card::after {
@@ -308,6 +336,10 @@ body.entry-locked #archive-shell {
 }
 
 @media (max-width: 767px) {
+    .archive-grid {
+        gap: 1.25rem;
+    }
+
     .premium-card {
         backdrop-filter: blur(18px);
     }

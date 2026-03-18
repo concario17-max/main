@@ -93,7 +93,8 @@ const main = async () => {
     addCheck(indexHtml.includes('property="og:image:alt"'), 'OG image alt text is declared');
     addCheck(indexHtml.includes('살아 있는 지혜의 포털'), 'Share copy uses the normalized Korean title');
     addCheck(indexHtml.includes('점성, 요가 수트라, 바가바드 기타, 사자의 서, 삼신 명등론을 잇는 프리미엄 지혜 아카이브.'), 'Meta description is normalized');
-    addCheck(indexHtml.includes('xl:grid-cols-3'), 'Desktop grid keeps wider cards for long content');
+    addCheck(indexHtml.includes('class="archive-grid w-full px-1 md:px-0 py-6 md:py-0"'), 'Cards grid uses the adaptive archive grid layout');
+    addCheck(componentCss.includes('.archive-grid'), 'Adaptive archive grid styles exist');
     addCheck(!indexHtml.includes('portal-overlay'), 'Unused portal overlay has been removed');
     addCheck(!indexHtml.includes('onclick='), 'Inline event handlers have been removed');
     addCheck(!indexHtml.includes('네 개'), 'Header copy does not hardcode a fixed card count');
