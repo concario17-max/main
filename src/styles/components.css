@@ -9,8 +9,8 @@
 
 .archive-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 1rem;
     align-items: start;
 }
 
@@ -142,12 +142,12 @@ body.entry-locked #archive-shell {
 .premium-card__portal {
     display: inline-flex;
     align-items: center;
-    min-height: 1.85rem;
-    padding: 0.45rem 0.75rem;
+    min-height: 1.55rem;
+    padding: 0.32rem 0.6rem;
     border-radius: 9999px;
     border: 1px solid currentColor;
-    font-size: 0.55rem;
-    letter-spacing: 0.24em;
+    font-size: 0.5rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     background: rgba(255, 255, 255, 0.38);
     opacity: 0.94;
@@ -171,8 +171,8 @@ body.entry-locked #archive-shell {
 
 .premium-card__index {
     font-family: "Cinzel", serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.42em;
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     opacity: 0.66;
 }
@@ -240,9 +240,9 @@ body.entry-locked #archive-shell {
 .premium-card__meta--compact {
     display: block;
     max-width: 100%;
-    font-size: 0.66rem;
+    font-size: 0.6rem;
     letter-spacing: 0.06em;
-    line-height: 1.85;
+    line-height: 1.65;
     text-wrap: pretty;
     word-break: keep-all;
     overflow-wrap: anywhere;
@@ -276,6 +276,10 @@ body.entry-locked #archive-shell {
     overflow-wrap: anywhere;
 }
 
+.premium-card__badge {
+    max-width: 100%;
+}
+
 .premium-card:not(.premium-card--featured) .premium-card__cta {
     color: currentColor;
     opacity: 0.38;
@@ -300,19 +304,23 @@ body.entry-locked #archive-shell {
 
 @media (min-width: 1024px) {
     .archive-grid {
-        grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr));
-        gap: 1.75rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.95rem;
     }
 
     .archive-grid__feature {
-        grid-column: span 2;
+        grid-column: span 1;
     }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1280px) {
     .archive-grid {
-        grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
-        gap: 2rem;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 0.85rem;
+    }
+
+    .premium-card__badge {
+        display: none;
     }
 }
 
@@ -337,7 +345,7 @@ body.entry-locked #archive-shell {
 
 @media (max-width: 767px) {
     .archive-grid {
-        gap: 1.25rem;
+        gap: 0.9rem;
     }
 
     .premium-card {
@@ -361,18 +369,18 @@ body.entry-locked #archive-shell {
     }
 
     .premium-card__portal {
-        padding: 0.42rem 0.66rem;
-        font-size: 0.5rem;
+        padding: 0.36rem 0.58rem;
+        font-size: 0.46rem;
     }
 
     .premium-card__index {
-        font-size: 0.66rem;
-        letter-spacing: 0.34em;
+        font-size: 0.58rem;
+        letter-spacing: 0.22em;
     }
 
     .premium-card__meta--compact {
-        font-size: 0.58rem;
+        font-size: 0.54rem;
         letter-spacing: 0.06em;
-        line-height: 1.7;
+        line-height: 1.55;
     }
 }
