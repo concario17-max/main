@@ -25,7 +25,18 @@ const assertChecks = () => {
 };
 
 const main = async () => {
-    const [indexHtml, rootStyleCss, componentCss, effectsCss, animationCss, renderCardsJs, cardEffectsJs, stardustJs, mainJs, entryGateJs] = await Promise.all([
+    const [
+        indexHtml,
+        rootStyleCss,
+        componentCss,
+        effectsCss,
+        animationCss,
+        renderCardsJs,
+        cardEffectsJs,
+        stardustJs,
+        mainJs,
+        entryGateJs,
+    ] = await Promise.all([
         readFile(new URL('../index.html', import.meta.url), 'utf8'),
         readFile(new URL('../src/style.css', import.meta.url), 'utf8'),
         readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8'),
@@ -66,6 +77,7 @@ const main = async () => {
     addCheck(indexHtml.includes('id="theme-toggle"'), 'Theme toggle button exists');
     addCheck(indexHtml.includes('id="entry-gate"'), 'Entry gate dialog exists');
     addCheck(indexHtml.includes('id="entry-gate-input"'), 'Entry gate input exists');
+    addCheck(indexHtml.includes('id="entry-gate-submit"'), 'Entry gate submit button exists');
     addCheck(indexHtml.includes('aria-label="Toggle color theme"'), 'Theme toggle has an accessibility label');
     addCheck(indexHtml.includes('id="cards-grid"'), 'Cards grid container exists');
     addCheck(indexHtml.includes('A Living Portal for Astrology, Yoga, Gita, and the Book of the Dead'), 'Header support copy is present');
@@ -78,7 +90,7 @@ const main = async () => {
     addCheck(!indexHtml.includes('portal-overlay'), 'Unused portal overlay has been removed');
     addCheck(!indexHtml.includes('onclick='), 'Inline event handlers have been removed');
     addCheck(!indexHtml.includes('네 개'), 'Header copy does not hardcode a fixed card count');
-    addCheck(!indexHtml.includes('Four'), 'Meta copy does not hardcode a fixed card count in English');
+    addCheck(!indexHtml.includes('Four Portals'), 'Meta copy does not hardcode a fixed card count in English');
 
     addCheck(rootStyleCss.includes("@import './styles/base.css';"), 'Style entry imports base.css');
     addCheck(rootStyleCss.includes("@import './styles/components.css';"), 'Style entry imports components.css');
@@ -95,6 +107,7 @@ const main = async () => {
     addCheck(renderCardsJs.includes('premium-card__topline'), 'Card renderer includes portal topline markup');
     addCheck(mainJs.includes('initEntryGate();'), 'Main entry initializes the password gate');
     addCheck(entryGateJs.includes("const unlockCode = '0228';"), 'Entry gate uses the configured unlock code');
+    addCheck(entryGateJs.includes('gate.remove();'), 'Entry gate removes itself after unlock');
     addCheck(!componentCss.includes('nth-child'), 'Component styles do not depend on nth-child card ordering');
     addCheck(componentCss.includes('.entry-gate__panel'), 'Entry gate styles exist');
     addCheck(componentCss.includes('.premium-card__meta--trinity'), 'Trinity tone styles exist');

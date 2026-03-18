@@ -3,6 +3,7 @@ const storageKey = 'simsang-entry-unlocked';
 
 const setLockedState = (locked) => {
     document.body.classList.toggle('entry-locked', locked);
+    document.body.classList.toggle('entry-unlocked', !locked);
 };
 
 const getStoredUnlockState = () => {
@@ -23,46 +24,62 @@ const persistUnlockState = () => {
 
 export const initEntryGate = () => {
     const gate = document.getElementById('entry-gate');
-    const form = document.getElementById('entry-gate-form');
     const input = document.getElementById('entry-gate-input');
     const error = document.getElementById('entry-gate-error');
+    const submit = document.getElementById('entry-gate-submit');
     const dismiss = document.getElementById('entry-gate-dismiss');
 
-    if (!gate || !form || !input || !error || !dismiss) return;
+    if (!gate || !input || !error || !submit || !dismiss) return;
 
     const unlock = () => {
         persistUnlockState();
-        gate.hidden = true;
-        gate.setAttribute('aria-hidden', 'true');
         error.textContent = '';
         setLockedState(false);
+        gate.hidden = true;
+        gate.setAttribute('aria-hidden', 'true');
+        gate.remove();
     };
 
-    const isUnlocked = getStoredUnlockState();
-
-    if (isUnlocked) {
-        unlock();
-        return;
-    }
-
-    gate.hidden = false;
-    setLockedState(true);
-    window.requestAnimationFrame(() => input.focus());
-
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-
+    const attemptUnlock = () => {
         if (input.value.trim() === unlockCode) {
             unlock();
             return;
         }
 
         error.textContent = '비밀번호가 올바르지 않습니다.';
+        input.focus();
         input.select();
+    };
+
+    if (getStoredUnlockState()) {
+        unlock();
+        return;
+    }
+
+    gate.hidden = false;
+    gate.setAttribute('aria-hidden', 'false');
+    setLockedState(true);
+
+    input.addEventListener('input', () => {
+        input.value = input.value.replace(/\D+/g, '').slice(0, 4);
+        if (error.textContent) {
+            error.textContent = '';
+        }
     });
 
+    input.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter') return;
+
+        event.preventDefault();
+        attemptUnlock();
+    });
+
+    submit.addEventListener('click', attemptUnlock);
+
     dismiss.addEventListener('click', () => {
-        error.textContent = '입장하려면 비밀번호를 입력해 주세요.';
+        error.textContent = '입장하려면 비밀번호 0228을 입력해 주세요.';
         input.focus();
     });
+
+    window.requestAnimationFrame(() => input.focus());
 };
