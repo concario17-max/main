@@ -25,7 +25,7 @@ const assertChecks = () => {
 };
 
 const main = async () => {
-    const [indexHtml, rootStyleCss, componentCss, effectsCss, animationCss, renderCardsJs, cardEffectsJs, stardustJs] = await Promise.all([
+    const [indexHtml, rootStyleCss, componentCss, effectsCss, animationCss, renderCardsJs, cardEffectsJs, stardustJs, mainJs, entryGateJs] = await Promise.all([
         readFile(new URL('../index.html', import.meta.url), 'utf8'),
         readFile(new URL('../src/style.css', import.meta.url), 'utf8'),
         readFile(new URL('../src/styles/components.css', import.meta.url), 'utf8'),
@@ -34,6 +34,8 @@ const main = async () => {
         readFile(new URL('../src/modules/renderCards.js', import.meta.url), 'utf8'),
         readFile(new URL('../src/modules/cardEffects.js', import.meta.url), 'utf8'),
         readFile(new URL('../src/modules/stardust.js', import.meta.url), 'utf8'),
+        readFile(new URL('../src/main.js', import.meta.url), 'utf8'),
+        readFile(new URL('../src/modules/entryGate.js', import.meta.url), 'utf8'),
     ]);
 
     addCheck(cards.length > 0, 'Card data includes at least one entry');
@@ -62,6 +64,8 @@ const main = async () => {
     addCheck(cards.some(({ href }) => href === 'https://3sin.simsang.org/'), 'Threefold card link is present');
 
     addCheck(indexHtml.includes('id="theme-toggle"'), 'Theme toggle button exists');
+    addCheck(indexHtml.includes('id="entry-gate"'), 'Entry gate dialog exists');
+    addCheck(indexHtml.includes('id="entry-gate-input"'), 'Entry gate input exists');
     addCheck(indexHtml.includes('aria-label="Toggle color theme"'), 'Theme toggle has an accessibility label');
     addCheck(indexHtml.includes('id="cards-grid"'), 'Cards grid container exists');
     addCheck(indexHtml.includes('A Living Portal for Astrology, Yoga, Gita, and the Book of the Dead'), 'Header support copy is present');
@@ -89,7 +93,10 @@ const main = async () => {
 
     addCheck(renderCardsJs.includes('premium-card__meta'), 'Card renderer uses explicit meta classes');
     addCheck(renderCardsJs.includes('premium-card__topline'), 'Card renderer includes portal topline markup');
+    addCheck(mainJs.includes('initEntryGate();'), 'Main entry initializes the password gate');
+    addCheck(entryGateJs.includes("const unlockCode = '0228';"), 'Entry gate uses the configured unlock code');
     addCheck(!componentCss.includes('nth-child'), 'Component styles do not depend on nth-child card ordering');
+    addCheck(componentCss.includes('.entry-gate__panel'), 'Entry gate styles exist');
     addCheck(componentCss.includes('.premium-card__meta--trinity'), 'Trinity tone styles exist');
     addCheck(cards.every(({ delayClass }) => animationCss.includes(`.${delayClass}`)), 'All card delay classes map to defined animations');
 

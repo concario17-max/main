@@ -4,6 +4,65 @@
     perspective: 2000px;
 }
 
+.entry-gate {
+    isolation: isolate;
+}
+
+.entry-gate__backdrop {
+    background:
+        radial-gradient(circle at top, rgba(197, 160, 89, 0.12), transparent 34%),
+        rgba(243, 238, 228, 0.72);
+    backdrop-filter: blur(24px);
+}
+
+.dark .entry-gate__backdrop {
+    background:
+        radial-gradient(circle at top, rgba(166, 137, 72, 0.16), transparent 36%),
+        rgba(6, 6, 6, 0.76);
+}
+
+.entry-gate__panel {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.66));
+    backdrop-filter: blur(22px);
+    box-shadow:
+        0 24px 70px -30px rgba(30, 24, 15, 0.28),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+.dark .entry-gate__panel {
+    background:
+        linear-gradient(180deg, rgba(15, 15, 15, 0.84), rgba(15, 15, 15, 0.7));
+    box-shadow:
+        0 24px 70px -30px rgba(0, 0, 0, 0.42),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.entry-gate__eyebrow {
+    color: rgba(197, 160, 89, 0.96);
+    font-size: 0.64rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+}
+
+.entry-gate__input:focus-visible,
+.entry-gate__submit:focus-visible {
+    outline: 2px solid rgba(197, 160, 89, 0.82);
+    outline-offset: 3px;
+}
+
+.entry-gate__submit {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.dark .entry-gate__submit {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+body.entry-locked {
+    overflow: hidden;
+}
+
 .premium-card--featured {
     background-image:
         radial-gradient(circle at top left, rgba(197, 160, 89, 0.14), transparent 42%),
