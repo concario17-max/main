@@ -75,7 +75,7 @@ const main = async () => {
     addCheck(cards.filter(({ featured }) => featured).length <= 1, 'At most one featured card exists');
     addCheck(cards.every(({ tone }) => ['celestial', 'sutra', 'divine', 'liberation', 'trinity'].includes(tone)), 'Each card uses a supported tone');
     addCheck(cards.some(({ href }) => href === 'https://3sin.simsang.org/'), 'Threefold card link is present');
-    addCheck(cards.some(({ copy }) => copy.label === '밀교의 성불 원리(因位三身行相明燈論)'), 'Samshin card label is normalized');
+    addCheck(cards.some(({ copy }) => copy.label === '밀교의 성불 원리'), 'Samshin card label is normalized');
 
     addCheck(indexHtml.includes('id="theme-toggle"'), 'Theme toggle button exists');
     addCheck(indexHtml.includes('id="entry-gate"'), 'Entry gate dialog exists');
@@ -93,7 +93,7 @@ const main = async () => {
     addCheck(indexHtml.includes('property="og:image:alt"'), 'OG image alt text is declared');
     addCheck(indexHtml.includes('살아 있는 지혜의 포털'), 'Share copy uses the normalized Korean title');
     addCheck(indexHtml.includes('점성, 요가 수트라, 바가바드 기타, 사자의 서, 삼신 명등론을 잇는 프리미엄 지혜 아카이브.'), 'Meta description is normalized');
-    addCheck(indexHtml.includes('xl:grid-cols-6'), 'Desktop grid expands for the extra card');
+    addCheck(indexHtml.includes('xl:grid-cols-3'), 'Desktop grid keeps wider cards for long content');
     addCheck(!indexHtml.includes('portal-overlay'), 'Unused portal overlay has been removed');
     addCheck(!indexHtml.includes('onclick='), 'Inline event handlers have been removed');
     addCheck(!indexHtml.includes('네 개'), 'Header copy does not hardcode a fixed card count');

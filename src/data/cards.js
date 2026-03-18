@@ -88,7 +88,7 @@ export const cards = [
             accent: 'Doctrine',
         },
         copy: {
-            label: '밀교의 성불 원리(因位三身行相明燈論)',
+            label: '밀교의 성불 원리',
             compactLabel: true,
             description: 'Trace the doctrine of the three radiant principles through image, motion, and luminous correspondence.',
             cta: 'Open the Treatise',
