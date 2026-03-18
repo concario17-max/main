@@ -1,210 +1,317 @@
 # research.md
 
-## 1. 프로젝트 개요
-Simsang Archive는 4개의 외부 아카이브를 하나의 프리미엄 포털 랜딩으로 묶는 정적 웹 프로젝트다. 핵심 목적은 앱 기능 자체보다 분위기, 큐레이션 감각, 카드 인터랙션을 통해 "고급 아카이브 입구" 경험을 만드는 데 있다.
+## 1. Project Summary
+This repository is a Vite-based static landing page for `simsang.org`. It is a single-document portal, not a multi-page application, and it does not include a backend. The site acts as a premium gateway that routes users out to a family of external archive domains.
 
-현재 구조는 다음 네 층으로 정리돼 있다.
-- 문서 쉘: [index.html](/C:/Users/roadsea/Desktop/main/index.html)
-- 데이터 계층: [src/data/cards.js](/C:/Users/roadsea/Desktop/main/src/data/cards.js), [src/data/cardIcons.js](/C:/Users/roadsea/Desktop/main/src/data/cardIcons.js)
-- 동작 계층: [src/main.js](/C:/Users/roadsea/Desktop/main/src/main.js), [src/modules](/C:/Users/roadsea/Desktop/main/src/modules)
-- 스타일 계층: [src/style.css](/C:/Users/roadsea/Desktop/main/src/style.css), [src/styles](/C:/Users/roadsea/Desktop/main/src/styles)
+Its current responsibilities are:
+- present the Simsang Archive brand
+- stage archive cards with premium motion and typography
+- gate access behind a lightweight client-side password prompt
+- open external archive destinations in new tabs
+- expose share/install metadata for social cards and app-like shortcuts
 
-## 2. 실행 방식
-이 프로젝트는 프레임워크 없는 Vite 기반 정적 사이트다.
+## 2. Repository Layout
+Important directories:
 
-주요 스크립트:
-- `npm run dev`: 개발 서버
-- `npm run build`: 프로덕션 빌드
-- `npm run preview`: 빌드 결과 확인
-- `npm run check:smoke`: 구조 회귀 점검
+- [src](/C:/Users/roadsea/Desktop/main/src): application code
+- [public](/C:/Users/roadsea/Desktop/main/public): favicon, manifest, OG image
+- [scripts](/C:/Users/roadsea/Desktop/main/scripts): smoke and browser verification scripts
+- [dist](/C:/Users/roadsea/Desktop/main/dist): Vite production output
+- [design](/C:/Users/roadsea/Desktop/main/design): reference design artifacts
+- [.compare](/C:/Users/roadsea/Desktop/main/.compare): ignored archive of an older project snapshot
+- [.agent](/C:/Users/roadsea/Desktop/main/.agent): agent/workflow metadata, not runtime code
 
-초기화 순서는 [src/main.js](/C:/Users/roadsea/Desktop/main/src/main.js) 기준으로 다음과 같다.
-1. 카드 렌더
-2. 테마 토글 초기화
-3. 카드 인터랙션 초기화
-4. 파티클 초기화
+Important files:
 
-이 순서는 중요하다. 렌더가 먼저 끝나야 `.premium-card` DOM을 찾는 인터랙션 코드가 정상 동작한다.
+- [index.html](/C:/Users/roadsea/Desktop/main/index.html): complete page shell and meta layer
+- [src/main.js](/C:/Users/roadsea/Desktop/main/src/main.js): runtime bootstrap
+- [src/data/cards.js](/C:/Users/roadsea/Desktop/main/src/data/cards.js): source of truth for card content
+- [src/data/cardIcons.js](/C:/Users/roadsea/Desktop/main/src/data/cardIcons.js): inline SVG icon factories
+- [package.json](/C:/Users/roadsea/Desktop/main/package.json): commands and dependencies
+- [plan.md](/C:/Users/roadsea/Desktop/main/plan.md): implementation and QA checklist
+- [research.md](/C:/Users/roadsea/Desktop/main/research.md): this report
 
-## 3. HTML 구조
-[index.html](/C:/Users/roadsea/Desktop/main/index.html)은 크게 세 부분으로 나뉜다.
+## 3. Build and Tooling
+The project uses a very small frontend toolchain:
 
-### Head
-- favicon, manifest, mobile web app meta
-- 일반 description
-- OG/Twitter 메타
-- Google Fonts
-- 스타일 엔트리 로드
+- Vite 5 for dev/build/preview
+- Tailwind CSS 3 for utility classes and theme tokens
+- PostCSS + Autoprefixer
+- Playwright runtime for browser smoke verification
+- no framework runtime
+- no TypeScript compiler
 
-이번 안정화 라운드에서 깨져 있던 메타 문자열을 모두 정상 문구로 교체했다. 이 변경은 공유 미리보기와 검색 노출 품질에 직접 영향을 준다.
+Current commands from [package.json](/C:/Users/roadsea/Desktop/main/package.json):
 
-### Background Layer
-- `bg-glow`
-- 3개의 aura div
-- 점 패턴 오버레이
+- `npm run dev`
+- `npm run build`
+- `npm run preview`
+- `npm run check:smoke`
+- `npm run check:browser`
+
+Important implication:
+- there is no dedicated `typecheck` script because the app is plain JavaScript
+- `npm run build` is currently the strongest compile-time safety check
+
+## 4. Runtime Boot Sequence
+The runtime starts in [src/main.js](/C:/Users/roadsea/Desktop/main/src/main.js).
+
+Boot order:
+1. `renderCards(cards)`
+2. `initEntryGate()`
+3. `initThemeToggle()`
+4. `initCardEffects()`
+5. `initStardust()`
+
+This order is intentional:
+- cards must exist before hover effects can bind
+- the password gate must initialize before the page becomes interactive
+- theme must initialize before the user meaningfully reads the screen
+- decorative effects are progressive enhancement
+
+State is handled with:
+- DOM state
+- `localStorage` for theme
+- `sessionStorage` for entry-gate unlock state
+
+## 5. HTML and Content Policy
+[index.html](/C:/Users/roadsea/Desktop/main/index.html) is the full page shell.
+
+Major body sections:
+- `#entry-gate`
+- ambient glow/aura background layers
 - `#particles-container`
-
-이 레이어는 전부 장식용이며 `pointer-events-none`로 사용자 입력을 막지 않는다.
-
-### Content Layer
 - `#theme-toggle`
-- 헤더
+- `#archive-shell`
+- header block
 - `#cards-grid`
 
-카드 자체는 정적 HTML에 직접 적혀 있지 않고 JS 렌더러가 주입한다.
+Current language policy:
+- brand headline and main archive headings remain English
+- card subtitle labels and header pills are Korean
+- gate copy is Korean
+- share/meta/manifest descriptions are Korean
 
-## 4. 카드 데이터 구조
-[src/data/cards.js](/C:/Users/roadsea/Desktop/main/src/data/cards.js)는 카드 콘텐츠의 단일 소스다.
+Normalized user-facing source strings now include:
+- header pills:
+  - `점성 아카이브`
+  - `요가 수트라`
+  - `바가바드 기타`
+  - `사자의 서`
+  - `삼신 명등론`
+- meta/share description:
+  - `점성, 요가 수트라, 바가바드 기타, 사자의 서, 삼신 명등론을 잇는 프리미엄 지혜 아카이브.`
+- share title:
+  - `SIMSANG ARCHIVE | 살아 있는 지혜의 포털`
 
-각 카드 객체는 다음 필드를 가진다.
+## 6. Card Data Model
+[src/data/cards.js](/C:/Users/roadsea/Desktop/main/src/data/cards.js) is the content source of truth.
+
+Each card includes:
 - `slug`
 - `href`
 - `delayClass`
-- `featured`
+- optional `featured`
 - `tone`
 - `icon`
+- `index`
+- `portal`
 - `heading.main`
 - `heading.accent`
 - `copy.label`
+- optional `copy.compactLabel`
 - `copy.description`
 - `copy.cta`
 
-현재 특징:
-- 첫 카드만 `featured: true`
-- tone은 `celestial`, `sutra`, `divine`, `liberation`
-- CTA 문구가 카드마다 다름
+Current cards:
+- `celestial-ephemeris`
+- `sutra-exegesis`
+- `divine-song`
+- `eternal-liberation`
+- `threefold-luminaries`
 
-이 구조 덕분에 카드 텍스트 수정, 링크 변경, 순서 조정이 HTML 수정 없이 가능하다.
+Normalized Korean subtitle labels:
+- `오컬트 주역 천체 관측소`
+- `파탄잘리 요가 수트라`
+- `바가바드 기타`
+- `티베트 사자의 서`
+- `밀교의 성불 원리(因位三身行相明燈論)`
 
-## 5. 카드 렌더링 방식
-[src/modules/renderCards.js](/C:/Users/roadsea/Desktop/main/src/modules/renderCards.js)는 데이터 객체를 카드 마크업 문자열로 변환한다.
+Compact-label policy:
+- long Korean labels can explicitly opt into compact handling with `copy.compactLabel`
+- this is preferred over relying only on length heuristics
 
-핵심 역할:
-- featured 카드와 일반 카드의 마크업 차등 처리
-- tone 기반 class 매핑
-- `data-card`와 `aria-label` 부여
-- 외부 링크 보안 속성 강제
+## 7. Card Rendering
+[src/modules/renderCards.js](/C:/Users/roadsea/Desktop/main/src/modules/renderCards.js) converts card data into HTML strings and mounts them into `#cards-grid`.
 
-최근 안정화 포인트:
-- 카드 메타 라벨에 `premium-card__meta--*` 클래스를 직접 부여하도록 수정
-- 이전에 있던 `nth-child` 기반 색상 매핑 제거
+Key responsibilities:
+- maps each `tone` to explicit CSS classes
+- renders the featured card variant
+- renders topline portal/index metadata
+- injects SVG icons from shared icon factories
+- adds `data-card` and `aria-label`
+- ensures external-link safety with `target="_blank"` and `rel="noopener noreferrer"`
 
-이 변화로 배지나 추가 요소가 들어가도 스타일이 DOM 순서에 따라 깨지지 않는다.
+The renderer no longer depends on DOM order for styling. This makes the grid safer to extend.
 
-## 6. 인터랙션 구조
+## 8. Interaction Modules
 
-### 카드 인터랙션
-[src/modules/cardEffects.js](/C:/Users/roadsea/Desktop/main/src/modules/cardEffects.js)는 다음 효과를 담당한다.
-- spotlight 좌표 추적
-- 카드 tilt
-- CTA magnetic 이동
-- `requestAnimationFrame` 기반 보간
+### 8.1 Entry Gate
+[src/modules/entryGate.js](/C:/Users/roadsea/Desktop/main/src/modules/entryGate.js) controls the client-side password prompt.
 
-구현 방식:
-- 카드 rect를 `Map`으로 캐싱
-- `mousemove` 때 목표값 계산
-- animation loop에서 현재값을 lerp로 보간
-- CSS 변수와 `transform`에 반영
+Current behavior:
+- unlock code is hardcoded as `0228`
+- the gate appears on first load
+- correct input removes the gate from the DOM
+- incorrect input shows a Korean error message
+- input is numeric-only and limited to four digits
+- Enter and button click both submit
+- the underlying app shell is locked using `inert`
+- focus is trapped inside the dialog while locked
+- unlock state is persisted in `sessionStorage`
+- unlock still succeeds even if storage access fails
 
-추가된 안정화:
-- `prefers-reduced-motion: reduce`일 때 인터랙션 초기화를 사실상 비활성화
+Accessibility shape:
+- `role="dialog"`
+- `aria-modal="true"`
+- `aria-labelledby`
+- `aria-describedby`
 
-### 파티클
-[src/modules/stardust.js](/C:/Users/roadsea/Desktop/main/src/modules/stardust.js)는 장식용 파티클을 생성한다.
+Important limitation:
+- this is still not real security
+- the code ships to the browser
+- meaningful protection must move to server or edge infrastructure
 
-특징:
-- 50개 파티클 생성
-- `DocumentFragment` 사용
-- `IntersectionObserver`로 표시 여부 제어
+### 8.2 Theme
+[src/modules/theme.js](/C:/Users/roadsea/Desktop/main/src/modules/theme.js)
 
-추가된 안정화:
-- `prefers-reduced-motion: reduce`일 때 파티클을 표시하지 않음
+Behavior:
+- default is light mode
+- stored under `simsang-theme`
+- toggles the `dark` class on `document.documentElement`
 
-### 테마
-[src/modules/theme.js](/C:/Users/roadsea/Desktop/main/src/modules/theme.js)는 다크 모드를 담당한다.
+### 8.3 Card Effects
+[src/modules/cardEffects.js](/C:/Users/roadsea/Desktop/main/src/modules/cardEffects.js)
 
-기능:
-- 초기 테마 판별
-- 토글 버튼 이벤트 바인딩
-- `localStorage` 저장
+Effects:
+- spotlight via CSS custom properties
+- 3D tilt
+- magnetic CTA drift
+- rAF-based smoothing
 
-## 7. 스타일 계층
-[src/style.css](/C:/Users/roadsea/Desktop/main/src/style.css)는 엔트리 파일이며, 실제 스타일은 역할별로 분리돼 있다.
+Safety:
+- skips motion when `prefers-reduced-motion: reduce` matches
 
-### [src/styles/base.css](/C:/Users/roadsea/Desktop/main/src/styles/base.css)
-- body 기본 스타일
-- 선택 영역 스타일
-- 데스크톱 스크롤바
+### 8.4 Stardust
+[src/modules/stardust.js](/C:/Users/roadsea/Desktop/main/src/modules/stardust.js)
 
-### [src/styles/components.css](/C:/Users/roadsea/Desktop/main/src/styles/components.css)
-- 카드 베이스 스타일
-- featured 카드 강조
-- tone별 icon/meta/rule/cta 스타일
-- focus-visible
+Behavior:
+- creates 50 decorative particles
+- uses `DocumentFragment`
+- hides entirely under reduced motion
+- uses `IntersectionObserver` to toggle visibility
 
-### [src/styles/effects.css](/C:/Users/roadsea/Desktop/main/src/styles/effects.css)
-- spotlight
-- glow
-- grain
-- 모바일용 효과 강도 완화
-- reduced-motion 시 시각 효과 약화
+## 9. Styling Architecture
+[src/style.css](/C:/Users/roadsea/Desktop/main/src/style.css) is only the import entry.
 
-### [src/styles/animations.css](/C:/Users/roadsea/Desktop/main/src/styles/animations.css)
+### [base.css](/C:/Users/roadsea/Desktop/main/src/styles/base.css)
+- selection colors
+- typography baseline
+- desktop scrollbar treatment
+
+### [components.css](/C:/Users/roadsea/Desktop/main/src/styles/components.css)
+- card shells
+- featured card look
+- header pills
+- card topline metadata
+- tone-specific color mapping
+- compact subtitle behavior
+- entry gate styling
+- focus-visible treatment
+
+### [effects.css](/C:/Users/roadsea/Desktop/main/src/styles/effects.css)
+- card spotlight
+- global glow
+- grain overlay
+- mobile reductions
+- reduced-motion fallback
+
+### [animations.css](/C:/Users/roadsea/Desktop/main/src/styles/animations.css)
 - `fadeUpPremium`
 - `auraFloat`
 - `drift`
-- `delay-100/300/500/700`
-- reduced-motion 애니메이션 무력화
+- stagger delay classes
+- global reduced-motion neutralization
 
-## 8. UI 변화 요약
-이번 라운드까지 반영된 주요 UI 변화:
-- 첫 카드를 featured 카드로 승격
-- featured 카드 전용 배지와 CTA 추가
-- 일반 카드 3장의 tone/CTA 차별화
-- 헤더 보조 문장을 이해 가능한 설명형 문구로 정리
-- 모바일에서 헤더, 카드, 배경 효과 밀도 완화
-- reduced-motion 대응 추가
+## 10. Static Assets and Artifact Policy
+[public](/C:/Users/roadsea/Desktop/main/public) contains:
+- favicon
+- Apple touch icon
+- manifest
+- OG image
 
-결과적으로 현재 UI는 초기보다 정보 위계가 분명하고, 모바일 부담이 적으며, 유지보수도 더 안전하다.
+[manifest.json](/C:/Users/roadsea/Desktop/main/public/manifest.json) now follows the same Korean description policy as the share meta.
 
-## 9. 검증 체계
-[scripts/smoke-check.mjs](/C:/Users/roadsea/Desktop/main/scripts/smoke-check.mjs)는 파일 기반 스모크 체크다.
+Artifact decisions:
+- [dist](/C:/Users/roadsea/Desktop/main/dist) is treated only as a build artifact
+- [design](/C:/Users/roadsea/Desktop/main/design) is retained as design/reference material
+- [.compare](/C:/Users/roadsea/Desktop/main/.compare) is retained for now as an ignored before-state archive, not as active source
 
-현재 검증 항목:
-- 카드 개수
-- slug 중복 여부
-- 링크 중복 여부
-- HTTPS 사용 여부
-- 카드 필수 필드 존재 여부
-- shared icon 사용 여부
-- featured 카드 1개 보장
-- tone 값 유효성
-- 테마 토글 / 카드 그리드 존재
-- 헤더 보조 카피 존재
-- 정상화된 메타 description 존재
-- 포털 제거 여부
-- inline 이벤트 제거 여부
-- style import 연결
-- `delay-700` 존재
-- reduced-motion 대응 존재
-- `nth-child` 의존 제거 여부
+## 11. Verification Strategy
+The project now has two automated checks:
 
-이건 브라우저 자동화 테스트는 아니지만, 구조 리팩터링 회귀를 빨리 잡는 데는 충분히 실용적이다.
+### 11.1 Structural Smoke
+[scripts/smoke-check.mjs](/C:/Users/roadsea/Desktop/main/scripts/smoke-check.mjs)
 
-## 10. 남아 있는 리스크
-- `.compare/` 폴더가 미추적으로 남아 있다. 프로젝트 산출물인지 임시 비교 자산인지 확인 후 정리 필요.
-- smoke check는 파일/문자열 기반이므로 실제 브라우저 상호작용 회귀를 완전히 대체하진 못한다.
-- `IntersectionObserver`가 fixed full-screen container에 대해 큰 이점을 주는 구조는 아니다. 동작엔 문제 없지만 최적화 여지는 있다.
-- 카드 카피가 모두 영어로 정리돼 있어, 실제 타깃 사용자 언어 전략과 맞는지는 제품 판단이 필요하다.
+This verifies:
+- card structure and uniqueness
+- tone coverage
+- normalized strings
+- gate markup presence
+- meta/manifest consistency
+- reduced-motion contracts
+- renderer contracts
+- style import contracts
+- absence of deprecated inline patterns
 
-## 11. 결론
-현재 Simsang Archive는 "감성 위주의 단일 HTML 랜딩"에서 "데이터/렌더/인터랙션/스타일 계층이 분리된 정적 포털"로 정리된 상태다.
+This is string- and structure-oriented, not behavioral.
 
-특히 이번 안정화 이후 기준으로 보면:
-- 메타와 공유 문구가 정상화됐고
-- 카드 스타일 결합도가 낮아졌고
-- 모바일 밀도가 개선됐고
-- 모션 접근성 대응이 들어갔고
-- 스모크 체크가 더 믿을 만해졌다
+### 11.2 Browser Smoke
+[scripts/browser-smoke.mjs](/C:/Users/roadsea/Desktop/main/scripts/browser-smoke.mjs)
 
-즉 지금 코드는 작은 정적 사이트 치고는 꽤 안정적으로 관리 가능한 상태다.
+This runs a real browser against `vite preview` and verifies:
+- gate appears
+- wrong password shows an error
+- `0228` unlocks the page
+- theme toggle still works after unlock
+- rendered card count matches card data
+- clicking the first card opens the expected external URL in a popup
+
+This is the first true browser-level regression layer in the repo.
+
+## 12. Current Risks and Technical Debt
+
+### 12.1 Access control is still client-side only
+The password gate is a UX lock, not a secure barrier.
+
+### 12.2 Terminal output can still misrepresent UTF-8 content
+Repository files were normalized and rewritten, but Windows shell output can still display mojibake depending on console encoding. Browser display and source-file encoding must be treated as separate concerns.
+
+### 12.3 Browser smoke is still minimal
+The project now verifies the main unlock/click flow, but it still lacks:
+- mobile emulation coverage
+- visual regression snapshots
+- cross-browser matrix coverage
+
+### 12.4 External destination behavior is out of scope
+The destination apps live on other domains. This repository cannot validate or change their internal logic.
+
+## 13. Practical Conclusion
+The codebase is now a modular static portal with:
+- normalized content strings
+- a more accessible and stable entry gate
+- explicit artifact/documentation policy
+- structural regression coverage
+- browser-level smoke coverage for the highest-risk user path
+
+The next genuinely high-value step would be to replace the client-side password gate with real infrastructure protection if restricted access matters.

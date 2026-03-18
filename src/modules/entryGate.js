@@ -1,9 +1,34 @@
 const unlockCode = '0228';
 const storageKey = 'simsang-entry-unlocked';
 
+const getManagedElements = () => [
+    document.getElementById('archive-shell'),
+    document.getElementById('theme-toggle'),
+].filter(Boolean);
+
 const setLockedState = (locked) => {
     document.body.classList.toggle('entry-locked', locked);
     document.body.classList.toggle('entry-unlocked', !locked);
+
+    getManagedElements().forEach((element) => {
+        if (!('inert' in element)) {
+            if (locked) {
+                element.setAttribute('aria-hidden', 'true');
+            } else {
+                element.removeAttribute('aria-hidden');
+            }
+
+            return;
+        }
+
+        element.inert = locked;
+
+        if (locked) {
+            element.setAttribute('aria-hidden', 'true');
+        } else {
+            element.removeAttribute('aria-hidden');
+        }
+    });
 };
 
 const getStoredUnlockState = () => {
@@ -21,6 +46,10 @@ const persistUnlockState = () => {
         return;
     }
 };
+
+const getFocusableElements = (gate) => Array.from(
+    gate.querySelectorAll('button, input, a, [tabindex]:not([tabindex="-1"])'),
+).filter((element) => !element.hasAttribute('disabled'));
 
 export const initEntryGate = () => {
     const gate = document.getElementById('entry-gate');
@@ -60,8 +89,29 @@ export const initEntryGate = () => {
     gate.setAttribute('aria-hidden', 'false');
     setLockedState(true);
 
+    gate.addEventListener('keydown', (event) => {
+        if (event.key !== 'Tab') return;
+
+        const focusableElements = getFocusableElements(gate);
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (!firstElement || !lastElement) return;
+
+        if (event.shiftKey && document.activeElement === firstElement) {
+            event.preventDefault();
+            lastElement.focus();
+        }
+
+        if (!event.shiftKey && document.activeElement === lastElement) {
+            event.preventDefault();
+            firstElement.focus();
+        }
+    });
+
     input.addEventListener('input', () => {
         input.value = input.value.replace(/\D+/g, '').slice(0, 4);
+
         if (error.textContent) {
             error.textContent = '';
         }
@@ -77,7 +127,7 @@ export const initEntryGate = () => {
     submit.addEventListener('click', attemptUnlock);
 
     dismiss.addEventListener('click', () => {
-        error.textContent = '입장하려면 비밀번호 0228을 입력해 주세요.';
+        error.textContent = '비밀번호를 입력해 주세요.';
         input.focus();
     });
 

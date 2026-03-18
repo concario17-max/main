@@ -63,6 +63,10 @@ body.entry-locked {
     overflow: hidden;
 }
 
+body.entry-locked #archive-shell {
+    user-select: none;
+}
+
 .premium-card--featured {
     background-image:
         radial-gradient(circle at top left, rgba(197, 160, 89, 0.14), transparent 42%),
@@ -211,8 +215,10 @@ body.entry-locked {
 .premium-card__meta--compact {
     display: block;
     max-width: 100%;
+    font-size: 0.66rem;
     letter-spacing: 0.08em;
     line-height: 1.75;
+    text-wrap: pretty;
     word-break: keep-all;
     overflow-wrap: anywhere;
 }

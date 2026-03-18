@@ -1,7 +1,7 @@
 {
   "name": "Simsang Archive",
   "short_name": "Archive",
-  "description": "A premium archive of astrology, yoga sutras, the Bhagavad Gita, and Tibetan wisdom.",
+  "description": "점성, 요가 수트라, 바가바드 기타, 사자의 서, 삼신 명등론을 잇는 프리미엄 지혜 아카이브.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#080808",
