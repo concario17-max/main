@@ -1,5 +1,5 @@
 const unlockCode = '0228';
-const storageKey = 'simsang-entry-unlocked';
+const storageKey = 'simsang-entry-unlocked-code';
 
 const getManagedElements = () => [
     document.getElementById('archive-shell'),
@@ -33,7 +33,7 @@ const setLockedState = (locked) => {
 
 const getStoredUnlockState = () => {
     try {
-        return window.sessionStorage.getItem(storageKey) === 'true';
+        return window.localStorage.getItem(storageKey) === unlockCode;
     } catch {
         return false;
     }
@@ -41,7 +41,7 @@ const getStoredUnlockState = () => {
 
 const persistUnlockState = () => {
     try {
-        window.sessionStorage.setItem(storageKey, 'true');
+        window.localStorage.setItem(storageKey, unlockCode);
     } catch {
         return;
     }

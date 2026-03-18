@@ -1,12 +1,10 @@
-import { spawn } from 'node:child_process';
-import { once } from 'node:events';
 import { setTimeout as delay } from 'node:timers/promises';
-import process from 'node:process';
 import { chromium } from 'playwright';
+import { preview } from 'vite';
 import { cards } from '../src/data/cards.js';
 
 const host = '127.0.0.1';
-const port = 4173;
+const port = 4173 + Math.floor(Math.random() * 200);
 const baseUrl = `http://${host}:${port}`;
 
 const assert = (condition, message) => {
@@ -15,64 +13,35 @@ const assert = (condition, message) => {
     }
 };
 
-const waitForServer = async () => {
-    for (let attempt = 0; attempt < 40; attempt += 1) {
-        try {
-            const response = await fetch(baseUrl);
+const closeServer = async (server) => {
+    const httpServer = server.httpServer;
 
-            if (response.ok) {
+    if (!httpServer) return;
+
+    await new Promise((resolve, reject) => {
+        httpServer.close((error) => {
+            if (error) {
+                reject(error);
                 return;
             }
-        } catch {
-            await delay(500);
-            continue;
-        }
 
-        await delay(500);
-    }
-
-    throw new Error('Timed out waiting for preview server');
-};
-
-const stopPreviewServer = async (previewServer) => {
-    previewServer.kill();
-
-    try {
-        await Promise.race([
-            once(previewServer, 'exit'),
-            delay(5_000),
-        ]);
-    } catch {
-        return;
-    }
+            resolve(undefined);
+        });
+    });
 };
 
 const main = async () => {
-    const previewCommand = `npm.cmd run preview -- --host ${host} --port ${port} --strictPort`;
-    const previewServer = spawn(
-        process.env.ComSpec ?? 'cmd.exe',
-        ['/d', '/s', '/c', previewCommand],
-        {
-            cwd: process.cwd(),
-            stdio: 'pipe',
-            windowsHide: true,
+    const previewServer = await preview({
+        preview: {
+            host,
+            port,
+            strictPort: true,
         },
-    );
-
-    let previewOutput = '';
-
-    const recordOutput = (chunk) => {
-        previewOutput += chunk.toString();
-    };
-
-    previewServer.stdout.on('data', recordOutput);
-    previewServer.stderr.on('data', recordOutput);
+    });
 
     let browser;
 
     try {
-        await waitForServer();
-
         browser = await chromium.launch({ headless: true });
         const page = await browser.newPage();
 
@@ -92,10 +61,17 @@ const main = async () => {
 
         await input.fill('0228');
         await submit.click();
-        await gate.waitFor({ state: 'detached' });
+        await gate.waitFor({ state: 'hidden' });
 
         assert(await page.locator('#theme-toggle').isVisible(), 'Theme toggle should remain visible after unlock');
         assert(await firstCard.isVisible(), 'First archive card should be visible after unlock');
+
+        await page.reload({ waitUntil: 'networkidle' });
+        await page.locator('#cards-grid').waitFor();
+        await delay(500);
+
+        const gateStillVisible = await page.locator('#entry-gate').isVisible().catch(() => false);
+        assert(!gateStillVisible, 'Gate should stay unlocked after reload while the password is unchanged');
 
         const initialTheme = await page.evaluate(() => document.documentElement.classList.contains('dark'));
         await page.locator('#theme-toggle').click();
@@ -116,17 +92,13 @@ const main = async () => {
 
         await browser.close();
         browser = undefined;
-    } catch (error) {
+    } finally {
         if (browser) {
             await browser.close();
         }
 
-        await stopPreviewServer(previewServer);
-        console.error(previewOutput);
-        throw error;
+        await closeServer(previewServer);
     }
-
-    await stopPreviewServer(previewServer);
 };
 
 main().catch((error) => {

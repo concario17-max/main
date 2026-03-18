@@ -99,7 +99,7 @@ const createCardMarkup = ({ slug, href, delayClass, featured, tone, index, porta
             <div class="premium-card__icon ${toneClasses.icon} ${featured ? 'w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 mb-6 sm:mb-8 lg:mb-10' : 'w-20 h-20 sm:w-24 sm:h-24 mb-7 sm:mb-9'} flex items-center justify-center transition-transform duration-1000 group-hover:scale-110">
                 ${icon()}
             </div>
-            <h2 class="${featured ? 'text-xl sm:text-2xl md:text-3xl xl:text-4xl' : 'text-base sm:text-lg md:text-xl lg:text-2xl'} font-display font-medium mb-1 text-primary dark:text-white tracking-[0.12em] md:tracking-[0.14em] uppercase">
+            <h2 class="${featured ? 'text-xl sm:text-2xl md:text-3xl xl:text-4xl leading-[1.18] md:leading-[1.12] pb-1' : 'text-base sm:text-lg md:text-xl lg:text-2xl leading-[1.24] md:leading-[1.18] pb-1'} font-display font-medium mb-1 text-primary dark:text-white tracking-[0.12em] md:tracking-[0.14em] uppercase break-keep">
                 ${createHeadingMarkup(heading)}
             </h2>
             <div class="premium-card__meta ${toneClasses.meta} ${hasCompactLabel ? 'premium-card__meta--compact' : ''} text-[10px] sm:text-[11px] font-body tracking-[0.18em] md:tracking-[0.24em] ${featured ? 'mb-5 md:mb-6' : 'mb-4 md:mb-5'} font-medium">
