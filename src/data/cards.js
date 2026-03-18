@@ -81,10 +81,10 @@ export const cards = [
         tone: 'trinity',
         icon: cardIcons.trinity,
         index: 'V',
-        portal: 'Threefold Portal',
+        portal: 'Samshin Portal',
         heading: {
-            main: 'Threefold',
-            accent: 'Luminaries',
+            main: 'Samshin',
+            accent: 'Doctrine',
         },
         copy: {
             label: '인위삼신행상명등론',

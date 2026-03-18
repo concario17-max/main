@@ -73,10 +73,12 @@ const createCtaMarkup = (featured, cta, tone) => {
 
 const createCardMarkup = ({ slug, href, delayClass, featured, tone, index, portal, icon, heading, copy }) => {
     const toneClasses = getToneClasses(tone);
+    const hasCompactLabel = copy.label.length > 12;
+    const cardSpanClass = featured ? 'premium-card--featured lg:col-span-2' : '';
 
     return `
     <a
-        class="group premium-card ${toneClasses.label} ${featured ? 'premium-card--featured lg:col-span-2' : ''} p-7 sm:p-9 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl animate-fade-up ${delayClass}"
+        class="group premium-card ${toneClasses.label} ${cardSpanClass} p-7 sm:p-9 md:p-12 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center h-full rounded-xl animate-fade-up ${delayClass}"
         data-card="${slug}"
         href="${href}"
         target="_blank"
@@ -97,10 +99,10 @@ const createCardMarkup = ({ slug, href, delayClass, featured, tone, index, porta
             <div class="premium-card__icon ${toneClasses.icon} ${featured ? 'w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 mb-6 sm:mb-8 lg:mb-10' : 'w-20 h-20 sm:w-24 sm:h-24 mb-7 sm:mb-9'} flex items-center justify-center transition-transform duration-1000 group-hover:scale-110">
                 ${icon()}
             </div>
-            <h2 class="${featured ? 'text-xl sm:text-2xl md:text-3xl xl:text-4xl' : 'text-base sm:text-lg md:text-xl lg:text-2xl'} font-display font-medium mb-1 text-primary dark:text-white tracking-[0.13em] md:tracking-[0.15em] uppercase">
+            <h2 class="${featured ? 'text-xl sm:text-2xl md:text-3xl xl:text-4xl' : 'text-base sm:text-lg md:text-xl lg:text-2xl'} font-display font-medium mb-1 text-primary dark:text-white tracking-[0.12em] md:tracking-[0.14em] uppercase">
                 ${createHeadingMarkup(heading)}
             </h2>
-            <div class="premium-card__meta ${toneClasses.meta} text-[10px] sm:text-[11px] font-body tracking-[0.18em] md:tracking-[0.24em] ${featured ? 'mb-5 md:mb-6' : 'mb-4 md:mb-5'} font-medium">
+            <div class="premium-card__meta ${toneClasses.meta} ${hasCompactLabel ? 'premium-card__meta--compact' : ''} text-[10px] sm:text-[11px] font-body tracking-[0.18em] md:tracking-[0.24em] ${featured ? 'mb-5 md:mb-6' : 'mb-4 md:mb-5'} font-medium">
                 ${copy.label}
             </div>
             <div class="premium-card__rule ${toneClasses.rule} w-8 h-px ${featured ? 'mb-6 md:mb-8' : 'mb-5 md:mb-6'} transition-all duration-500 group-hover:w-16"></div>

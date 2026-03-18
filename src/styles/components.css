@@ -149,6 +149,15 @@
     color: rgba(76, 89, 110, 0.98);
 }
 
+.premium-card__meta--compact {
+    display: block;
+    max-width: 100%;
+    letter-spacing: 0.08em;
+    line-height: 1.75;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+}
+
 .premium-card__rule {
     background-color: currentColor;
 }
@@ -225,5 +234,11 @@
     .premium-card__index {
         font-size: 0.66rem;
         letter-spacing: 0.34em;
+    }
+
+    .premium-card__meta--compact {
+        font-size: 0.58rem;
+        letter-spacing: 0.06em;
+        line-height: 1.7;
     }
 }
