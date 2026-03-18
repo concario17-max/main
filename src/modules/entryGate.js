@@ -5,6 +5,22 @@ const setLockedState = (locked) => {
     document.body.classList.toggle('entry-locked', locked);
 };
 
+const getStoredUnlockState = () => {
+    try {
+        return window.sessionStorage.getItem(storageKey) === 'true';
+    } catch {
+        return false;
+    }
+};
+
+const persistUnlockState = () => {
+    try {
+        window.sessionStorage.setItem(storageKey, 'true');
+    } catch {
+        return;
+    }
+};
+
 export const initEntryGate = () => {
     const gate = document.getElementById('entry-gate');
     const form = document.getElementById('entry-gate-form');
@@ -15,13 +31,14 @@ export const initEntryGate = () => {
     if (!gate || !form || !input || !error || !dismiss) return;
 
     const unlock = () => {
+        persistUnlockState();
         gate.hidden = true;
+        gate.setAttribute('aria-hidden', 'true');
         error.textContent = '';
-        window.sessionStorage.setItem(storageKey, 'true');
         setLockedState(false);
     };
 
-    const isUnlocked = window.sessionStorage.getItem(storageKey) === 'true';
+    const isUnlocked = getStoredUnlockState();
 
     if (isUnlocked) {
         unlock();
