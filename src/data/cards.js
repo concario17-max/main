@@ -70,6 +70,7 @@ export const cards = [
         },
         copy: {
             label: '티베트 사자의 서',
+            compactLabel: true,
             description: 'Explore teachings on transition, death, and luminous awareness through the Tibetan wisdom tradition.',
             cta: 'Cross the Bardo',
         },
@@ -87,7 +88,8 @@ export const cards = [
             accent: 'Doctrine',
         },
         copy: {
-            label: '인위삼신행상명등론',
+            label: '밀교의 성불 원리(因位三身行相明燈論)',
+            compactLabel: true,
             description: 'Trace the doctrine of the three radiant principles through image, motion, and luminous correspondence.',
             cta: 'Open the Treatise',
         },

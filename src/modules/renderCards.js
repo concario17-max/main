@@ -73,7 +73,7 @@ const createCtaMarkup = (featured, cta, tone) => {
 
 const createCardMarkup = ({ slug, href, delayClass, featured, tone, index, portal, icon, heading, copy }) => {
     const toneClasses = getToneClasses(tone);
-    const hasCompactLabel = copy.label.length > 12;
+    const hasCompactLabel = copy.compactLabel || copy.label.length > 12;
     const cardSpanClass = featured ? 'premium-card--featured lg:col-span-2' : '';
 
     return `
