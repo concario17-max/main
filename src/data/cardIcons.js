@@ -44,4 +44,16 @@ export const cardIcons = {
             <circle cx="75" cy="50" r="1.5" fill="currentColor"></circle>
         </svg>
     `,
+    trinity: () => `
+        <svg class="w-full h-full stroke-[0.8]" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="50" cy="50" r="36" stroke="currentColor" stroke-width="0.5" opacity="0.45"></circle>
+            <path d="M50 16 L 78 66 H 22 Z" stroke="currentColor" stroke-width="0.8"></path>
+            <circle cx="50" cy="26" r="5" fill="currentColor"></circle>
+            <circle cx="31" cy="59" r="5" fill="currentColor" opacity="0.82"></circle>
+            <circle cx="69" cy="59" r="5" fill="currentColor" opacity="0.82"></circle>
+            <path d="M50 31 V 50" stroke="currentColor" stroke-width="0.8"></path>
+            <path d="M35 56 H 65" stroke="currentColor" stroke-width="0.8"></path>
+            <circle cx="50" cy="50" r="6" stroke="currentColor" stroke-width="0.8"></circle>
+        </svg>
+    `,
 };

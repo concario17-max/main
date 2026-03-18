@@ -74,4 +74,22 @@ export const cards = [
             cta: 'Cross the Bardo',
         },
     },
+    {
+        slug: 'threefold-luminaries',
+        href: 'https://3sin.simsang.org/',
+        delayClass: 'delay-700',
+        tone: 'trinity',
+        icon: cardIcons.trinity,
+        index: 'V',
+        portal: 'Threefold Portal',
+        heading: {
+            main: 'Threefold',
+            accent: 'Luminaries',
+        },
+        copy: {
+            label: '인위삼신행상명등론',
+            description: 'Trace the doctrine of the three radiant principles through image, motion, and luminous correspondence.',
+            cta: 'Open the Treatise',
+        },
+    },
 ];

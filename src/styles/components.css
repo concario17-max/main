@@ -121,6 +121,14 @@
     border-color: rgba(151, 124, 77, 0.28);
 }
 
+.premium-card__icon--trinity,
+.premium-card__rule--trinity,
+.premium-card__cta--trinity {
+    color: rgba(104, 120, 139, 0.94);
+    background-color: rgba(104, 120, 139, 0.16);
+    border-color: rgba(104, 120, 139, 0.28);
+}
+
 .premium-card__meta--celestial {
     color: rgba(197, 160, 89, 0.95);
 }
@@ -135,6 +143,10 @@
 
 .premium-card__meta--liberation {
     color: rgba(106, 85, 51, 0.98);
+}
+
+.premium-card__meta--trinity {
+    color: rgba(76, 89, 110, 0.98);
 }
 
 .premium-card__rule {

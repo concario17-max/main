@@ -29,6 +29,13 @@ const toneClassMap = {
         rule: 'premium-card__rule--liberation',
         cta: 'premium-card__cta--liberation',
     },
+    trinity: {
+        label: 'premium-card--trinity',
+        icon: 'premium-card__icon--trinity',
+        meta: 'premium-card__meta--trinity',
+        rule: 'premium-card__rule--trinity',
+        cta: 'premium-card__cta--trinity',
+    },
 };
 
 const getToneClasses = (tone) => toneClassMap[tone] ?? toneClassMap.celestial;

@@ -9,8 +9,7 @@ export const initThemeToggle = () => {
     if (!themeToggle) return;
 
     const savedTheme = window.localStorage.getItem(storageKey);
-    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    const initialTheme = savedTheme ?? preferredTheme;
+    const initialTheme = savedTheme ?? 'light';
 
     applyTheme(initialTheme);
 

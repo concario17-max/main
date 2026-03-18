@@ -58,18 +58,19 @@ const main = async () => {
     addCheck(new Set(cards.map(({ slug }) => slug)).size === cards.length, 'Card slugs are unique');
     addCheck(cards.every(({ icon }) => Object.values(cardIcons).includes(icon)), 'Cards use shared icon definitions');
     addCheck(cards.filter(({ featured }) => featured).length <= 1, 'At most one featured card exists');
-    addCheck(cards.every(({ tone }) => ['celestial', 'sutra', 'divine', 'liberation'].includes(tone)), 'Each card uses a supported tone');
+    addCheck(cards.every(({ tone }) => ['celestial', 'sutra', 'divine', 'liberation', 'trinity'].includes(tone)), 'Each card uses a supported tone');
+    addCheck(cards.some(({ href }) => href === 'https://3sin.simsang.org/'), 'Threefold card link is present');
 
     addCheck(indexHtml.includes('id="theme-toggle"'), 'Theme toggle button exists');
     addCheck(indexHtml.includes('aria-label="Toggle color theme"'), 'Theme toggle has an accessibility label');
     addCheck(indexHtml.includes('id="cards-grid"'), 'Cards grid container exists');
     addCheck(indexHtml.includes('A Living Portal for Astrology, Yoga, Gita, and the Book of the Dead'), 'Header support copy is present');
-    addCheck(indexHtml.includes('header-pill'), 'Header portal pills are present');
-    addCheck(indexHtml.includes('점성, 요가 수트라, 바가바드 기타, 티베트 사자의 서를 잇는 프리미엄 지혜 아카이브.'), 'Meta description is normalized');
+    addCheck(indexHtml.includes('삼신 명등론'), 'New portal pill is present');
     addCheck(indexHtml.includes('property="og:locale" content="ko_KR"'), 'OG locale is present');
     addCheck(indexHtml.includes('property="og:image:width" content="1200"'), 'OG image width is declared');
     addCheck(indexHtml.includes('property="og:image:height" content="630"'), 'OG image height is declared');
     addCheck(indexHtml.includes('property="og:image:alt"'), 'OG image alt text is declared');
+    addCheck(indexHtml.includes('xl:grid-cols-6'), 'Desktop grid expands for the extra card');
     addCheck(!indexHtml.includes('portal-overlay'), 'Unused portal overlay has been removed');
     addCheck(!indexHtml.includes('onclick='), 'Inline event handlers have been removed');
     addCheck(!indexHtml.includes('네 개'), 'Header copy does not hardcode a fixed card count');
@@ -89,6 +90,7 @@ const main = async () => {
     addCheck(renderCardsJs.includes('premium-card__meta'), 'Card renderer uses explicit meta classes');
     addCheck(renderCardsJs.includes('premium-card__topline'), 'Card renderer includes portal topline markup');
     addCheck(!componentCss.includes('nth-child'), 'Component styles do not depend on nth-child card ordering');
+    addCheck(componentCss.includes('.premium-card__meta--trinity'), 'Trinity tone styles exist');
     addCheck(cards.every(({ delayClass }) => animationCss.includes(`.${delayClass}`)), 'All card delay classes map to defined animations');
 
     assertChecks();
