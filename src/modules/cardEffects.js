@@ -8,7 +8,7 @@ export const initCardEffects = () => {
         cards.forEach((card) => {
             card.style.removeProperty('transform');
 
-            const cta = card.querySelector('.mt-auto');
+            const cta = card.querySelector('.premium-card__cta-target');
             if (cta) {
                 cta.style.removeProperty('transform');
             }
@@ -53,7 +53,7 @@ export const initCardEffects = () => {
             const y = event.clientY - rect.top;
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            const cta = card.querySelector('.mt-auto');
+            const cta = card.querySelector('.premium-card__cta-target');
 
             let magneticX = 0;
             let magneticY = 0;
@@ -118,7 +118,7 @@ export const initCardEffects = () => {
             card.style.setProperty('--mouse-y', `${nextTarget.currSpotY}px`);
             card.style.transform = `rotateX(${nextTarget.currTiltX}deg) rotateY(${nextTarget.currTiltY}deg)`;
 
-            const cta = card.querySelector('.mt-auto');
+            const cta = card.querySelector('.premium-card__cta-target');
             if (cta) {
                 cta.style.transform = `translate(${nextTarget.currMagneticX}px, ${nextTarget.currMagneticY}px)`;
             }

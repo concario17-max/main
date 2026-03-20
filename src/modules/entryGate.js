@@ -1,3 +1,5 @@
+import { getPersistentValue, setPersistentValue } from './storage.js';
+
 const unlockCode = '0228';
 const storageKey = 'simsang-entry-unlocked-code';
 
@@ -31,20 +33,10 @@ const setLockedState = (locked) => {
     });
 };
 
-const getStoredUnlockState = () => {
-    try {
-        return window.localStorage.getItem(storageKey) === unlockCode;
-    } catch {
-        return false;
-    }
-};
+const getStoredUnlockState = () => getPersistentValue(storageKey) === unlockCode;
 
 const persistUnlockState = () => {
-    try {
-        window.localStorage.setItem(storageKey, unlockCode);
-    } catch {
-        return;
-    }
+    setPersistentValue(storageKey, unlockCode, { maxAgeSeconds: 60 * 60 * 24 * 30 });
 };
 
 const getFocusableElements = (gate) => Array.from(

@@ -56,7 +56,7 @@ const createCtaMarkup = (featured, cta, tone) => {
 
     if (featured) {
         return `
-            <div class="premium-card__cta ${toneClasses.cta} mt-auto inline-flex items-center gap-2 md:gap-2.5 rounded-full border px-3.5 py-2 md:px-4 md:py-2.5 text-[8px] md:text-[9px] font-body tracking-[0.22em] md:tracking-[0.26em] uppercase transition-all duration-700">
+            <div class="premium-card__cta premium-card__cta-target ${toneClasses.cta} mt-auto inline-flex items-center gap-2 md:gap-2.5 rounded-full border px-3.5 py-2 md:px-4 md:py-2.5 text-[8px] md:text-[9px] font-body tracking-[0.22em] md:tracking-[0.26em] uppercase transition-all duration-700">
                 <span class="w-5 h-px bg-current opacity-80"></span>
                 ${cta}
             </div>
@@ -64,7 +64,7 @@ const createCtaMarkup = (featured, cta, tone) => {
     }
 
     return `
-        <div class="premium-card__cta ${toneClasses.cta} mt-auto text-[8px] md:text-[9px] font-body tracking-[0.22em] md:tracking-[0.26em] uppercase opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-4 group-hover:translate-y-0 flex items-center gap-2">
+        <div class="premium-card__cta premium-card__cta-target ${toneClasses.cta} mt-auto text-[8px] md:text-[9px] font-body tracking-[0.22em] md:tracking-[0.26em] uppercase opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-4 group-hover:translate-y-0 flex items-center gap-2">
             <span class="w-4 h-px bg-current transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700"></span>
             ${cta}
         </div>

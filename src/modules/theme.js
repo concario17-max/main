@@ -1,3 +1,5 @@
+import { getPersistentValue, setPersistentValue } from './storage.js';
+
 const storageKey = 'simsang-theme';
 
 const applyTheme = (theme) => {
@@ -8,14 +10,14 @@ export const initThemeToggle = () => {
     const themeToggle = document.getElementById('theme-toggle');
     if (!themeToggle) return;
 
-    const savedTheme = window.localStorage.getItem(storageKey);
-    const initialTheme = savedTheme ?? 'light';
+    const savedTheme = getPersistentValue(storageKey);
+    const initialTheme = savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : 'light';
 
     applyTheme(initialTheme);
 
     themeToggle.addEventListener('click', () => {
         const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
         applyTheme(nextTheme);
-        window.localStorage.setItem(storageKey, nextTheme);
+        setPersistentValue(storageKey, nextTheme, { maxAgeSeconds: 60 * 60 * 24 * 365 });
     });
 };

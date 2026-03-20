@@ -120,3 +120,82 @@ Simsang Archive 랜딩 페이지를 감도 높은 프리미엄 포털로 유지�
 1. 클라이언트 비밀번호 게이트를 서버 또는 엣지 보호로 대체
 2. 브라우저 스모크를 시각 회귀나 모바일 에뮬레이션까지 확장
 3. `.compare` 보관 정책 확정 후 정리
+## 2026-03-20 Detailed TODO
+
+Goal: fix the remaining functional and architectural issues without starting implementation until the plan is reviewed.
+
+### A. Entry Gate Persistence Bug
+- [ ] Reproduce the refresh problem and confirm whether the gate reappears because the unlock state is not being read, not being written, or being cleared unexpectedly.
+- [ ] Trace the exact lifecycle of `initEntryGate()` from first load, successful unlock, reload, and failure states.
+- [ ] Verify the current storage key, storage medium, and fallback behavior in normal browsing and storage-restricted cases.
+- [ ] Decide the correct persistence contract:
+- [ ] persist across reloads in the same browser
+- [ ] optionally persist across browser restarts
+- [ ] define expected behavior when storage is unavailable
+- [ ] Plan a regression test update for refresh persistence.
+
+### B. Real Korean Text and Encoding Hygiene
+- [ ] Audit all user-facing Korean strings in:
+- [ ] `index.html`
+- [ ] `src/data/cards.js`
+- [ ] `src/modules/entryGate.js`
+- [ ] `public/manifest.json`
+- [ ] `scripts/smoke-check.mjs`
+- [ ] `scripts/browser-smoke.mjs`
+- [ ] `plan.md`
+- [ ] `research.md`
+- [ ] Identify which files contain actual mojibake in source versus only terminal-display corruption.
+- [ ] Define the canonical Korean copy for header pills, meta text, gate text, and all card labels.
+- [ ] Plan a UTF-8 normalization pass so source files, smoke tests, and docs all use the same strings.
+- [ ] Add verification steps that compare file contents instead of trusting console rendering.
+
+### C. Entry Gate Security Boundary
+- [ ] Document the current client-side-only gate as insecure behavior.
+- [ ] Decide the target mitigation level:
+- [ ] keep UX-only gate but make limitations explicit
+- [ ] move enforcement to hosting/edge/infrastructure
+- [ ] remove the fake protection entirely
+- [ ] If infrastructure protection is not possible in this repo, plan the strongest safe in-repo mitigation and documentation updates.
+
+### D. Theme Storage Robustness
+- [ ] Review `src/modules/theme.js` for failure cases when `localStorage` is unavailable.
+- [ ] Define graceful fallback behavior for:
+- [ ] blocked storage
+- [ ] private browsing edge cases
+- [ ] malformed stored values
+- [ ] Plan to make theme initialization and theme toggling use the same defensive storage pattern as the entry gate.
+
+### E. Behavior Hooks Coupled to Style Classes
+- [ ] Review `src/modules/cardEffects.js` selectors and identify every behavior that depends on utility classes such as `.mt-auto`.
+- [ ] Decide dedicated behavior hooks or data attributes for:
+- [ ] CTA magnetic motion target
+- [ ] card motion binding
+- [ ] any future interactive child elements
+- [ ] Plan the renderer and CSS changes needed so behavior selectors remain stable even if layout classes change later.
+
+### F. Browser Smoke Reliability
+- [ ] Reproduce the `spawn EPERM` failure path in the current environment and confirm whether it is caused by sandboxed process spawning, Vite preview startup, or Playwright launch.
+- [ ] Decide whether `scripts/browser-smoke.mjs` should:
+- [ ] stay as-is and be documented as environment-sensitive
+- [ ] use a different local server boot path
+- [ ] detect unsupported environments and fail with a clearer message
+- [ ] Plan updates so the browser check is more reliable in restricted environments where possible.
+
+### G. Test Coverage Gaps
+- [ ] Add planned coverage for entry-gate persistence across refresh.
+- [ ] Add planned checks for exact Korean copy normalization after encoding cleanup.
+- [ ] Add planned checks for theme fallback behavior when storage is unavailable.
+- [ ] Add planned checks that motion code safely no-ops when behavior hooks are absent.
+
+### H. Documentation Sync
+- [ ] Update `research.md` after implementation so it matches the final code, not the pre-fix state.
+- [ ] Update `plan.md` checklist items to mark which risks were fully resolved versus only documented.
+- [ ] Record any intentionally unresolved infrastructure/security items as explicit follow-up work.
+
+### I. Implementation Order
+- [ ] 1. Fix persistence bug for the entry gate.
+- [ ] 2. Normalize real Korean copy and UTF-8 file contents.
+- [ ] 3. Harden theme storage fallback.
+- [ ] 4. Decouple motion behavior from style-class selectors.
+- [ ] 5. Improve browser smoke reliability and expand smoke coverage.
+- [ ] 6. Refresh documentation after all code and test changes settle.
