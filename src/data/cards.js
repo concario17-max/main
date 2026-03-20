@@ -94,4 +94,23 @@ export const cards = [
             cta: 'Open the Treatise',
         },
     },
+    {
+        slug: 'bori-dodeunglon',
+        href: 'https://bori.simsang.org/',
+        delayClass: 'delay-700',
+        tone: 'sutra',
+        icon: cardIcons.sutra,
+        index: 'VI',
+        portal: 'Bori Portal',
+        heading: {
+            main: 'Bori',
+            accent: 'Dodeunglon',
+        },
+        copy: {
+            label: '보리도등론',
+            compactLabel: true,
+            description: 'Enter the Bori Dodeung Treatise through a focused reading path shaped around awakening, discipline, and luminous insight.',
+            cta: 'Read the Treatise',
+        },
+    },
 ];
