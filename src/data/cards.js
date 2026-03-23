@@ -113,4 +113,23 @@ export const cards = [
             cta: 'Read the Treatise',
         },
     },
+    {
+        slug: 'the-bezels-of-wisdom',
+        href: 'https://bezels.simsang.org/',
+        delayClass: 'delay-700',
+        tone: 'divine',
+        icon: cardIcons.divine,
+        index: 'VII',
+        portal: 'Bezels Portal',
+        heading: {
+            main: 'Bezels',
+            accent: 'of Wisdom',
+        },
+        copy: {
+            label: '지혜의 보석들',
+            compactLabel: true,
+            description: 'Enter a contemplative reading of Ibn Arabi’s prophetic wisdom, where love, light, and unseen realities are set like jewels within each revealed form.',
+            cta: 'Open the Bezels',
+        },
+    },
 ];

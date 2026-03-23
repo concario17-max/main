@@ -80,8 +80,10 @@ const main = async () => {
     addCheck(cards.every(({ tone }) => ['celestial', 'sutra', 'divine', 'liberation', 'trinity'].includes(tone)), 'Each card uses a supported tone');
     addCheck(cards.some(({ href }) => href === 'https://3sin.simsang.org/'), 'Threefold card link is present');
     addCheck(cards.some(({ href }) => href === 'https://bori.simsang.org/'), 'Bori card link is present');
+    addCheck(cards.some(({ href }) => href === 'https://bezels.simsang.org/'), 'Bezels card link is present');
     addCheck(cards.some(({ copy }) => copy.label === '밀교의 성불 원리'), 'Samshin card label is normalized');
     addCheck(cards.some(({ copy }) => copy.label === '보리도등론'), 'Bori card label is normalized');
+    addCheck(cards.some(({ copy }) => copy.label === '지혜의 보석들'), 'Bezels card label is normalized');
 
     addCheck(indexHtml.includes('id="theme-toggle"'), 'Theme toggle button exists');
     addCheck(indexHtml.includes('id="entry-gate"'), 'Entry gate dialog exists');
@@ -94,6 +96,7 @@ const main = async () => {
     addCheck(indexHtml.includes('A Living Portal for Astrology, Yoga, the Gita, Bardo Wisdom, and Samshin Doctrine'), 'Header support copy is present');
     addCheck(indexHtml.includes('밀교의 성불 원리'), 'Header pills use normalized Korean copy');
     addCheck(indexHtml.includes('보리도등론'), 'Bori pill is present');
+    addCheck(indexHtml.includes('지혜의 보석들'), 'Bezels pill is present');
     addCheck(indexHtml.includes('property="og:locale" content="ko_KR"'), 'OG locale is present');
     addCheck(indexHtml.includes('property="og:image:width" content="1200"'), 'OG image width is declared');
     addCheck(indexHtml.includes('property="og:image:height" content="630"'), 'OG image height is declared');
