@@ -1,4 +1,8 @@
 @layer base {
+    [hidden] {
+        display: none !important;
+    }
+
     body {
         @apply selection:bg-accent-light/20 dark:selection:bg-accent-dark/20 antialiased tracking-tight;
         font-feature-settings: "ss01", "ss02", "cv01";
