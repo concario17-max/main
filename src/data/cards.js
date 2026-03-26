@@ -34,7 +34,7 @@ export const cards = [
         },
         copy: {
             label: '파탄잘리 요가 수트라',
-            description: 'Read distilled teachings on consciousness, discipline, and the inner architecture of contemplative practice.',
+            description: '요가수트라(Yoga Sutras of Patanjali)는 고대 요가의 근원이 되는 문헌으로서 기원전 2세기 파탄잘리가 저술했다. 인도 철학에서 요가는 6대 철학학파 중 하나였고, 이 짧은 작품은 요가 철학과 수행 전통에 큰 영향을 주었다. 여기서 요가는 생각과 느낌이 확실히 유지되는 마음의 상태이며, 수트라는 줄이라는 뜻이다.',
             cta: 'Unveil the Sutras',
         },
     },
@@ -52,7 +52,7 @@ export const cards = [
         },
         copy: {
             label: '바가바드 기타',
-            description: 'Enter a guided reading of duty, devotion, and awakening through the voice of the Gita.',
+            description: '바가바드 기타(산스크리트어: भगवद् गीता Bhagavad Gītā)는 성스러운 신에 대한 기타(Gita:歌頌)라는 뜻이며, 기원전 4∼2·3세기경에 성립된 것으로 여겨진다. 신에 대한 신애(信愛)의 실천은 카스트나 남녀의 구별을 초월하여 모두 최고신의 은총을 받을 수 있다고 하여 정통적 브라만교 사상과 다른 입장을 표명하고 있다. 그러나 그 열렬한 신애(信愛)의 정은 사상적 입장의 차이를 초월하여 브라만교가 이를 승인하기에 이르렀다. 현재는 《마하바라타》 속에 수록되어 있으나 원래는 별개의 것으로 성립되었던 것이다. 인도에서는 평상시에 늘 암송할 정도로 사람들에게 친숙해져 있다.',
             cta: 'Hear the Song',
         },
     },
@@ -71,7 +71,7 @@ export const cards = [
         copy: {
             label: '티베트 사자의 서',
             compactLabel: true,
-            description: 'Explore teachings on transition, death, and luminous awareness through the Tibetan wisdom tradition.',
+            description: '바르도 퇴돌(티베트어: བར་དོ་ཐོས་གྲོལ, 와일리 표기법: bar do thos grol)은 티베트 불교 닝마파의 경전이다. 파드마삼바바가 저술해 제자가 산중에 묻어 숨긴 것을 후대에 테르톤 업 림프액이 발굴한 매장교법(테르마) 《사프츄우 시트 곤파 란돌(적정·분노백존을 명상 하는 것에 의한 스스로의 해탈)(Tibetan: ཟབ་ཆོས་ཞི་ཁྲོ་དགོངས་པ་རང་གྲོལ)》에 포함되어 있는 《바르드 트 달러 첸모(중유에 대해 청문 하는 것에 의한 해탈)(Tibetan: བར་དོ་ཐོས་གྲོལ་ཆེན་མོ་)》라는 문구를 가리킨다.',
             cta: 'Cross the Bardo',
         },
     },
@@ -90,7 +90,7 @@ export const cards = [
         copy: {
             label: '밀교의 성불 원리',
             compactLabel: true,
-            description: 'Trace the doctrine of the three radiant principles through image, motion, and luminous correspondence.',
+            description: '티베트 대장경에는 밀교부에 해당하는 방대하고 다양한 경전과 논서가 전한다. 그중 책의 원전인 〈시이꾸쑴기남샥랍쌜된메(因位三身行相明燈論) 〉는 ‘닦지 않은 상태’를 뜻하는 인위(因位)의 단계에서 ‘중생의 마음 흐름[心流注]’에 존재하는 부처님의 삼신[法身·報身·化身]의 상태구조를 드러내 법의 의혹을 제거한 뒤, 법을 성취하는 심오한 길을 바르게 여는 등불이라는 의미의 논서다.',
             cta: 'Open the Treatise',
         },
     },
