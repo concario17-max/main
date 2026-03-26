@@ -109,27 +109,8 @@ export const cards = [
         copy: {
             label: '보리도등론',
             compactLabel: true,
-            description: 'Enter the Bori Dodeung Treatise through a focused reading path shaped around awakening, discipline, and luminous insight.',
+            description: '보리도등론(菩提道燈論, Bodhipathapradīpa)은 11세기 인도 스승 아띠샤(Atīśa)가 지은 68게송의 짧은 논서로, 깨달음으로 가는 길을 비추는 등불이라는 뜻을 지닌다. 이 문헌은 티베트 불교의 핵심 수행 체계인 보리도차제(菩提道次第)의 사상적 기초가 된 중요한 텍스트다.',
             cta: 'Read the Treatise',
-        },
-    },
-    {
-        slug: 'the-bezels-of-wisdom',
-        href: 'https://bezels.simsang.org/',
-        delayClass: 'delay-700',
-        tone: 'divine',
-        icon: cardIcons.divine,
-        index: 'VII',
-        portal: 'Bezels Portal',
-        heading: {
-            main: 'Bezels',
-            accent: 'of Wisdom',
-        },
-        copy: {
-            label: '지혜의 보석들',
-            compactLabel: true,
-            description: 'Enter a contemplative reading of Ibn Arabi’s prophetic wisdom, where love, light, and unseen realities are set like jewels within each revealed form.',
-            cta: 'Open the Bezels',
         },
     },
 ];
