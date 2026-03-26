@@ -16,7 +16,7 @@ export const cards = [
         },
         copy: {
             label: '오컬트 주역 천체 관측소',
-            description: '헤르메스학적 주역, 프란츠 바르돈의 소환마법실천, 루돌프 슈타이너의 영혼 달력을 엮은 영성 달력입니다. 시간을 날짜가 아니라 상징, 수행, 내면 성찰의 리듬으로 읽게 합니다.',
+            description: '헤르메스학적 주역, 프란츠 바르돈의 소환마법실천, 루돌프 슈타이너의 영혼 달력을 엮은 영성 달력입니다. 시간을 날짜가 아니라 상징, 수행, 내면 성찰의 리듬으로 읽게 합니다. 일상 속에서 우주적 질서와 영혼의 변화를 함께 관조하려는 이들을 위한 안내서입니다.',
             cta: 'Enter the Archive',
         },
     },
@@ -52,7 +52,7 @@ export const cards = [
         },
         copy: {
             label: '바가바드 기타',
-            description: '바가바드 기타(산스크리트어: भगवद् गीता Bhagavad Gītā)는 성스러운 신에 대한 기타(Gita:歌頌)라는 뜻이며, 기원전 4∼2·3세기경에 성립된 것으로 여겨진다. 신에 대한 신애(信愛)의 실천은 카스트나 남녀의 구별을 초월하여 모두 최고신의 은총을 받을 수 있다고 하여 정통적 브라만교 사상과 다른 입장을 표명하고 있다. 그러나 그 열렬한 신애(信愛)의 정은 사상적 입장의 차이를 초월하여 브라만교가 이를 승인하기에 이르렀다. 현재는 《마하바라타》 속에 수록되어 있으나 원래는 별개의 것으로 성립되었던 것이다. 인도에서는 평상시에 늘 암송할 정도로 사람들에게 친숙해져 있다.',
+            description: '바가바드 기타(산스크리트어: भगवद् गीता Bhagavad Gītā)는 성스러운 신에 대한 기타(Gita:歌頌)라는 뜻이며, 기원전 4∼2·3세기경에 성립된 것으로 여겨진다. 현재는 《마하바라타》 속에 수록되어 있으나 원래는 별개의 것으로 성립되었던 것이다. 인도에서는 평상시에 늘 암송할 정도로 사람들에게 친숙해져 있다.',
             cta: 'Hear the Song',
         },
     },
@@ -84,8 +84,8 @@ export const cards = [
         index: 'V',
         portal: 'Samshin Portal',
         heading: {
-            main: 'Samshin',
-            accent: 'Doctrine',
+            main: 'Tantric',
+            accent: 'Treatise',
         },
         copy: {
             label: '밀교의 성불 원리',
@@ -104,7 +104,7 @@ export const cards = [
         portal: 'Bori Portal',
         heading: {
             main: 'Bori',
-            accent: 'Dodeunglon',
+            accent: 'Path Lamp',
         },
         copy: {
             label: '보리도등론',
@@ -122,12 +122,12 @@ export const cards = [
         index: 'VII',
         portal: 'Nag Hammadi Portal',
         heading: {
-            main: 'Nag Hammadi',
+            main: 'Gnostic',
             accent: 'Library',
         },
         copy: {
             label: '나그함마디 문서',
-            description: 'Explore the Nag Hammadi codices through a concise reading of hidden sayings, gnostic insight, and early Christian texts.',
+            description: '나그함마디 문서(Nag Hammadi library)는 1945년 이집트 나그함마디 마을 근처에서 발견된 초기 기독교 영지주의 복음서들을 가리키는 낱말이다. 발견된 나그함마디 문서에는 영지주의 문서 52편, 헤르메스주의 문헌(Hermetica · 헤르메티카)의 문서 3편, 그리고 플라톤의 《국가》의 번역본이 포함되어 있었다.',
             cta: 'Open the Library',
         },
     },
