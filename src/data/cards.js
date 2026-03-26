@@ -113,4 +113,22 @@ export const cards = [
             cta: 'Read the Treatise',
         },
     },
+    {
+        slug: 'nag-hammadi-library',
+        href: 'https://nag.simsang.org/',
+        delayClass: 'delay-700',
+        tone: 'sutra',
+        icon: cardIcons.sutra,
+        index: 'VII',
+        portal: 'Nag Hammadi Portal',
+        heading: {
+            main: 'Nag Hammadi',
+            accent: 'Library',
+        },
+        copy: {
+            label: '나그함마디 문서',
+            description: 'Explore the Nag Hammadi codices through a concise reading of hidden sayings, gnostic insight, and early Christian texts.',
+            cta: 'Open the Library',
+        },
+    },
 ];
