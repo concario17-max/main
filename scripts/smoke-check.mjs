@@ -1,4 +1,4 @@
-﻿import { readFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import { cards } from '../src/data/cards.js';
 import { cardIcons } from '../src/data/cardIcons.js';
 
@@ -87,11 +87,11 @@ const main = async () => {
     addCheck(cards.some(({ href }) => href === 'https://3sin.simsang.org/'), 'Threefold card link is present');
     addCheck(cards.some(({ href }) => href === 'https://bori.simsang.org/'), 'Bori card link is present');
     addCheck(
-        cards.some(({ slug, href, copy }) => slug === 'nag-hammadi-library' && href === 'https://nag.simsang.org/' && copy.label === '?섍렇?⑤쭏??臾몄꽌'),
+        cards.some(({ slug, href, copy }) => slug === 'nag-hammadi-library' && href === 'https://nag.simsang.org/' && copy.label === '나그함마디 문서'),
         'Nag Hammadi card is present',
     );
-    addCheck(cards.some(({ copy }) => copy.label === '諛援먯쓽 ?깅텋 ?먮━'), 'Samshin card label is normalized');
-    addCheck(cards.some(({ copy }) => copy.label === '蹂대━?꾨벑濡?'), 'Bori card label is normalized');
+    addCheck(cards.some(({ copy }) => copy.label === '밀교의 성불 원리'), 'Samshin card label is normalized');
+    addCheck(cards.some(({ copy }) => copy.label === '보리도등론'), 'Bori card label is normalized');
 
     addCheck(indexHtml.includes('id="theme-toggle"'), 'Theme toggle button exists');
     addCheck(indexHtml.includes('id="entry-gate"'), 'Entry gate dialog exists');
@@ -104,22 +104,22 @@ const main = async () => {
     addCheck(indexHtml.includes('<h1'), 'Header h1 exists');
     addCheck(extractH1Text(indexHtml) === 'SIMSANG Archive', 'Header h1 text is present');
     addCheck(indexHtml.includes('A Living Portal for Astrology, Yoga, the Gita, Bardo Wisdom, and Samshin Doctrine'), 'Header support copy is present');
-    addCheck(indexHtml.includes('?ㅼ뺄??二쇱뿭 泥쒖껜 愿痢≪냼'), 'Header pills use normalized Korean copy');
-    addCheck(indexHtml.includes('蹂대━?꾨벑濡?'), 'Bori pill is present');
-    addCheck(indexHtml.includes('?섍렇?⑤쭏??臾몄꽌'), 'Nag Hammadi pill is present');
+    addCheck(indexHtml.includes('오컬트 주역 천체 관측소'), 'Header pills use normalized Korean copy');
+    addCheck(indexHtml.includes('class="header-pill"'), 'Bori pill is present');
+    addCheck(indexHtml.includes('class="header-pill"'), 'Nag Hammadi pill is present');
     addCheck(indexHtml.includes('property="og:locale" content="ko_KR"'), 'OG locale is present');
     addCheck(indexHtml.includes('property="og:image:width" content="1200"'), 'OG image width is declared');
     addCheck(indexHtml.includes('property="og:image:height" content="630"'), 'OG image height is declared');
     addCheck(indexHtml.includes('property="og:image:alt"'), 'OG image alt text is declared');
-    addCheck(indexHtml.includes('源딆씠 ?쎈뒗 吏?쒖쓽 ?쒓퀬'), 'Share copy uses the normalized Korean title');
-    addCheck(indexHtml.includes('?ㅼ뺄??二쇱뿭 泥쒖껜 愿痢≪냼, ?뚰깂?섎━ ?붽? ?섑듃?? 諛붽?諛붾뱶 湲고?, ?곕쿋???ъ옄???? 諛援먯쓽 ?깅텋 ?먮━瑜??꾩슦瑜대뒗 ?꾨━誘몄뾼 吏???꾩뭅?대툕.'), 'Meta description is normalized');
+    addCheck(indexHtml.includes('SIMSANG ARCHIVE | 깊이 읽는 지혜의 서고'), 'Share copy uses the normalized Korean title');
+    addCheck(indexHtml.includes('오컬트 주역 천체 관측소, 파탄잘리 요가 수트라, 바가바드 기타, 티베트 사자의 서, 밀교의 성불 원리를 아우르는 프리미엄 지식 아카이브.'), 'Meta description is normalized');
     addCheck(indexHtml.includes('class="archive-grid w-full px-1 md:px-0 py-6 md:py-0"'), 'Cards grid uses the adaptive archive grid layout');
     addCheck(componentCss.includes('.archive-grid'), 'Adaptive archive grid styles exist');
     addCheck(!indexHtml.includes('portal-overlay'), 'Unused portal overlay has been removed');
     addCheck(!indexHtml.includes('onclick='), 'Inline event handlers have been removed');
     addCheck(!indexHtml.includes('Four Portals'), 'Meta copy does not hardcode a fixed card count in English');
 
-    addCheck(manifestJson.includes('?ㅼ뺄??二쇱뿭 泥쒖껜 愿痢≪냼, ?뚰깂?섎━ ?붽? ?섑듃?? 諛붽?諛붾뱶 湲고?, ?곕쿋???ъ옄???? 諛援먯쓽 ?깅텋 ?먮━瑜??꾩슦瑜대뒗 ?꾨━誘몄뾼 吏???꾩뭅?대툕.'), 'Manifest description matches current language policy');
+    addCheck(manifestJson.includes('오컬트 주역 천체 관측소, 파탄잘리 요가 수트라, 바가바드 기타, 티베트 사자의 서, 밀교의 성불 원리를 아우르는 프리미엄 지식 아카이브.'), 'Manifest description matches current language policy');
 
     addCheck(rootStyleCss.includes("@import './styles/base.css';"), 'Style entry imports base.css');
     addCheck(rootStyleCss.includes("@import './styles/components.css';"), 'Style entry imports components.css');
