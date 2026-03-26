@@ -24,6 +24,12 @@ const assertChecks = () => {
     });
 };
 
+const extractH1Text = (html) => html
+    .match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1]
+    ?.replace(/<[^>]+>/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
 const main = async () => {
     const [
         indexHtml,
@@ -95,8 +101,10 @@ const main = async () => {
     addCheck(indexHtml.includes('aria-describedby="entry-gate-copy"'), 'Entry gate describes its supporting copy');
     addCheck(indexHtml.includes('id="archive-shell"'), 'Archive shell exists for gate state management');
     addCheck(indexHtml.includes('id="cards-grid"'), 'Cards grid container exists');
+    addCheck(indexHtml.includes('<h1'), 'Header h1 exists');
+    addCheck(extractH1Text(indexHtml) === '오컬트 주역 천체 관측소', 'Header h1 text is present');
     addCheck(indexHtml.includes('A Living Portal for Astrology, Yoga, the Gita, Bardo Wisdom, and Samshin Doctrine'), 'Header support copy is present');
-    addCheck(indexHtml.includes('밀교의 성불 원리'), 'Header pills use normalized Korean copy');
+    addCheck(indexHtml.includes('오컬트 주역 천체 관측소'), 'Header pills use normalized Korean copy');
     addCheck(indexHtml.includes('보리도등론'), 'Bori pill is present');
     addCheck(indexHtml.includes('나그함마디 문서'), 'Nag Hammadi pill is present');
     addCheck(indexHtml.includes('property="og:locale" content="ko_KR"'), 'OG locale is present');
