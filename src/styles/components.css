@@ -9,7 +9,7 @@
 
 .archive-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     gap: 1rem;
     align-items: start;
 }
@@ -311,7 +311,7 @@ body.entry-locked #archive-shell {
 
 @media (min-width: 1280px) {
     .archive-grid {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 0.85rem;
     }
 

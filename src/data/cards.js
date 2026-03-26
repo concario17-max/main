@@ -16,7 +16,7 @@ export const cards = [
         },
         copy: {
             label: '오컬트 주역 천체 관측소',
-            description: 'Track planetary cycles, symbolic alignments, and cosmic timing through a refined astrological archive.',
+            description: '헤르메스학적 주역, 프란츠 바르돈의 소환마법실천, 루돌프 슈타이너의 영혼 달력을 엮은 영성 달력입니다. 시간을 날짜가 아니라 상징, 수행, 내면 성찰의 리듬으로 읽게 합니다.',
             cta: 'Enter the Archive',
         },
     },
