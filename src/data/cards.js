@@ -103,7 +103,6 @@ export const cards = [
         index: 'VI',
         portal: 'Bori Portal',
         heading: {
-            main: 'Bori',
             accent: 'Path Lamp',
         },
         copy: {
