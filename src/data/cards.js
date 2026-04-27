@@ -103,7 +103,8 @@ export const cards = [
         index: 'VI',
         portal: 'Bori Portal',
         heading: {
-            accent: 'Path Lamp',
+            main: 'Path',
+            accent: 'Lamp',
         },
         copy: {
             label: '보리도등론',
@@ -128,6 +129,25 @@ export const cards = [
             label: '나그함마디 문서',
             description: '나그함마디 문서(Nag Hammadi library)는 1945년 이집트 나그함마디 마을 근처에서 발견된 초기 기독교 영지주의 복음서들을 가리키는 낱말이다. 발견된 나그함마디 문서에는 영지주의 문서 52편, 헤르메스주의 문헌(Hermetica · 헤르메티카)의 문서 3편, 그리고 플라톤의 《국가》의 번역본이 포함되어 있었다.',
             cta: 'Open the Library',
+        },
+    },
+    {
+        slug: 'item-archive',
+        href: 'https://items.simsang.org/',
+        delayClass: 'delay-700',
+        tone: 'sutra',
+        icon: cardIcons.sutra,
+        index: 'VIII',
+        portal: 'Item Portal',
+        heading: {
+            main: 'Item',
+            accent: 'Archive',
+        },
+        copy: {
+            label: '아이템 아카이브',
+            compactLabel: true,
+            description: 'items.simsang.org에 모아 둔 항목 아카이브입니다.',
+            cta: 'Open the Archive',
         },
     },
 ];
