@@ -4,7 +4,7 @@
     }
 
     body {
-        @apply selection:bg-accent-light/20 dark:selection:bg-accent-dark/20 antialiased tracking-tight;
+        @apply selection:bg-accent-light/20 antialiased tracking-tight;
         font-feature-settings: "ss01", "ss02", "cv01";
         text-rendering: optimizeLegibility;
         font-synthesis: none;
@@ -17,10 +17,10 @@
     }
 
     ::-webkit-scrollbar-track {
-        @apply bg-background-light dark:bg-background-dark;
+        @apply bg-background-light;
     }
 
     ::-webkit-scrollbar-thumb {
-        @apply bg-accent-light/50 dark:bg-accent-dark/50 rounded-full;
+        @apply bg-accent-light/50 rounded-full;
     }
 }

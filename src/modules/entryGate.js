@@ -5,7 +5,6 @@ const storageKey = 'simsang-entry-unlocked-code';
 
 const getManagedElements = () => [
     document.getElementById('archive-shell'),
-    document.getElementById('theme-toggle'),
 ].filter(Boolean);
 
 const setLockedState = (locked) => {

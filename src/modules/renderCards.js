@@ -58,7 +58,7 @@ const createCardMarkup = ({ slug, href, delayClass, featured, tone, index, porta
 
     return `
     <a
-        class="group premium-card ${toneClasses.label} ${cardSpanClass} p-5 sm:p-6 md:p-7 shadow-premium hover:shadow-premium-hover dark:shadow-premium-dark dark:hover:shadow-premium-hover-dark flex flex-col items-center text-center rounded-xl animate-fade-up ${delayClass}"
+        class="group premium-card ${toneClasses.label} ${cardSpanClass} p-5 sm:p-6 md:p-7 shadow-premium hover:shadow-premium-hover flex flex-col items-center text-center rounded-xl animate-fade-up ${delayClass}"
         data-card="${slug}"
         href="${href}"
         target="_blank"
@@ -78,14 +78,14 @@ const createCardMarkup = ({ slug, href, delayClass, featured, tone, index, porta
             <div class="premium-card__icon ${toneClasses.icon} w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 mb-4 sm:mb-5 flex items-center justify-center transition-transform duration-1000 group-hover:scale-110">
                 ${icon()}
             </div>
-            <h2 class="premium-card__title text-[15px] sm:text-base md:text-lg lg:text-[1.35rem] leading-[1.24] md:leading-[1.16] pb-1 font-display font-medium mb-1 text-primary dark:text-white tracking-[0.08em] md:tracking-[0.1em] uppercase break-keep">
+            <h2 class="premium-card__title text-[15px] sm:text-base md:text-lg lg:text-[1.35rem] leading-[1.24] md:leading-[1.16] pb-1 font-display font-medium mb-1 text-primary tracking-[0.08em] md:tracking-[0.1em] uppercase break-keep">
                 ${createHeadingMarkup(heading)}
             </h2>
             <div class="premium-card__meta ${toneClasses.meta} ${hasCompactLabel ? 'premium-card__meta--compact' : ''} text-[9px] sm:text-[10px] font-body tracking-[0.14em] md:tracking-[0.18em] mb-3 md:mb-4 font-medium">
                 ${copy.label}
             </div>
             <div class="premium-card__rule ${toneClasses.rule} w-7 h-px mb-3 md:mb-4 transition-all duration-500 group-hover:w-12"></div>
-            <p class="premium-card__description break-keep text-slate-700 dark:text-slate-300 text-[11px] sm:text-[12px] leading-5 sm:leading-6 font-medium italic mb-4 md:mb-5">
+            <p class="premium-card__description break-keep text-slate-700 text-[11px] sm:text-[12px] leading-5 sm:leading-6 font-medium italic mb-4 md:mb-5">
                 ${copy.description}
             </p>
             ${createCtaMarkup(copy.cta, tone)}

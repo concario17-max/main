@@ -43,7 +43,6 @@ const main = async () => {
         stardustJs,
         mainJs,
         entryGateJs,
-        themeJs,
         storageJs,
     ] = await Promise.all([
         readFile(new URL('../index.html', import.meta.url), 'utf8'),
@@ -57,7 +56,6 @@ const main = async () => {
         readFile(new URL('../src/modules/stardust.js', import.meta.url), 'utf8'),
         readFile(new URL('../src/main.js', import.meta.url), 'utf8'),
         readFile(new URL('../src/modules/entryGate.js', import.meta.url), 'utf8'),
-        readFile(new URL('../src/modules/theme.js', import.meta.url), 'utf8'),
         readFile(new URL('../src/modules/storage.js', import.meta.url), 'utf8'),
     ]);
 
@@ -103,12 +101,11 @@ const main = async () => {
     addCheck(cards.some(({ copy }) => copy.label === '밀교의 성불 원리'), 'Samshin card label is normalized');
     addCheck(cards.some(({ copy }) => copy.label === '보리도등론'), 'Bori card label is normalized');
 
-    addCheck(indexHtml.includes('id="theme-toggle"'), 'Theme toggle button exists');
     addCheck(indexHtml.includes('id="entry-gate"'), 'Entry gate dialog exists');
     addCheck(indexHtml.includes('id="entry-gate-input"'), 'Entry gate input exists');
     addCheck(indexHtml.includes('id="entry-gate-submit"'), 'Entry gate submit button exists');
-    addCheck(indexHtml.includes('aria-label="Toggle color theme"'), 'Theme toggle has an accessibility label');
     addCheck(indexHtml.includes('aria-describedby="entry-gate-copy"'), 'Entry gate describes its supporting copy');
+    addCheck(!indexHtml.includes('id="theme-toggle"'), 'Theme toggle markup has been removed');
     addCheck(indexHtml.includes('id="archive-shell"'), 'Archive shell exists for gate state management');
     addCheck(indexHtml.includes('id="cards-grid"'), 'Cards grid container exists');
     addCheck(indexHtml.includes('<h1'), 'Header h1 exists');
@@ -147,14 +144,13 @@ const main = async () => {
     addCheck(renderCardsJs.includes('premium-card__topline'), 'Card renderer includes portal topline markup');
     addCheck(renderCardsJs.includes('premium-card__cta-target'), 'Card renderer exposes a dedicated CTA behavior hook');
     addCheck(mainJs.includes('initEntryGate();'), 'Main entry initializes the password gate');
+    addCheck(!mainJs.includes('initThemeToggle'), 'Main entry no longer initializes theme toggling');
     addCheck(entryGateJs.includes("const unlockCode = '0228';"), 'Entry gate uses the configured unlock code');
     addCheck(entryGateJs.includes('getPersistentValue(storageKey)'), 'Entry gate reads persistent unlock state through the shared storage helper');
     addCheck(entryGateJs.includes('setPersistentValue(storageKey, unlockCode'), 'Entry gate persists unlock state through the shared storage helper');
     addCheck(entryGateJs.includes('element.inert = locked;'), 'Entry gate locks the underlying app shell');
     addCheck(entryGateJs.includes('gate.remove();'), 'Entry gate removes itself after unlock');
     addCheck(entryGateJs.includes("event.key !== 'Tab'"), 'Entry gate traps keyboard focus');
-    addCheck(themeJs.includes('getPersistentValue(storageKey)'), 'Theme uses defensive persistent storage reads');
-    addCheck(themeJs.includes('setPersistentValue(storageKey, nextTheme'), 'Theme uses defensive persistent storage writes');
     addCheck(storageJs.includes('document.cookie'), 'Shared storage helper uses cookie fallback');
     addCheck(!cardEffectsJs.includes("querySelector('.mt-auto')"), 'Card effects no longer depend on utility classes for behavior');
     addCheck(cardEffectsJs.includes("querySelector('.premium-card__cta-target')"), 'Card effects use a dedicated CTA behavior hook');

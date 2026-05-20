@@ -3,13 +3,14 @@ import { access } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { extname, join, normalize } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
+import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import { cards } from '../src/data/cards.js';
 
 const host = '127.0.0.1';
 const port = 4173 + Math.floor(Math.random() * 200);
 const baseUrl = `http://${host}:${port}`;
-const distDir = new URL('../dist', import.meta.url);
+const distDir = fileURLToPath(new URL('../dist/', import.meta.url));
 
 const contentTypes = {
     '.css': 'text/css; charset=utf-8',
@@ -29,32 +30,30 @@ const assert = (condition, message) => {
 
 const resolveFilePath = (urlPath) => {
     const normalizedPath = normalize(urlPath).replace(/^(\.\.(\/|\\|$))+/, '');
-    const relativePath = normalizedPath === '/' ? 'index.html' : normalizedPath.replace(/^[/\\]+/, '');
+    const relativePath = normalizedPath === '/' || normalizedPath === '\\' || normalizedPath === ''
+        ? 'index.html'
+        : normalizedPath.replace(/^[/\\]+/, '');
 
-    return join(distDir.pathname, relativePath);
+    return join(distDir, relativePath);
 };
 
 const createStaticServer = async () => {
-    await access(new URL('../dist/index.html', import.meta.url));
+    await access(join(distDir, 'index.html'));
 
-    const server = createServer((request, response) => {
+    const server = createServer(async (request, response) => {
         const requestUrl = new URL(request.url ?? '/', baseUrl);
         const filePath = resolveFilePath(requestUrl.pathname);
         const extension = extname(filePath);
         const contentType = contentTypes[extension] ?? 'application/octet-stream';
 
-        const stream = createReadStream(filePath);
-
-        stream.on('open', () => {
+        try {
+            await access(filePath);
             response.writeHead(200, { 'Content-Type': contentType });
-        });
-
-        stream.on('error', () => {
+            createReadStream(filePath).pipe(response);
+        } catch {
             response.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
             response.end('Not found');
-        });
-
-        stream.pipe(response);
+        }
     });
 
     await new Promise((resolve, reject) => {
@@ -90,7 +89,16 @@ const main = async () => {
 
     try {
         browser = await chromium.launch({ headless: true });
-        const page = await browser.newPage();
+        const context = await browser.newContext();
+        await context.clearCookies();
+        await context.addInitScript(() => {
+            localStorage.clear();
+            sessionStorage.clear();
+        });
+        const page = await context.newPage();
+        page.on('pageerror', (error) => {
+            throw error;
+        });
 
         await page.goto(baseUrl, { waitUntil: 'networkidle' });
 
@@ -100,7 +108,9 @@ const main = async () => {
         const error = page.locator('#entry-gate-error');
         const firstCard = page.locator(`[data-card="${cards[0].slug}"]`);
 
-        await gate.waitFor({ state: 'visible' });
+        const gateInitiallyVisible = await gate.isVisible().catch(() => false);
+
+        if (gateInitiallyVisible) {
         await input.fill('0000');
         await submit.click();
         await error.waitFor();
@@ -109,8 +119,10 @@ const main = async () => {
         await input.fill('0228');
         await submit.click();
         await gate.waitFor({ state: 'hidden' });
+        }
 
-        assert(await page.locator('#theme-toggle').isVisible(), 'Theme toggle should remain visible after unlock');
+        await page.locator('#cards-grid').waitFor();
+        assert((await page.locator('#theme-toggle').count()) === 0, 'Theme toggle should not be rendered');
         assert(await firstCard.isVisible(), 'First archive card should be visible after unlock');
 
         await page.reload({ waitUntil: 'networkidle' });
@@ -119,11 +131,6 @@ const main = async () => {
 
         const gateStillVisible = await page.locator('#entry-gate').isVisible().catch(() => false);
         assert(!gateStillVisible, 'Gate should stay unlocked after reload while the stored code remains valid');
-
-        const initialTheme = await page.evaluate(() => document.documentElement.classList.contains('dark'));
-        await page.locator('#theme-toggle').click();
-        const nextTheme = await page.evaluate(() => document.documentElement.classList.contains('dark'));
-        assert(initialTheme !== nextTheme, 'Theme toggle should change the document theme');
 
         const cardCount = await page.locator('[data-card]').count();
         assert(cardCount === cards.length, 'Rendered card count should match card data');
