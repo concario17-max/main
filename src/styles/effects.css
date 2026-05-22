@@ -1,58 +1,60 @@
-@layer components {
-    .bg-glow {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 80vw;
-        height: 80vw;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 0;
-        background: radial-gradient(circle, rgb(var(--color-accent) / 0.03) 0%, transparent 60%);
-        transform: translate(-50%, -50%);
-    }
+.premium-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        1000px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(197, 160, 89, 0.05),
+        transparent 50%
+    );
+    opacity: 0;
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: 10;
+}
 
-    .grain-overlay {
-        position: absolute;
-        inset: 0;
-        z-index: 20;
-        pointer-events: none;
-        opacity: 0.03;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    }
+.premium-card:hover::before {
+    opacity: 1;
+}
 
-    #particles-container {
-        pointer-events: none;
-        overflow: hidden;
-    }
+.bg-glow {
+    position: absolute;
+    width: 80vw;
+    height: 80vw;
+    background: radial-gradient(circle, rgba(197, 160, 89, 0.03) 0%, transparent 60%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
 
-    .stardust-particle {
-        position: absolute;
-        bottom: -5%;
-        left: var(--particle-left, 0);
-        width: var(--particle-size, 2px);
-        height: var(--particle-size, 2px);
-        border-radius: 999px;
-        background: rgb(var(--color-accent) / 0.36);
-        box-shadow: 0 0 calc(var(--particle-size, 2px) * 2) rgb(var(--color-accent) / 0.28);
-        pointer-events: none;
-        animation: drift var(--particle-duration, 24s) linear var(--particle-delay, 0s) infinite;
-    }
-
-    .entry-gate__backdrop {
-        backdrop-filter: blur(24px);
-    }
-
-    .entry-gate__panel {
-        backdrop-filter: blur(22px);
-    }
+.grain-overlay {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 20;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 @media (max-width: 767px) {
+    .premium-card::before {
+        background: radial-gradient(
+            720px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(197, 160, 89, 0.035),
+            transparent 52%
+        );
+    }
+
     .bg-glow {
         width: 68vw;
         height: 68vw;
-        background: radial-gradient(circle, rgb(var(--color-accent) / 0.022) 0%, transparent 62%);
+        background: radial-gradient(circle, rgba(197, 160, 89, 0.022) 0%, transparent 62%);
     }
 
     .grain-overlay {
@@ -61,15 +63,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .premium-card::before,
     .bg-glow,
     .grain-overlay,
-    #particles-container,
-    .stardust-particle,
-    .premium-card::before,
-    .ui-card::before {
+    #particles-container {
         animation: none !important;
     }
 
+    .premium-card::before,
     .bg-glow,
     .grain-overlay {
         opacity: 0.01;
