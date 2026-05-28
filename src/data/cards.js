@@ -58,7 +58,7 @@ export const cards = [
     },
     {
         slug: 'eternal-liberation',
-        href: 'https://tibet.simsang.org/',
+        href: 'https://thodol.simsang.org/',
         delayClass: 'delay-700',
         tone: 'liberation',
         icon: cardIcons.liberation,
