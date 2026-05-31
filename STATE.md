@@ -1,28 +1,29 @@
 # Current Task
-- Replace the Tibetan Book of the Dead link with `thodol.simsang.org`.
+- Remove the Item Archive card from the archive list and update smoke checks.
 
 # Route
-- Route A
+- Route B
 
 # Writer Slot
-- main: direct implementation on a single-file hotfix.
+- main: planner only until contract freeze and write sets are set.
 
 # Contract Freeze
 - Scope:
-  - Update the Tibetan Book of the Dead card link to `https://thodol.simsang.org/`.
+  - Remove the Item Archive card entry from `src/data/cards.js`.
+  - Remove the Item Archive presence check from `scripts/smoke-check.mjs`.
 - Verification:
-  - `rg -n "thodol.simsang.org|tibet.simsang.org" src/data/cards.js`
+  - `node scripts/smoke-check.mjs`
 - Assumption:
-  - Keep the existing card content and only change the destination URL.
+  - Only the archive card list and its smoke check should change; other cards stay untouched.
 
 # Write Sets
-- main: `src/data/cards.js`
+- worker_copy: `src/data/cards.js`, `scripts/smoke-check.mjs`
 
 # Reviewer
-- not required for this single-file hotfix
+- main-review
 
 # Last Update
-- 2026-05-28 KST
+- 2026-05-30 KST
 
 # Reason
-- The request is a one-line link swap in a single file, so Route A is sufficient.
+- The request spans the card data plus smoke checks, so Route B with split ownership is required.

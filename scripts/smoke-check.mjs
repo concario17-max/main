@@ -88,16 +88,6 @@ const main = async () => {
         cards.some(({ slug, href, copy }) => slug === 'nag-hammadi-library' && href === 'https://nag.simsang.org/' && copy.label === '나그함마디 문서'),
         'Nag Hammadi card is present',
     );
-    addCheck(
-        cards.some(({ slug, href, heading, copy }) => (
-            slug === 'item-archive'
-            && href === 'https://items.simsang.org/'
-            && heading.main === 'Item'
-            && heading.accent === 'Archive'
-            && copy.label === '아이템 아카이브'
-        )),
-        'Item Archive card is present',
-    );
     addCheck(cards.some(({ copy }) => copy.label === '밀교의 성불 원리'), 'Samshin card label is normalized');
     addCheck(cards.some(({ copy }) => copy.label === '보리도등론'), 'Bori card label is normalized');
 
@@ -114,7 +104,6 @@ const main = async () => {
     addCheck(indexHtml.includes('오컬트 주역 천체 관측소'), 'Header pills use normalized Korean copy');
     addCheck(indexHtml.includes('class="header-pill"'), 'Bori pill is present');
     addCheck(indexHtml.includes('class="header-pill"'), 'Nag Hammadi pill is present');
-    addCheck(indexHtml.includes('아이템 아카이브'), 'Item Archive pill is present');
     addCheck(indexHtml.includes('property="og:locale" content="ko_KR"'), 'OG locale is present');
     addCheck(indexHtml.includes('property="og:image:width" content="1200"'), 'OG image width is declared');
     addCheck(indexHtml.includes('property="og:image:height" content="630"'), 'OG image height is declared');

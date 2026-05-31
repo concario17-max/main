@@ -131,23 +131,4 @@ export const cards = [
             cta: 'Open the Library',
         },
     },
-    {
-        slug: 'item-archive',
-        href: 'https://items.simsang.org/',
-        delayClass: 'delay-700',
-        tone: 'sutra',
-        icon: cardIcons.sutra,
-        index: 'VIII',
-        portal: 'Item Portal',
-        heading: {
-            main: 'Item',
-            accent: 'Archive',
-        },
-        copy: {
-            label: '아이템 아카이브',
-            compactLabel: true,
-            description: 'items.simsang.org에 모아 둔 항목 아카이브입니다.',
-            cta: 'Open the Archive',
-        },
-    },
 ];
