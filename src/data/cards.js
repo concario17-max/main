@@ -77,7 +77,7 @@ export const cards = [
     },
     {
         slug: 'threefold-luminaries',
-        href: 'https://3sin.simsang.org/',
+        href: 'https://3body.simsang.org/',
         delayClass: 'delay-700',
         tone: 'trinity',
         icon: cardIcons.trinity,
@@ -88,7 +88,7 @@ export const cards = [
             accent: 'Treatise',
         },
         copy: {
-            label: '밀교의 성불 원리',
+            label: '인위삼신행상명등론',
             compactLabel: true,
             description: '티베트 대장경에는 밀교부에 해당하는 방대하고 다양한 경전과 논서가 전한다. 그중 책의 원전인 〈시이꾸쑴기남샥랍쌜된메(因位三身行相明燈論) 〉는 ‘닦지 않은 상태’를 뜻하는 인위(因位)의 단계에서 ‘중생의 마음 흐름[心流注]’에 존재하는 부처님의 삼신[法身·報身·化身]의 상태구조를 드러내 법의 의혹을 제거한 뒤, 법을 성취하는 심오한 길을 바르게 여는 등불이라는 의미의 논서다.',
             cta: 'Open the Treatise',

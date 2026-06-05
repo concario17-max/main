@@ -1,5 +1,5 @@
 # Current Task
-- Remove the Item Archive card from the archive list and update smoke checks.
+- Rename the Milgyo card to `인위삼신행상명등론`.
 
 # Route
 - Route B
@@ -9,21 +9,21 @@
 
 # Contract Freeze
 - Scope:
-  - Remove the Item Archive card entry from `src/data/cards.js`.
-  - Remove the Item Archive presence check from `scripts/smoke-check.mjs`.
+  - Rename the Milgyo card label in `src/data/cards.js` to `인위삼신행상명등론`.
+  - Update matching copy in `index.html`, `public/manifest.json`, and `scripts/smoke-check.mjs`.
 - Verification:
   - `node scripts/smoke-check.mjs`
 - Assumption:
-  - Only the archive card list and its smoke check should change; other cards stay untouched.
+  - Keep the existing card content and only change the label plus matching site copy.
 
 # Write Sets
-- worker_copy: `src/data/cards.js`, `scripts/smoke-check.mjs`
+- worker_copy: `src/data/cards.js`, `scripts/smoke-check.mjs`, `index.html`, `public/manifest.json`
 
 # Reviewer
 - main-review
 
 # Last Update
-- 2026-05-30 KST
+- 2026-06-05 KST
 
 # Reason
-- The request spans the card data plus smoke checks, so Route B with split ownership is required.
+- The request changes the card label plus related site copy and smoke checks, so Route B with split ownership is required.
