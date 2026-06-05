@@ -1,29 +1,28 @@
 # Current Task
-- Rename the Milgyo card to `인위삼신행상명등론`.
+- Make the Nag Hammadi and Bori cards use the Threefold card color.
 
 # Route
-- Route B
+- Route A
 
 # Writer Slot
-- main: planner only until contract freeze and write sets are set.
+- main: direct implementation on a single-file hotfix.
 
 # Contract Freeze
 - Scope:
-  - Rename the Milgyo card label in `src/data/cards.js` to `인위삼신행상명등론`.
-  - Update matching copy in `index.html`, `public/manifest.json`, and `scripts/smoke-check.mjs`.
+  - Change the `tone` for the Nag Hammadi and Bori cards in `src/data/cards.js` to `trinity`.
 - Verification:
-  - `node scripts/smoke-check.mjs`
+  - `rg -n "nag-hammadi-library|bori-dodeunglon|tone: 'trinity'|tone: 'sutra'" src/data/cards.js`
 - Assumption:
-  - Keep the existing card content and only change the label plus matching site copy.
+  - Keep the existing text and icon content, and only change the shared card color tone.
 
 # Write Sets
-- worker_copy: `src/data/cards.js`, `scripts/smoke-check.mjs`, `index.html`, `public/manifest.json`
+- main: `src/data/cards.js`
 
 # Reviewer
-- main-review
+- not required for this single-file hotfix
 
 # Last Update
 - 2026-06-05 KST
 
 # Reason
-- The request changes the card label plus related site copy and smoke checks, so Route B with split ownership is required.
+- The request only changes card tone values in one file, so Route A is sufficient.
