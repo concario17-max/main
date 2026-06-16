@@ -19,16 +19,36 @@ export const initCardEffects = () => {
 
     const state = { cardRects: new Map() };
     const targets = new Map();
+    const hoveredCards = new Set();
+    const visibleCards = new Set();
     const lerp = (start, end, factor) => start + (end - start) * factor;
 
+    // 화면 가시성 상태 변화 관찰자 설정 (화면 밖 연산 제거 목적)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                visibleCards.add(entry.target);
+                state.cardRects.set(entry.target, entry.target.getBoundingClientRect());
+                startLoop();
+            } else {
+                visibleCards.delete(entry.target);
+            }
+        });
+    }, { threshold: 0.01 });
+
     const updateCardRects = () => {
-        cards.forEach((card) => state.cardRects.set(card, card.getBoundingClientRect()));
+        cards.forEach((card) => {
+            if (visibleCards.has(card)) {
+                state.cardRects.set(card, card.getBoundingClientRect());
+            }
+        });
     };
 
-    updateCardRects();
     window.addEventListener('resize', updateCardRects, { passive: true });
 
     cards.forEach((card) => {
+        observer.observe(card);
+
         targets.set(card, {
             spotX: 50,
             spotY: 50,
@@ -45,6 +65,9 @@ export const initCardEffects = () => {
         });
 
         card.addEventListener('mousemove', (event) => {
+            // 게이트웨이가 차단 상태면 마우스 연산 생략
+            if (document.body.classList.contains('entry-locked')) return;
+
             const rect = state.cardRects.get(card);
             if (!rect) return;
 
@@ -79,9 +102,12 @@ export const initCardEffects = () => {
                 magneticX,
                 magneticY,
             });
+
+            startLoop();
         }, { passive: true });
 
         card.addEventListener('mouseleave', () => {
+            hoveredCards.delete(card);
             const currentTarget = targets.get(card);
 
             targets.set(card, {
@@ -91,41 +117,111 @@ export const initCardEffects = () => {
                 magneticX: 0,
                 magneticY: 0,
             });
+
+            startLoop();
         });
 
         card.addEventListener('mouseenter', () => {
+            if (document.body.classList.contains('entry-locked')) return;
+
+            hoveredCards.add(card);
             state.cardRects.set(card, card.getBoundingClientRect());
+            startLoop();
         });
     });
 
-    const animate = () => {
-        cards.forEach((card) => {
-            const currentTarget = targets.get(card);
-            if (!currentTarget) return;
+    let isAnimating = false;
 
-            const nextTarget = {
-                ...currentTarget,
-                currSpotX: lerp(currentTarget.currSpotX, currentTarget.spotX, 0.06),
-                currSpotY: lerp(currentTarget.currSpotY, currentTarget.spotY, 0.06),
-                currTiltX: lerp(currentTarget.currTiltX, currentTarget.tiltX, 0.06),
-                currTiltY: lerp(currentTarget.currTiltY, currentTarget.tiltY, 0.06),
-                currMagneticX: lerp(currentTarget.currMagneticX, currentTarget.magneticX, 0.1),
-                currMagneticY: lerp(currentTarget.currMagneticY, currentTarget.magneticY, 0.1),
-            };
-
-            targets.set(card, nextTarget);
-            card.style.setProperty('--mouse-x', `${nextTarget.currSpotX}px`);
-            card.style.setProperty('--mouse-y', `${nextTarget.currSpotY}px`);
-            card.style.transform = `rotateX(${nextTarget.currTiltX}deg) rotateY(${nextTarget.currTiltY}deg)`;
-
-            const cta = card.querySelector('.premium-card__cta-target');
-            if (cta) {
-                cta.style.transform = `translate(${nextTarget.currMagneticX}px, ${nextTarget.currMagneticY}px)`;
-            }
-        });
-
+    const startLoop = () => {
+        if (isAnimating) return;
+        isAnimating = true;
         requestAnimationFrame(animate);
     };
 
-    requestAnimationFrame(animate);
+    const animate = () => {
+        if (document.body.classList.contains('entry-locked')) {
+            isAnimating = false;
+            return;
+        }
+
+        let needsNextFrame = false;
+
+        cards.forEach((card) => {
+            if (!visibleCards.has(card)) return;
+
+            const currentTarget = targets.get(card);
+            if (!currentTarget) return;
+
+            const diffSpotX = currentTarget.spotX - currentTarget.currSpotX;
+            const diffSpotY = currentTarget.spotY - currentTarget.currSpotY;
+            const diffTiltX = currentTarget.tiltX - currentTarget.currTiltX;
+            const diffTiltY = currentTarget.tiltY - currentTarget.currTiltY;
+            const diffMagX = currentTarget.magneticX - currentTarget.currMagneticX;
+            const diffMagY = currentTarget.magneticY - currentTarget.currMagneticY;
+
+            const isHovered = hoveredCards.has(card);
+            const hasSpotMovement = Math.abs(diffSpotX) > 0.05 || Math.abs(diffSpotY) > 0.05;
+            const hasTiltMovement = Math.abs(diffTiltX) > 0.005 || Math.abs(diffTiltY) > 0.005;
+            const hasMagMovement = Math.abs(diffMagX) > 0.01 || Math.abs(diffMagY) > 0.01;
+
+            // 마우스 호버 상태이거나 아직 0으로 회귀하지 못한 연산이 존재할 때만 프레임 갱신
+            if (isHovered || hasSpotMovement || hasTiltMovement || hasMagMovement) {
+                const nextTarget = {
+                    ...currentTarget,
+                    currSpotX: lerp(currentTarget.currSpotX, currentTarget.spotX, 0.06),
+                    currSpotY: lerp(currentTarget.currSpotY, currentTarget.spotY, 0.06),
+                    currTiltX: lerp(currentTarget.currTiltX, currentTarget.tiltX, 0.06),
+                    currTiltY: lerp(currentTarget.currTiltY, currentTarget.tiltY, 0.06),
+                    currMagneticX: lerp(currentTarget.currMagneticX, currentTarget.magneticX, 0.1),
+                    currMagneticY: lerp(currentTarget.currMagneticY, currentTarget.magneticY, 0.1),
+                };
+
+                targets.set(card, nextTarget);
+                card.style.setProperty('--mouse-x', `${nextTarget.currSpotX}px`);
+                card.style.setProperty('--mouse-y', `${nextTarget.currSpotY}px`);
+                card.style.transform = `rotateX(${nextTarget.currTiltX}deg) rotateY(${nextTarget.currTiltY}deg)`;
+
+                const cta = card.querySelector('.premium-card__cta-target');
+                if (cta) {
+                    cta.style.transform = `translate(${nextTarget.currMagneticX}px, ${nextTarget.currMagneticY}px)`;
+                }
+
+                needsNextFrame = true;
+            } else {
+                // 완전히 정지했을 경우 고정값 스냅을 적용해 미세 떨림 방지
+                if (currentTarget.currTiltX !== currentTarget.tiltX ||
+                    currentTarget.currTiltY !== currentTarget.tiltY ||
+                    currentTarget.currMagneticX !== currentTarget.magneticX ||
+                    currentTarget.currMagneticY !== currentTarget.magneticY) {
+
+                    const clampedTarget = {
+                        ...currentTarget,
+                        currSpotX: currentTarget.spotX,
+                        currSpotY: currentTarget.spotY,
+                        currTiltX: currentTarget.tiltX,
+                        currTiltY: currentTarget.tiltY,
+                        currMagneticX: currentTarget.magneticX,
+                        currMagneticY: currentTarget.magneticY,
+                    };
+                    targets.set(card, clampedTarget);
+                    card.style.setProperty('--mouse-x', `${clampedTarget.currSpotX}px`);
+                    card.style.setProperty('--mouse-y', `${clampedTarget.currSpotY}px`);
+                    card.style.transform = `rotateX(${clampedTarget.currTiltX}deg) rotateY(${clampedTarget.currTiltY}deg)`;
+
+                    const cta = card.querySelector('.premium-card__cta-target');
+                    if (cta) {
+                        cta.style.transform = `translate(${clampedTarget.currMagneticX}px, ${clampedTarget.currMagneticY}px)`;
+                    }
+                }
+            }
+        });
+
+        if (needsNextFrame) {
+            requestAnimationFrame(animate);
+        } else {
+            isAnimating = false;
+        }
+    };
+
+    startLoop();
 };

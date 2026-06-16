@@ -41,7 +41,7 @@ export const setPersistentValue = (key, value, options = {}) => {
     }
 
     try {
-        document.cookie = `${encodeURIComponent(key)}=${encodeURIComponent(value)}; Max-Age=${maxAgeSeconds}; Path=/; SameSite=Lax`;
+        document.cookie = `${encodeURIComponent(key)}=${encodeURIComponent(value)}; Max-Age=${maxAgeSeconds}; Path=/; SameSite=Lax; Secure`;
         persisted = true;
     } catch {
         // No-op when cookies are blocked.

@@ -1,4 +1,5 @@
 import { getPersistentValue, setPersistentValue } from './storage.js';
+import { initStardust } from './stardust.js';
 
 const unlockCode = '0228';
 const storageKey = 'simsang-entry-unlocked-code';
@@ -58,6 +59,7 @@ export const initEntryGate = () => {
         gate.hidden = true;
         gate.setAttribute('aria-hidden', 'true');
         gate.remove();
+        initStardust();
     };
 
     const attemptUnlock = () => {

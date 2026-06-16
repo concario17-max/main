@@ -1,28 +1,30 @@
 # Current Task
-- Make the Nag Hammadi and Bori cards use the Threefold card color.
+- Fix structural flaws, optimize RAF loops, delay stardust initialization, restore 5-column layout, and secure cookies.
 
 # Route
-- Route A
+- Route B: Multi-module refactoring and optimization.
 
 # Writer Slot
-- main: direct implementation on a single-file hotfix.
+- main: direct optimization on rendering, interaction, storage, and styling layers.
 
 # Contract Freeze
 - Scope:
-  - Change the `tone` for the Nag Hammadi and Bori cards in `src/data/cards.js` to `trinity`.
+  - Optimize `src/modules/cardEffects.js` to stop animation loop when idle.
+  - Delay `initStardust` until passcode gate unlock in `src/modules/entryGate.js`.
+  - Restore 5-column layout and balance card grids in `src/styles/components.css`.
+  - Add `Secure` attribute to cookies in `src/modules/storage.js`.
 - Verification:
-  - `rg -n "nag-hammadi-library|bori-dodeunglon|tone: 'trinity'|tone: 'sutra'" src/data/cards.js`
-- Assumption:
-  - Keep the existing text and icon content, and only change the shared card color tone.
+  - `cmd /c npm run build` and `cmd /c npm run check:smoke` pass successfully.
 
 # Write Sets
-- main: `src/data/cards.js`
+- main: `src/modules/cardEffects.js`, `src/modules/entryGate.js`, `src/main.js`, `src/modules/storage.js`, `src/styles/components.css`, `research.md`, `STATE.md`
 
 # Reviewer
-- not required for this single-file hotfix
+- local validation through smoke and build checks
 
 # Last Update
-- 2026-06-05 KST
+- 2026-06-16 KST
 
 # Reason
-- The request only changes card tone values in one file, so Route A is sufficient.
+- Multi-file optimization and layout updates require comprehensive code changes and documentation alignment.
+

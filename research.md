@@ -22,9 +22,8 @@
 ## 3. Deep-Dive Analysis & Identified Issues (상세 진단 및 결함)
 
 ### 3.1. 테마 스펙 불일치 및 기능 누락 (Theme System Drift)
-- **증상**: `index.html` 내에 테마 토글 버튼 마크업(`#theme-toggle`)이 물리적으로 존재하지 않으며, `src/modules/theme.js` 또한 빈 함수(`export const initThemeToggle = () => {}`)로 남겨져 실질적인 테마 토글 기능이 작동하지 않음
-- **모순점**: 과거 문서(`STATE.md`, `research.md`)에는 테마 토글 기능이 정상 작동하며 메인 부트 시퀀스에서 초기화되는 것처럼 서술되어 있으나, 실제 테스트 코드(`smoke-check.mjs` 및 `browser-smoke.mjs`)에서는 `#theme-toggle`이 존재하지 않는 것을 정상 패스 조건(`!indexHtml.includes('id="theme-toggle"')`)으로 검증함
-- **진단**: 사양 변경(테마 토글 비활성화 및 라이트 단일 모드 고정)이 코드와 테스트에만 반영되고 기획 문서에는 업데이트되지 않은 채 방치되어 정보 동기화가 깨져 있음
+- **증상**: `index.html` 내에 테마 토글 버튼 마크업 `#theme-toggle`이 물리적으로 존재하지 않으며, `src/modules/theme.js` 또한 빈 함수로 남겨져 실질적인 테마 토글 기능이 작동하지 않음
+- **대처**: 최근 기획 사양(테마 토글 비활성화 및 라이트 단일 모드 고정)에 맞추어 `STATE.md` 및 `research.md` 상의 테마 토글 시퀀스 설명 등을 공식 삭제하고, 단일 라이트 테마 전용 명세로 문서를 완전히 통일함
 
 ### 3.2. 유휴 상태 애니메이션 루프의 자원 낭비 (Non-Idle Frame Overhead)
 - **증상**: `src/modules/cardEffects.js`에서 카드 틸팅 및 마그네틱 모션을 구현하기 위해 `requestAnimationFrame`을 활용한 영구 루프를 구동함
@@ -91,7 +90,7 @@
 - `components.css`에서 데스크톱(1280px 이상) 그리드 열을 5열로 조정함
 - 대표 카드(`featured: true`)가 가로 2열(`grid-column: span 2`)을 차지하도록 스타일을 수정하여, 총 점유 너비를 `2 (Featured) + 5 (나머지 5개 카드) = 7` 그리드 칸으로 정확히 맞아떨어지게 설계하여 완벽한 격자 정렬 레이아웃을 달성함
 
-### 4.4. 명세와 코드의 정비
+### 4.5. 명세와 코드의 정비
 - 테마 시스템이 정말로 제거된 것이 맞다면 기획 문서(`research.md`, `STATE.md`)에서 메인 부트 시퀀스(`initThemeToggle`)와 관리 엘리먼트(`theme-toggle`) 관련 설명을 제거하고 단일 모드 전용으로 문서의 정합성을 일치시킴
 
 ---

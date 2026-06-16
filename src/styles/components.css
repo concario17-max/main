@@ -264,17 +264,16 @@ body.entry-locked #archive-shell {
         gap: 0.95rem;
     }
 
-    .archive-grid__feature {
-        grid-column: span 1;
+    .premium-card--featured {
+        grid-column: span 2;
     }
 }
 
 @media (min-width: 1280px) {
     .archive-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(5, minmax(0, 1fr));
         gap: 0.85rem;
     }
-
 }
 
 .premium-card::after {
