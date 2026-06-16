@@ -199,3 +199,32 @@ Goal: fix the remaining functional and architectural issues without starting imp
 - [ ] 4. Decouple motion behavior from style-class selectors.
 - [ ] 5. Improve browser smoke reliability and expand smoke coverage.
 - [ ] 6. Refresh documentation after all code and test changes settle.
+
+## 2026-06-16 Detailed TODO: 문제점 개선 계획
+
+Goal: research.md에 도출된 5가지 핵심 결함(테마 시스템 불일치, RAF 성능 낭비, 파티클 지연 로드, 데스크톱 레이아웃 밸런스, 쿠키 보안 강화)을 세분화하여 해결한다.
+
+### J. 테마 시스템과 스펙의 정합성 정비
+- [ ] `STATE.md` 및 `research.md` 상에서 테마 토글 비활성화 사양이 반영되도록 문구를 수정한다.
+- [ ] 혹시나 테마 토글의 기능 복구가 기획적으로 요구되는지 확인하고, 미작동 중인 `src/modules/theme.js` 내 명세와 `index.html` 문서 정리를 단일 모드 고정형 명세로 확실하게 통일시킨다.
+
+### K. 유휴 상태 애니메이션 프레임 루프 (Sleep Mode) 최적화
+- [ ] `src/modules/cardEffects.js`에서 `isAnimating` 상태 플래그를 추가하여 마그네틱/틸팅 값이 모두 `0`으로 온전히 수렴했을 때 requestAnimationFrame 루프를 끄고 휴면(Idle) 상태로 전환하는 제어 로직을 작성한다.
+- [ ] 각 카드 엘리먼트의 `mouseenter` 및 `mousemove` 이벤트 발생 시 휴면 상태를 즉시 깨우고 프레임 루프를 다시 시작(startLoop)하도록 리스너를 보강한다.
+- [ ] 게이트 잠금 상태(`entry-locked` 클래스가 body에 존재할 때)이거나, 카드가 화면 밖으로 스크롤되어 보이지 않을 경우(IntersectionObserver 연동) 프레임 연산을 원천적으로 차단한다.
+
+### L. 배경 파티클 (Stardust) 지연 초기화 구현
+- [ ] `src/main.js`의 `DOMContentLoaded` 리스너에서 `initStardust()` 호출부의 즉시 실행을 제거한다.
+- [ ] `src/modules/entryGate.js` 내의 성공적인 잠금 해제 함수(`unlock()`) 안에서, 게이트 화면이 완전 소멸하는 단계 직전에 `initStardust()`가 동적으로 바인딩 및 생성되도록 호출 시점을 지연시킨다.
+
+### M. 데스크톱 5열 레이아웃 최적화 및 7개 카드 밸런싱
+- [ ] `src/styles/components.css`에서 데스크톱 해상도(`@media (min-h-screen...)` 대역의 그리드 열 수)를 기존 4열에서 명세에 기재된 5열(`repeat(5, minmax(0, 1fr))`)로 변경한다.
+- [ ] `featured` 카드가 가로 2열(`grid-column: span 2`)을 차지하도록 css 구조를 설계하여, 총 7개의 카드가 2 (featured) + 5 (나머지 카드) = 7칸의 시각적으로 균형 잡힌 5열 레이아웃을 형성하도록 매핑한다.
+
+### N. 쿠키 보안 플래그 강화
+- [ ] `src/modules/storage.js`의 `setPersistentValue` 내에서 쿠키 생성 구문에 HTTPS 환경에서만 쿠키가 안전하게 송수신되도록 `Secure` 속성을 추가한다.
+
+### O. 회귀 검증 및 빌드 스모크 테스트 실행
+- [ ] 수정 사항들을 반영한 후 `cmd /c npm run build` 명령을 실행해 프로덕션 빌드가 성공적으로 완료되는지 점검한다.
+- [ ] `cmd /c npm run check:smoke` 테스트를 구동하여 5열 레이아웃과 수정한 모듈 상태 검증 명세들이 모두 정상 통과하는지 확인한다.
+
