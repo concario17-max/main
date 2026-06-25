@@ -96,7 +96,7 @@ export const cards = [
     },
     {
         slug: 'bori-dodeunglon',
-        href: 'https://bori.simsang.org/',
+        href: 'https://lamp.simsang.org/',
         delayClass: 'delay-700',
         tone: 'trinity',
         icon: cardIcons.sutra,

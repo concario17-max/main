@@ -83,7 +83,7 @@ const main = async () => {
     addCheck(cards.filter(({ featured }) => featured).length <= 1, 'At most one featured card exists');
     addCheck(cards.every(({ tone }) => ['celestial', 'sutra', 'divine', 'liberation', 'trinity'].includes(tone)), 'Each card uses a supported tone');
     addCheck(cards.some(({ href }) => href === 'https://3body.simsang.org/'), 'Threefold card link is present');
-    addCheck(cards.some(({ href }) => href === 'https://bori.simsang.org/'), 'Bori card link is present');
+    addCheck(cards.some(({ href }) => href === 'https://lamp.simsang.org/'), 'Bori card link is present');
     addCheck(
         cards.some(({ slug, href, copy }) => slug === 'nag-hammadi-library' && href === 'https://nag.simsang.org/' && copy.label === '나그함마디 문서'),
         'Nag Hammadi card is present',
