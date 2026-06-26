@@ -113,6 +113,8 @@ export const cards = [
             cta: 'Read the Treatise',
         },
     },
+    /*
+    // 임시 숨김 처리: 나중에 다시 작업 예정
     {
         slug: 'nag-hammadi-library',
         href: 'https://nag.simsang.org/',
@@ -131,4 +133,5 @@ export const cards = [
             cta: 'Open the Library',
         },
     },
+    */
 ];

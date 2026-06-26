@@ -84,10 +84,13 @@ const main = async () => {
     addCheck(cards.every(({ tone }) => ['celestial', 'sutra', 'divine', 'liberation', 'trinity'].includes(tone)), 'Each card uses a supported tone');
     addCheck(cards.some(({ href }) => href === 'https://3body.simsang.org/'), 'Threefold card link is present');
     addCheck(cards.some(({ href }) => href === 'https://lamp.simsang.org/'), 'Bori card link is present');
+    /*
+    // 임시 숨김 처리: 나중에 다시 작업 예정
     addCheck(
         cards.some(({ slug, href, copy }) => slug === 'nag-hammadi-library' && href === 'https://nag.simsang.org/' && copy.label === '나그함마디 문서'),
         'Nag Hammadi card is present',
     );
+    */
     addCheck(cards.some(({ copy }) => copy.label === '인위삼신행상명등론'), 'Samshin card label is normalized');
     addCheck(cards.some(({ copy }) => copy.label === '보리도등론'), 'Bori card label is normalized');
 
@@ -103,7 +106,10 @@ const main = async () => {
     addCheck(indexHtml.includes('A Living Portal for Astrology, Yoga, the Gita, Bardo Wisdom, and Samshin Doctrine'), 'Header support copy is present');
     addCheck(indexHtml.includes('오컬트 주역 천체 관측소'), 'Header pills use normalized Korean copy');
     addCheck(indexHtml.includes('class="header-pill"'), 'Bori pill is present');
+    /*
+    // 임시 숨김 처리: 나중에 다시 작업 예정
     addCheck(indexHtml.includes('class="header-pill"'), 'Nag Hammadi pill is present');
+    */
     addCheck(indexHtml.includes('property="og:locale" content="ko_KR"'), 'OG locale is present');
     addCheck(indexHtml.includes('property="og:image:width" content="1200"'), 'OG image width is declared');
     addCheck(indexHtml.includes('property="og:image:height" content="630"'), 'OG image height is declared');
