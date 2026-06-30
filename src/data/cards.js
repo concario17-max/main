@@ -76,12 +76,30 @@ export const cards = [
         },
     },
     {
+        slug: 'miracle-portal',
+        href: 'https://miracle.simsang.org/',
+        delayClass: 'delay-700',
+        tone: 'liberation',
+        icon: cardIcons.liberation,
+        index: 'V',
+        portal: 'Miracle Portal',
+        heading: {
+            main: 'Atonement',
+            accent: 'Vision',
+        },
+        copy: {
+            label: '기적수업',
+            description: '기적수업(A Course in Miracles)은 두려움으로 굳어진 마음의 시선을 사랑의 인식으로 되돌리는 영적 훈련서입니다. 세계를 바꾸기보다 세계를 바라보는 마음을 정화하고, 죄책감과 분리의 꿈에서 깨어나 용서라는 빛으로 현실을 다시 읽게 합니다. 매일의 관계와 감정, 판단과 상처를 영혼의 교실로 삼아 내면의 기적을 배우려는 이들을 위한 안내서입니다.',
+            cta: 'Begin the Lessons',
+        },
+    },
+    {
         slug: 'threefold-luminaries',
         href: 'https://3body.simsang.org/',
         delayClass: 'delay-700',
         tone: 'trinity',
         icon: cardIcons.trinity,
-        index: 'V',
+        index: 'VI',
         portal: 'Samshin Portal',
         heading: {
             main: 'Tantric',
