@@ -85,6 +85,7 @@ const main = async () => {
     addCheck(cards.some(({ href }) => href === 'https://3body.simsang.org/'), 'Threefold card link is present');
     addCheck(cards.some(({ href }) => href === 'https://lamp.simsang.org/'), 'Bori card link is present');
     addCheck(cards.some(({ href }) => href === 'https://miracle.simsang.org/'), 'Miracle card link is present');
+    addCheck(cards.some(({ href }) => href === 'https://rosi.simsang.org/'), 'Rosicrucian card link is present');
     /*
     // 임시 숨김 처리: 나중에 다시 작업 예정
     addCheck(
@@ -95,6 +96,7 @@ const main = async () => {
     addCheck(cards.some(({ copy }) => copy.label === '인위삼신행상명등론'), 'Samshin card label is normalized');
     addCheck(cards.some(({ copy }) => copy.label === '보리도등론'), 'Bori card label is normalized');
     addCheck(cards.some(({ copy }) => copy.label === '기적수업'), 'Miracle card label is normalized');
+    addCheck(cards.some(({ copy }) => copy.label === '장미십자의 비의'), 'Rosicrucian card label is normalized');
 
     addCheck(indexHtml.includes('id="entry-gate"'), 'Entry gate dialog exists');
     addCheck(indexHtml.includes('id="entry-gate-input"'), 'Entry gate input exists');
@@ -105,7 +107,7 @@ const main = async () => {
     addCheck(indexHtml.includes('id="cards-grid"'), 'Cards grid container exists');
     addCheck(indexHtml.includes('<h1'), 'Header h1 exists');
     addCheck(extractH1Text(indexHtml) === 'SIMSANG Archive', 'Header h1 text is present');
-    addCheck(indexHtml.includes('A Living Portal for Astrology, Yoga, the Gita, Bardo Wisdom, Atonement, Samshin Doctrine, and Path Lamp'), 'Header support copy is present');
+    addCheck(indexHtml.includes('A Living Portal for Astrology, Yoga, the Gita, Bardo Wisdom, Atonement, Samshin Doctrine, Path Lamp, and Rosicrucian Esotericism'), 'Header support copy is present');
     addCheck(indexHtml.includes('오컬트 주역 천체 관측소'), 'Header pills use normalized Korean copy');
     addCheck(indexHtml.includes('class="header-pill"'), 'Bori pill is present');
     /*
@@ -117,14 +119,14 @@ const main = async () => {
     addCheck(indexHtml.includes('property="og:image:height" content="630"'), 'OG image height is declared');
     addCheck(indexHtml.includes('property="og:image:alt"'), 'OG image alt text is declared');
     addCheck(indexHtml.includes('SIMSANG ARCHIVE | 깊이 읽는 지혜의 서고'), 'Share copy uses the normalized Korean title');
-    addCheck(indexHtml.includes('오컬트 주역 천체 관측소, 파탄잘리 요가 수트라, 바가바드 기타, 티베트 사자의 서, 기적수업, 인위삼신행상명등론, 보리도등론을 아우르는 프리미엄 지식 아카이브.'), 'Meta description is normalized');
+    addCheck(indexHtml.includes('오컬트 주역 천체 관측소, 파탄잘리 요가 수트라, 바가바드 기타, 티베트 사자의 서, 기적수업, 인위삼신행상명등론, 보리도등론, 장미십자의 비의를 아우르는 프리미엄 지식 아카이브.'), 'Meta description is normalized');
     addCheck(indexHtml.includes('class="archive-grid w-full px-1 md:px-0 py-6 md:py-0"'), 'Cards grid uses the adaptive archive grid layout');
     addCheck(componentCss.includes('.archive-grid'), 'Adaptive archive grid styles exist');
     addCheck(!indexHtml.includes('portal-overlay'), 'Unused portal overlay has been removed');
     addCheck(!indexHtml.includes('onclick='), 'Inline event handlers have been removed');
     addCheck(!indexHtml.includes('Four Portals'), 'Meta copy does not hardcode a fixed card count in English');
 
-    addCheck(manifestJson.includes('오컬트 주역 천체 관측소, 파탄잘리 요가 수트라, 바가바드 기타, 티베트 사자의 서, 기적수업, 인위삼신행상명등론, 보리도등론을 아우르는 프리미엄 지식 아카이브.'), 'Manifest description matches current language policy');
+    addCheck(manifestJson.includes('오컬트 주역 천체 관측소, 파탄잘리 요가 수트라, 바가바드 기타, 티베트 사자의 서, 기적수업, 인위삼신행상명등론, 보리도등론, 장미십자의 비의를 아우르는 프리미엄 지식 아카이브.'), 'Manifest description matches current language policy');
 
     addCheck(rootStyleCss.includes("@import './styles/base.css';"), 'Style entry imports base.css');
     addCheck(rootStyleCss.includes("@import './styles/components.css';"), 'Style entry imports components.css');

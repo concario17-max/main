@@ -131,6 +131,25 @@ export const cards = [
             cta: 'Read the Treatise',
         },
     },
+    {
+        slug: 'rosicrucian-esotericism',
+        href: 'https://rosi.simsang.org/',
+        delayClass: 'delay-700',
+        tone: 'liberation',
+        icon: cardIcons.liberation,
+        index: 'VI',
+        portal: 'Rosicrucian Portal',
+        heading: {
+            main: 'Rosicrucian',
+            accent: 'Esotericism',
+        },
+        copy: {
+            label: '장미십자의 비의',
+            compactLabel: true,
+            description: '장미십자의 비의(Rosicrucian Esotericism)는 정신과학자 루돌프 슈타이너가 전한 현대적 입문의 길로서, 그리스도적 경건함과 헤르메스학적 지혜를 융합한 서구 신비학의 핵심입니다. 우주와 인간의 기원, 사후와 재육화의 여정, 그리고 감각 세계 너머의 영적 지각을 계발하는 체계적인 수행 경로를 제시합니다.',
+            cta: 'Enter the Rose Cross',
+        },
+    },
     /*
     // 임시 숨김 처리: 나중에 다시 작업 예정
     {
