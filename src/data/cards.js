@@ -57,12 +57,31 @@ export const cards = [
         },
     },
     {
+        slug: 'rosicrucian-esotericism',
+        href: 'https://rosi.simsang.org/',
+        delayClass: 'delay-700',
+        tone: 'liberation',
+        icon: cardIcons.liberation,
+        index: 'VI',
+        portal: 'Rosicrucian Portal',
+        heading: {
+            main: 'Rosicrucian',
+            accent: 'Esotericism',
+        },
+        copy: {
+            label: '장미십자의 비의',
+            compactLabel: true,
+            description: '장미십자의 비의(Rosicrucian Esotericism)는 정신과학자 루돌프 슈타이너가 전한 현대적 입문의 길로서, 그리스도적 경건함과 헤르메스학적 지혜를 융합한 서구 신비학의 핵심입니다. 우주와 인간의 기원, 사후와 재육화의 여정, 그리고 감각 세계 너머의 영적 지각을 계발하는 체계적인 수행 경로를 제시합니다.',
+            cta: 'Enter the Rose Cross',
+        },
+    },
+    {
         slug: 'eternal-liberation',
         href: 'https://thodol.simsang.org/',
         delayClass: 'delay-700',
         tone: 'liberation',
         icon: cardIcons.liberation,
-        index: 'IV',
+        index: 'VII',
         portal: 'Bardo Portal',
         heading: {
             main: 'Eternal',
@@ -81,7 +100,7 @@ export const cards = [
         delayClass: 'delay-700',
         tone: 'liberation',
         icon: cardIcons.liberation,
-        index: 'V',
+        index: 'VIII',
         portal: 'Miracle Portal',
         heading: {
             main: 'Atonement',
@@ -99,7 +118,7 @@ export const cards = [
         delayClass: 'delay-700',
         tone: 'trinity',
         icon: cardIcons.trinity,
-        index: 'VI',
+        index: 'IX',
         portal: 'Samshin Portal',
         heading: {
             main: 'Tantric',
@@ -118,7 +137,7 @@ export const cards = [
         delayClass: 'delay-700',
         tone: 'trinity',
         icon: cardIcons.sutra,
-        index: 'VI',
+        index: 'IX',
         portal: 'Bori Portal',
         heading: {
             main: 'Path',
@@ -129,25 +148,6 @@ export const cards = [
             compactLabel: true,
             description: '보리도등론(菩提道燈論, Bodhipathapradīpa)은 11세기 인도 스승 아띠샤(Atīśa)가 지은 68게송의 짧은 논서로, 깨달음으로 가는 길을 비추는 등불이라는 뜻을 지닌다. 이 문헌은 티베트 불교의 핵심 수행 체계인 보리도차제(菩提道次第)의 사상적 기초가 된 중요한 텍스트다.',
             cta: 'Read the Treatise',
-        },
-    },
-    {
-        slug: 'rosicrucian-esotericism',
-        href: 'https://rosi.simsang.org/',
-        delayClass: 'delay-700',
-        tone: 'liberation',
-        icon: cardIcons.liberation,
-        index: 'VI',
-        portal: 'Rosicrucian Portal',
-        heading: {
-            main: 'Rosicrucian',
-            accent: 'Esotericism',
-        },
-        copy: {
-            label: '장미십자의 비의',
-            compactLabel: true,
-            description: '장미십자의 비의(Rosicrucian Esotericism)는 정신과학자 루돌프 슈타이너가 전한 현대적 입문의 길로서, 그리스도적 경건함과 헤르메스학적 지혜를 융합한 서구 신비학의 핵심입니다. 우주와 인간의 기원, 사후와 재육화의 여정, 그리고 감각 세계 너머의 영적 지각을 계발하는 체계적인 수행 경로를 제시합니다.',
-            cta: 'Enter the Rose Cross',
         },
     },
     /*
